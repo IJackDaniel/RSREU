@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\TanKi\VisualStudioProjects\RSREU\Semester 3\TaSD\1.Sort\Selection Sort\Selection Sort\main.cpp(1,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
+C:\Users\TanKi\VisualStudioProjects\RSREU\Semester 3\TaSD\1.Sort\Selection Sort\Selection Sort\main.cpp(8,18): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+  Selection Sort.vcxproj -> C:\Users\TanKi\VisualStudioProjects\RSREU\Semester 3\TaSD\1.Sort\Selection Sort\x64\Debug\Selection Sort.exe
