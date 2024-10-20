@@ -13,8 +13,13 @@ void get_data(int arr[][2], int len) {
 	}
 }
 
-void get_randdata(int arr[100][2], int len) {
-	
+void get_randdata(int arr[][2], int len, int mn_val, int mx_val) {
+	int x, y;
+	int i;
+	for (i = 0; i < len; i++) {
+		arr[i][0] = rand() % (mx_val + 1 - mn_val) + mn_val;
+		arr[i][1] = rand() % (mx_val + 1 - mn_val) + mn_val;
+	}
 }
 
 int main(int argc, char *argv[]) {
@@ -34,14 +39,22 @@ int main(int argc, char *argv[]) {
 	}
 	while (choice > 2 || choice < 1);
 	
+	int mn, mx;
 	switch (choice)
 	{
 		case 1:
 			get_data(arr, ln);
 			break;
 		case 2:
-//			get_randdata(arr);
+			printf("Enter a range of values:\n");
+			scanf("%f %f", &mn, &mx);
+			get_randdata(arr, ln, mn, mx);
 			break;
+	}
+	
+	int p;
+	for (p = 0; p < ln; p++){
+		printf("%d\n", arr[p]);
 	}
 	
 	return 0;
