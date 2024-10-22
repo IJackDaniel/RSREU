@@ -205,6 +205,24 @@ class LinkedList:
                     cur = cur.get_next()
                     i += 1
 
+    def remove_all_chet(self):
+        cur = self.head
+        while not self.is_empty() and cur.get_data() % 2 == 0:
+            self.pop_front()
+            cur = self.head
+        prev = None
+        while cur is not None:
+            if cur.get_data() % 2 == 0:
+                if prev:
+                    temp = cur.get_next()
+                    prev.set_next(temp)
+                    cur = temp
+                else:
+                    self.head = cur.get_next()
+            else:
+                prev = cur
+                cur = cur.get_next()
+
     def remove_all_positives(self):  # удалить все положительные числа
         cur = self.head
         while not self.is_empty() and cur.get_data() > 0:
@@ -259,5 +277,39 @@ class LinkedList:
                 current.set_data(md)
                 current = current.get_next()
 
+    def swap_i_j_index(self, i, j):  # Поменять i-й элемент с j-м
+        if i == j:
+            return
+
+        if i < 0 or j < 0 or i > self.size() or j > self.size():
+            return -1
+
+        current = self.head
+        node_i = None
+        node_j = None
+        counter = 0
+
+        while current is not None:
+            if counter == i:
+                node_i = current
+            if counter == j:
+                node_j = current
+            current = current.get_next()
+            counter += 1
+
+        if node_i and node_j:
+            temp_data = node_i.get_data()
+            node_i.set_data(node_j.get_data())
+            node_j.set_data(temp_data)
+
     def __str__(self):
         return str(self.head)
+
+
+linked_list = LinkedList()
+linked_list.push_back(1)
+linked_list.push_back(5)
+linked_list.push_back(3)
+print(linked_list)
+linked_list.remove_all_chet()
+print(linked_list)

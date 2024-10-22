@@ -21,13 +21,13 @@ void get_randdata(float arr[][3], int len, int mn_val, int mx_val) {
 	}
 }
 
-void is_in_field(float arr[][3], int len, float r, float a, float b) {
+void is_in_field(float arr[][3], int len, float r) {
 	float x, y;
 	int i;
 	for (i = 0; i < len; i++) {
 		x = arr[i][0];
 		y = arr[i][1];
-		if (fabs(x) <= a && fabs(y) <= b && !((x + a) * (x + a) + (y - b) * (y - b) <= r * r) && !((x - a) * (x - a) + (y + b) * (y + b) <= r * r)) {
+		if (fabs(x) <= r && fabs(y) <= r && !((x + r) * (x + r) + (y - r) * (y - r) <= r * r) && !((x - r) * (x - r) + (y + r) * (y + r) <= r * r)) {
 			arr[i][2] = 1.0;
 		}
 	}
@@ -35,8 +35,17 @@ void is_in_field(float arr[][3], int len, float r, float a, float b) {
 
 void view(float arr[][3], int len) {
 	int p;
+	printf("\nBelong\n");
 	for (p = 0; p < len; p++){
-		printf("point [%3d] = (%- 11.3f; %- 11.3f): result - %1.0f\n", p, arr[p][0], arr[p][1], arr[p][2]);
+		if (arr[p][2] == 1.0) {
+			printf("point [%3d] = (%- 11.3f; %- 11.3f)\n", p, arr[p][0], arr[p][1]);
+		}
+	}
+	printf("\nDidn't belong\n");
+	for (p = 0; p < len; p++){
+		if (arr[p][2] == 0.0) {
+			printf("point [%3d] = (%- 11.3f; %- 11.3f)\n", p, arr[p][0], arr[p][1]);
+		}
 	}
 }
 
@@ -48,15 +57,15 @@ int main() {
 	}
 	while (ln < 0);
 	
-	float r, a, b;
+	float r;
 	do {
-		printf("Enter field parameters: r, a, b: ");
-		scanf("%f %f %f", &r, &a, &b);
+		printf("\nEnter field parameter R: ");
+		scanf("%f", &r);
 	}
-	while (r <= 0 || a <= 0 || b <= 0);
+	while (r <= 0);
 	
 	int choice;
-	printf("The format of filling the array: \n1 - manually; 2 - randomly: \n");
+	printf("\nThe format of filling the array: \n1 - manually; 2 - randomly:\n");
 	do {
 		scanf("%d", &choice);
 	}
@@ -70,13 +79,19 @@ int main() {
 			get_data(arr, ln);
 			break;
 		case 2:
-			printf("Enter a range of values:\n");
+			printf("\nEnter a range of values: ");
 			scanf("%d %d", &mn, &mx);
+			if (mn > mx) {
+				float temp;
+				temp = mn;
+				mn = mx;
+				mx = temp;
+			}
 			get_randdata(arr, ln, mn, mx);
 			break;
 	}
 	
-	is_in_field(arr, ln, r, a, b);
+	is_in_field(arr, ln, r);
 	
 	view(arr, ln);
 	
