@@ -45,12 +45,7 @@ n = int(input())
 for _ in range(n):
     inp = input().split()
     cmd = int(inp[0])
-    # if cmd == 0:
-    #     heap.Insert(int(inp[1]))
-    # else:
-    #     print(heap.Extract())
-    match cmd:
-        case 0:
-            heap.Insert(int(inp[1]))
-        case 1:
-            print(heap.Extract())
+    if cmd == 0:
+        heap.Insert(int(inp[1]))
+    else:
+        print(heap.Extract())
