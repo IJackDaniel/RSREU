@@ -9,6 +9,7 @@ def LeftBinS(arr, x):
             r = m
     return l
 
+
 def RightBinS(arr, x):
     l = -1
     r = len(arr)
