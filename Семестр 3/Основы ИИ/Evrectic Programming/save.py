@@ -26,9 +26,7 @@ class Situation:
         return self.maze[arr[0]][arr[1]] == "2"  # Выход - результат проверки
 
     # Функция отображения действующей ситуации
-    def show_current_situation(self, arr, flag):  # на вход подаётся ситуация
-        if not flag:
-            print(arr[0], arr[1])
+    def show_current_situation(self, arr):  # на вход подаётся ситуация
         matrix = self.maze  # Лабиринт
         n = len(matrix)  # Длина лабиринта
         m = len(matrix[0])  # Ширина лабиринта
@@ -49,90 +47,68 @@ class Situation:
             print()
         print()
 
-    # Оценочная функция по градиенту
-    # производит сравнение ситуаций
-    def valuation_method(self, *situations):  # на вход подаётся набор ситуаций
+    def valuation_method(self, *situations):
         situation_1, situation_2 = situations[0], situations[1]
-        # Сравнение ситуаций с целевой
         if ((situation_1[0][0] - self.target[0]) ** 2 + (situation_1[0][1] - self.target[1]) ** 2 <=
                 (situation_2[0][0] - self.target[0]) ** 2 + (situation_2[0][1] - self.target[1]) ** 2):
             return -1  # Если первая ситуация хуже
         else:
             return 1  # Если первая ситуация лучше или такая же
 
-    # Порождающая функция
-    def generate_method(self, arr):  # на вход подаётся ситуация и номер хода
+    def generate_method(self, arr):
         i, j, n = arr[0][0], arr[0][1], arr[1][0]
-        variants = []  # возможные ходы
+        vars = []
         for el in [[i, j + 1], [0]], [[i + 1, j], [0]], [[i - 1, j], [0]], [[i, j - 1], [0]]:
             if el[0][0] < 0 or el[0][0] > 9 or el[0][1] < 0 or el[0][1] > 9 or self.wall([el[0][0], el[0][1]]):
                 continue
             else:
-                variants.append(el)
+                vars.append(el)
 
-        variants.sort(key=cmp_to_key(self.valuation_method))
+        vars.sort(key=cmp_to_key(self.valuation_method))
 
-        if n < len(variants):
-            return variants[n]  # Возврат одного хода
+        if n < len(vars):
+            return vars[n]
         else:
             return []  # Нового шага нет
 
-    # Метод поиска в глубину
-    # Вход: начальная ситуация
-    # Промежуточные данные:
-    # stack - стек со всеми ситуациями на пути
-    # success - булева переменная, которая хранит результат проверки ситуации на целевую
-    # new_situation - новая порождаемая ситуация
-    # Выход: путь, который проделал робот для достижения цели
     def dfs(self):
-        stack = [[self.coord, [0]]]  # Стек для хранения ситуаций
-        # Цикл, пока стек не пустой
+        stack = [[self.coord, [0]]]
         while stack:
-            success = self.target_situation(stack[-1][0])  # Проверка на достижение целевой ситуации
-            self.show_current_situation(stack[-1][0], False)  # Отображение лабиринта, робота и цели
-            sleep(0.5)  # Задержка вывода на 0,5 секунд
+            success = self.target_situation(stack[-1][0])
+            self.show_current_situation(stack[-1][0])
+            sleep(0.5)
 
-            # Проверка на достижение цели
             if success:
-                # Перемещение значений из stack в path
                 for i in range(len(stack)):
                     self.path.append(stack[i][0])
-                # Вывод пройденного пути
                 print(f"Пройденный путь:\n{self.path}")
                 print("Путь:")
-                self.show_current_situation(stack[-1][0], True)
+                self.show_current_situation(stack[-1][0])
                 return
 
             # Формирование новой ситуации
             new_situation = self.generate_method(stack[-1])
+            if not new_situation:
+                stack[-1][1][0] += 1
+                continue
+            print(new_situation)
 
-            # Проверка: попадает ли порождённая ситуация в стек
-            try:
-                if any(last_situation[0][0:2] == new_situation[0][0:2] for last_situation in stack):
-                    stack[-1][1][0] += 1
-                    continue
-            except IndexError:
-                pass
+            if any(situation[0][0:2] == new_situation[0][0:2] for situation in stack):
+                stack[-1][1][0] += 1
+                continue
 
-            # Если новых ходов больше нет
             if len(new_situation) == 0:
                 stack.pop()
-                # Если стек оказался пустым
                 if len(stack) == 0:
                     break
-                stack[-1][1][0] += 1  # Увеличиваем номер хода на 1
-            else:  # Если ходы есть
+                stack[-1][1][0] += 1
+            else:
                 stack.append(new_situation)
-        # Вывод сообщения, если решение не найдено
         print("Решения нет")
         return
 
 
 if __name__ == "__main__":
-    # Лабиринты (2 - стенка; 0 - ничего)
-
-    # Первый лабиринт - коридорный
-    # В этом лабиринте нет никаких разветвлений
     first_maze = [
             ["0", "0", "0", "0", "0", "0", "0", "0", "2", "0"],
             ["0", "2", "2", "2", "2", "2", "2", "0", "2", "0"],
@@ -144,7 +120,6 @@ if __name__ == "__main__":
             ["0", "2", "0", "0", "2", "0", "2", "0", "2", "0"],
             ["0", "2", "2", "2", "2", "0", "2", "0", "2", "0"],
             ["0", "0", "0", "0", "0", "0", "2", "0", "0", "0"]]
-    # Второй лабиринт
     second_maze = [
             ["0", "2", "0", "2", "0", "2", "0", "0", "0", "0"],
             ["0", "2", "0", "0", "0", "2", "2", "2", "0", "2"],
@@ -156,21 +131,7 @@ if __name__ == "__main__":
             ["2", "2", "0", "0", "0", "0", "0", "0", "2", "2"],
             ["0", "2", "0", "2", "2", "0", "2", "0", "2", "0"],
             ["0", "0", "0", "2", "0", "0", "2", "0", "0", "0"]]
-    # Третий лабиринт
     third_maze = [
-            ["0", "2", "0", "2", "0", "2", "0", "0", "0", "0"],
-            ["0", "2", "0", "0", "0", "2", "2", "2", "0", "2"],
-            ["0", "0", "0", "2", "0", "2", "0", "2", "0", "2"],
-            ["2", "2", "2", "2", "0", "2", "0", "2", "0", "0"],
-            ["0", "2", "0", "0", "0", "2", "0", "0", "0", "2"],
-            ["0", "2", "0", "2", "2", "2", "2", "2", "0", "2"],
-            ["0", "0", "0", "2", "0", "2", "0", "0", "0", "2"],
-            ["2", "2", "0", "0", "0", "0", "0", "0", "2", "2"],
-            ["0", "2", "0", "2", "2", "0", "2", "0", "2", "0"],
-            ["0", "0", "0", "2", "0", "0", "2", "0", "0", "0"]]
-    # Четвёртый лабиринт - пустой
-    # В этом лабиринте вообще нет стенок
-    fourth_maze = [
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
@@ -182,40 +143,31 @@ if __name__ == "__main__":
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"],
             ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]]
 
-    # Выбор лабиринта пользователем
     print("""Выбор лабиринта:
     1. Коридорный лабиринт
     2. Первый стандартный лабиринт вариант 1
     3. Первый стандартный лабиринт вариант 2
-    4. Пустой лабиринт\n""")
+    4. Второй стандартный лабиринт\n""")
     choice_maze = int(input("Ввод: "))
 
-    # Конструкция выбора лабиринта
     match choice_maze:
         case 1:
-            selected_maze = first_maze
+            maze = first_maze
             start_pos = [0, 9]
             target_pos = [7, 2]
         case 2:
-            selected_maze = second_maze
+            maze = second_maze
             start_pos = [2, 0]
             target_pos = [2, 6]
         case 3:
-            selected_maze = third_maze
-            start_pos = [0, 9]
-            target_pos = [0, 2]
-        case 4:
-            selected_maze = fourth_maze
-            start_pos = [1, 1]
-            target_pos = [5, 8]
+            maze = third_maze
+            start_pos = [0, 0]
+            target_pos = [2, 4]
         case _:
-            print("Некорректный выбор лабиринта!")
-            exit(2)
+            ...
 
-    # Определение ситуации
-    situation = Situation(selected_maze, start_pos, target_pos)
+    situation = Situation(maze, start_pos, target_pos)
 
-    # Запуск метода поиска в глубину
     situation.dfs()
 
 '''
