@@ -45,7 +45,7 @@ heap = Heap()
 
 n = int(input())
 arr = input().split()
-arr = "8 4 349 3 5 8 34 48 54 345".split()
+# arr = "8 4 349 3 5 8 34 48 54 345".split()
 
 for elem in arr:
     heap.Insert(int(elem))

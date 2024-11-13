@@ -13,8 +13,6 @@ class Situation:
         self.maze = maze  # Лабиринт, представленный в виде матрицы
         self.coord = current_coord  # Действующие координаты робота в виде массива из двух значений
         self.target = target  # Целевая координата в виде массива из двух значений
-        self.path = []  # Пусть по лабиринту до целевой координаты
-        self.current_move = 0
 
     # Функция проверки целевой ситуации
     def target_situation(self, arr):  # На вход подаётся ситуация
@@ -26,7 +24,9 @@ class Situation:
         return self.maze[arr[0]][arr[1]] == "2"  # Выход - результат проверки
 
     # Функция отображения действующей ситуации
-    def show_current_situation(self, arr, flag):  # на вход подаётся ситуация
+    def show_current_situation(self, arr, flag, path=None):  # на вход подаётся ситуация
+        if path is None:
+            path = []
         if not flag:
             print(arr[0], arr[1])
         matrix = self.maze  # Лабиринт
@@ -42,7 +42,7 @@ class Situation:
                     print("x", end=" ")
                 elif self.maze[i][j] == "2":  # Проверка координаты на стенку
                     print(chr(9608), end=" ")
-                elif current in self.path:
+                elif current in path:
                     print("1", end=" ")
                 else:
                     print(self.maze[i][j], end=" ")
@@ -70,7 +70,7 @@ class Situation:
             else:
                 variants.append(el)
 
-        variants.sort(key=cmp_to_key(self.valuation_method))
+        # variants.sort(key=cmp_to_key(self.valuation_method))
 
         if n < len(variants):
             return variants[n]  # Возврат одного хода
@@ -89,18 +89,19 @@ class Situation:
         # Цикл, пока стек не пустой
         while stack:
             success = self.target_situation(stack[-1][0])  # Проверка на достижение целевой ситуации
-            self.show_current_situation(stack[-1][0], False)  # Отображение лабиринта, робота и цели
-            sleep(0.5)  # Задержка вывода на 0,5 секунд
+            # self.show_current_situation(stack[-1][0], False)  # Отображение лабиринта, робота и цели
+            # sleep(0.5)  # Задержка вывода на 0,5 секунд
 
             # Проверка на достижение цели
             if success:
                 # Перемещение значений из stack в path
+                path = []
                 for i in range(len(stack)):
-                    self.path.append(stack[i][0])
+                    path.append(stack[i][0])
                 # Вывод пройденного пути
-                print(f"Пройденный путь:\n{self.path}")
+                print(f"Пройденный путь:\n{path}")
                 print("Путь:")
-                self.show_current_situation(stack[-1][0], True)
+                self.show_current_situation(stack[-1][0], True, path)
                 return
 
             # Формирование новой ситуации
