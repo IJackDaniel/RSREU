@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\\u0444\u0432\u044C\u0448\u0442\\Programming\\RSREU\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 3\\\u0422\u0438\u0421\u0414\\\u041B\u0430\u0431\u043E\u0440\u0430\u0442\u043E\u0440\u043D\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430 \u21165 (\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430)\\E. \u041E\u0431\u0445\u043E\u0434\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{05D46C24-2CC7-4681-8B20-F9EACC493D2E}|E. \u041E\u0431\u0445\u043E\u0434\\E. \u041E\u0431\u0445\u043E\u0434.vcxproj|C:\\Users\\\u0444\u0432\u044C\u0448\u0442\\Programming\\RSREU\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 3\\\u0422\u0438\u0421\u0414\\\u041B\u0430\u0431\u043E\u0440\u0430\u0442\u043E\u0440\u043D\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430 \u21165 (\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430)\\E. \u041E\u0431\u0445\u043E\u0434\\E. \u041E\u0431\u0445\u043E\u0434\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{05D46C24-2CC7-4681-8B20-F9EACC493D2E}|E. \u041E\u0431\u0445\u043E\u0434\\E. \u041E\u0431\u0445\u043E\u0434.vcxproj|solutionrelative:E. \u041E\u0431\u0445\u043E\u0434\\Source.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Source.cpp",
+              "DocumentMoniker": "C:\\Users\\\u0444\u0432\u044C\u0448\u0442\\Programming\\RSREU\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 3\\\u0422\u0438\u0421\u0414\\\u041B\u0430\u0431\u043E\u0440\u0430\u0442\u043E\u0440\u043D\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430 \u21165 (\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430)\\E. \u041E\u0431\u0445\u043E\u0434\\E. \u041E\u0431\u0445\u043E\u0434\\Source.cpp",
+              "RelativeDocumentMoniker": "E. \u041E\u0431\u0445\u043E\u0434\\Source.cpp",
+              "ToolTip": "C:\\Users\\\u0444\u0432\u044C\u0448\u0442\\Programming\\RSREU\\\u0421\u0435\u043C\u0435\u0441\u0442\u0440 3\\\u0422\u0438\u0421\u0414\\\u041B\u0430\u0431\u043E\u0440\u0430\u0442\u043E\u0440\u043D\u0430\u044F \u0440\u0430\u0431\u043E\u0442\u0430 \u21165 (\u043F\u0440\u0430\u043A\u0442\u0438\u043A\u0430)\\E. \u041E\u0431\u0445\u043E\u0434\\E. \u041E\u0431\u0445\u043E\u0434\\Source.cpp",
+              "RelativeToolTip": "E. \u041E\u0431\u0445\u043E\u0434\\Source.cpp",
+              "ViewState": "AQIAAHsAAAAAAAAAAAAAAIUAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-17T14:26:05.71Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

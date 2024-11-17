@@ -97,7 +97,7 @@ int main() {
 	
 	void (*result) (float*, int);
 	result = view;
-	view(&arr, ln);
+	result(&arr, ln);
 	
 	return 0;
 }
