@@ -3,7 +3,7 @@ setrecursionlimit(100000)
 
 
 def dfs(start):
-    global find
+    global find1
     color[start] = "Grey"
     for v in graph[start]:
         if color[v] == "White":
@@ -27,9 +27,9 @@ for i in range(n):
             result.append(j + 1)
     graph[i + 1] = set(result)
 
-find = False
+find1 = False
 for i in range(1, n + 1):
     color = ["White"] * (n + 1)
     dfs(i)
 
-print(int(find))
+print(int(find1))

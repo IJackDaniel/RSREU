@@ -65,8 +65,8 @@ while num != 6:
 
         # Вывод всей информации по ключу
         case 4:
-            find = ""
-            while find != "н":
+            find1 = ""
+            while find1 != "н":
                 need_key = input("Введите интересующую фамилию: ")
                 if need_key in database:
                     print(f"""Имя: {database[need_key][0]}
@@ -75,7 +75,7 @@ while num != 6:
 Зарплата: {database[need_key][3]}\n""")
                 else:
                     print("Записи с такой фамилией нет!\n")
-                find = input("Продолжить поиск? д/н: ")
+                find1 = input("Продолжить поиск? д/н: ")
 
         # Вывод по условию
         case 5:
