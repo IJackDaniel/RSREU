@@ -1,10 +1,8 @@
 def is_topological_sort(n, edges, permutation):
     graph = [[] for _ in range(n)]
-    indegrees = [0] * n
 
     for u, v in edges:
         graph[u - 1].append(v - 1)
-        indegrees[v - 1] += 1
 
     position = [0] * n
     for idx, node in enumerate(permutation):

@@ -6,10 +6,10 @@
 
 void get_data(float* arr, const int len) {
 	int i;
-	for (i = 0; i < len; i++) {
-		printf("Enter %d array element: ", i);
+	for (i = 0; i < len * 3; i = i + 3) {
+		printf("Enter %d array element: ", i / 3);
 		scanf("%f %f", *(arr + i), *(arr + i + 1));
-		*(arr + i + 2) = 0.0;
+		*(arr + i + 2) = -1.0;
 	}
 }	
 
@@ -25,10 +25,10 @@ void get_randdata(float* arr, const int len) {
 	}
 	int i;
 	srand(time(0));
-	for (i = 0; i < len; i++) {
+	for (i = 0; i < len * 3; i = i + 3) {
 		*(arr + i) = rand() % (mx_val + 1 - mn_val) + mn_val;
-		*(arr + i + 1) = rand() % (mx_val + 1 - mn_val) + mn_val;
-		*(arr + i + 2) = 0.0;
+		*(arr + i + 1) = rand() % (mx_val + 1 - mn_val) + mn_val;;
+		*(arr + i + 2) = -1.0;
 	}
 }
 
@@ -39,15 +39,15 @@ bool is_in_field(float x, float y, float r) {
 void view(float* arr, const int len) {
 	int p;
 	printf("\nBelong\n");
-	for (p = 0; p < len; p++){
-		if (*(arr + p + 2) == 1.0) {
-			printf("point [%3d] = (%- 11.3f; %- 11.3f)\n", p, *(arr + p), *(arr + p + 1));
+	for (p = 0; p < len * 3; p = p + 3){
+		if (*(arr + p + 2) > 0.0) {
+			printf("point [%3d] = (%- 11.3f; %- 11.3f)\n", p / 3, *(arr + p), *(arr + p + 1));
 		}
 	}
 	printf("\nDidn't belong\n");
-	for (p = 0; p < len; p++){
-		if (*(arr + p + 2) == 0.0) {
-			printf("point [%3d] = (%- 11.3f; %- 11.3f)\n", p, *(arr + p), *(arr + p + 1));
+	for (p = 0; p < len * 3; p = p + 3){
+		if (*(arr + p + 2) < 0.0) {
+			printf("point [%3d] = (%- 11.3f; %- 11.3f)\n", p / 3, *(arr + p), *(arr + p + 1));
 		}
 	}
 }
@@ -74,30 +74,30 @@ int main() {
 	}
 	while (choice > 2 || choice < 1);
 	
-	float arr[ln][3]; 
-	void (*inp_points) (float(*)[3], int);
+	float arr[ln * 3]; 
+	void (*inp_points) (float* , int) = NULL;
 	switch (choice)
 	{
 		case 1:
 			inp_points = get_data;
-			inp_points(arr, ln);
 			break;
 		case 2:
 			inp_points = get_randdata;
-			inp_points(arr, ln);
 			break;
 	}
+	inp_points((float*)arr, ln);
 	
 	int i;
-	for (i = 0; i < ln; i++) {
-		if (is_in_field(**(arr + i), **(arr + i + 1), r)) {
-			**(arr + i + 2) = 1.0;
+	for (i = 0; i < ln * 3; i = i + 3) {
+		float x = *(arr + i), y = *(arr + i + 1);
+		if (is_in_field(x, y, r)) {
+			*(arr + i + 2) = 1.0;
 		}
 	}
-	
-	void (*result) (float(*)[3], int);
+
+	void (*result) (float* , int) = NULL;
 	result = view;
-	result(arr, ln);
+	result((float*)arr, ln);
 	
 	return 0;
 }
