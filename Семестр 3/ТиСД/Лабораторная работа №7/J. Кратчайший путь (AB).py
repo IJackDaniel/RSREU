@@ -15,15 +15,6 @@ def floyd_warshall(graph, n):
     return dist
 
 
-def matr_weight(data, n):
-    matrix = [[-1 for _ in range(n)] for _ in range(n)]
-    for i in range(n):
-        matrix[i][i] = 0
-    for a, b in data.keys():
-        matrix[a][b] = data[(a, b)]
-    return matrix
-
-
 n, k = map(int, input().split())
 
 matrix = [[-1 for _ in range(n)] for _ in range(n)]
