@@ -1,0 +1,2 @@
+"Laboratory Work 9.exe" "Simple test. First? Second, 988R! Winter is coming. A Lannister always pays his debts! An8y wo0rd1s w1th num3er3s! Apple, melon, peanut, tree, house, horse, pig, farm." -delete 9
+pause

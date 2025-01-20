@@ -1,0 +1,2 @@
+"Laboratory Work 9.exe" "This installation of! the program? will select words from. the proposed text that end in a vowel letter. An important note. is that the number! of characters cannot? exceed three hundred" -create
+pause
