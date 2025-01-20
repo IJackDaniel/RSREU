@@ -6,14 +6,12 @@
 # Поиск в глубину (dfs)
 # Поиск в глубину с градиентом
 # Поиск в ширину (bfs)
-#
-# Методы в работе:
-# Встречный поиск
 
 # Добавление необходимых библиотек
 from time import sleep
 from functools import cmp_to_key
 from collections import deque
+from prettytable import PrettyTable
 
 
 class Situation:
@@ -159,6 +157,38 @@ class Situation:
                     print(self.maze[i][j], end=" ")
             print()
         print()
+
+    def print_table(self, from_dfs, from_grad, from_bfs, from_equal, from_meeting):
+        accuracy = 2
+        D_DFS, L_DFS, N_DFS = from_dfs
+        R_DFS = round(N_DFS / L_DFS, accuracy)
+        W_DFS = round((N_DFS**(1 / L_DFS)), accuracy)
+
+        D_GRAD, L_GRAD, N_GRAD = from_grad
+        R_GRAD = round(N_GRAD / L_GRAD, accuracy)
+        W_GRAD = round((N_GRAD ** (1 / L_GRAD)), accuracy)
+
+        D_BFS, L_BFS, N_BFS = from_bfs
+        R_BFS = round(N_BFS / L_BFS, accuracy)
+        W_BFS = round((N_BFS ** (1 / L_BFS)), accuracy)
+
+        D_EQU, L_EQU, N_EQU = from_equal
+        R_EQU = round(N_EQU / L_EQU, accuracy)
+        W_EQU = round((N_EQU ** (1 / L_EQU)), accuracy)
+
+        D_MEET, L_MEET, N_MEET = from_meeting
+        R_MEET = round(N_MEET / L_MEET, accuracy)
+        W_MEET = round((N_MEET ** (1 / L_MEET)), accuracy)
+
+        mytable = PrettyTable()
+        mytable.field_names = ["Метод", "Глубина поиска", "Длина пути", "Общее число порожденных вершин",
+                               "Разветвленность дерева", "Направленность поиска"]
+        mytable.add_row(["В глубину", D_DFS, L_DFS, N_DFS, R_DFS, W_DFS])
+        mytable.add_row(["По градиенту", D_GRAD, L_GRAD, N_GRAD, R_GRAD, W_GRAD])
+        mytable.add_row(["В ширину", D_BFS, L_BFS, N_BFS, R_BFS, W_BFS])
+        mytable.add_row(["Равных цен", D_EQU, L_EQU, N_EQU, R_EQU, W_EQU])
+        mytable.add_row(["Двунаправленный", D_MEET, L_MEET, N_MEET, R_MEET, W_MEET])
+        print(mytable)
 
     # Метод поиска в глубину
     # Вход: начальная ситуация
@@ -330,12 +360,13 @@ if __name__ == "__main__":
         ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0"]]
 
     # Выбор лабиринта пользователем
-    print("""Выбор лабиринта:
-    1. Коридорный лабиринт
-    2. Первый стандартный лабиринт вариант 1
-    3. Первый стандартный лабиринт вариант 2
-    4. Пустой лабиринт\n""")
-    choice_maze = int(input("Ввод: "))
+    # print("""Выбор лабиринта:
+    # 1. Коридорный лабиринт
+    # 2. Первый стандартный лабиринт вариант 1
+    # 3. Первый стандартный лабиринт вариант 2
+    # 4. Пустой лабиринт\n""")
+    # choice_maze = int(input("Ввод: "))
+    choice_maze = 2
 
     # Конструкция выбора лабиринта
     match choice_maze:
@@ -369,7 +400,11 @@ if __name__ == "__main__":
     # situation.dfs_with_gradient()
 
     # Запуск метода поиска в ширину
-    situation.bfs()
+    # situation.bfs()
+
+    sleep(5)
+
+    situation.print_table([9, 9, 22], [9, 9, 9], [10, 10, 17], [10, 9, 20], [11, 11, 18])
 
 '''
 [
