@@ -9,7 +9,7 @@ typedef struct
 	bool sign;
 } Fraction;
 
-void show_menu() 
+void show_menu()
 {
 	printf("\nSelect a function:\n");
 	printf("1. Creating a fraction;\n");
