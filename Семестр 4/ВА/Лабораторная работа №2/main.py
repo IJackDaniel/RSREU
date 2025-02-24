@@ -1,6 +1,8 @@
 import sys
+from time import sleep
+
 import numpy as np
-from PyQt6.QtGui import QPalette, QColor
+from PyQt6.QtGui import QPalette, QColor, QIntValidator
 from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QLabel, QCheckBox, \
     QComboBox, QGridLayout, QLineEdit, QPushButton
 from matplotlib import pyplot as plt
@@ -13,13 +15,13 @@ class PlotWindow(QWidget):
     def __init__(self, n0, n1, n2, n3, n4, n5, n6):
         super().__init__()
 
-        self.a = int(n0)
-        self.b = int(n1)
-        self.c = int(n2)
-        self.d = int(n3)
-        self.e = int(n4)
-        self.f = int(n5)
-        self.g = int(n6)
+        self.a = float(n0)
+        self.b = float(n1)
+        self.c = float(n2)
+        self.d = float(n3)
+        self.e = float(n4)
+        self.f = float(n5)
+        self.g = float(n6)
 
         self.initUI()
 
@@ -27,7 +29,7 @@ class PlotWindow(QWidget):
         self.setWindowTitle("График")
         self.setGeometry(100, 100, 600, 400)
         # Генерация данных для графика
-        x = np.linspace(0, 10, 100)
+        x = np.linspace(-100, 100, 2000)
         # print(self.a, self.b, self.c, self.d, self.e, self.f, self.g)
         y = self.g * x ** 6 + self.f * x ** 5 + self.e * x ** 4 + self.d * x ** 3 + self.c * x ** 2 + self.b * x + self.a
         # Создание графика
@@ -66,6 +68,7 @@ class MainWindow(QMainWindow):
         self.e = 0
         self.f = 0
         self.g = 0
+        self.results = ["0" for el in range(1, 7)]
 
         ########## Инициализация объектов
         # Создание текстовых сообщений со степенями x
@@ -90,7 +93,12 @@ class MainWindow(QMainWindow):
         self.equation = QLabel(widget)
         # Текстовые поля "результат"
         self.result_txt = QLabel(widget)
-        self.result = QLabel(widget)
+        self.result_dih = QLabel(widget)
+        self.result_chord = QLabel(widget)
+        self.result_newt = QLabel(widget)
+        self.result_newt_mod = QLabel(widget)
+        self.result_comb = QLabel(widget)
+        self.result_iter = QLabel(widget)
         # Кнопка "Показать график"
         self.button = QPushButton(widget)
 
@@ -123,14 +131,15 @@ class MainWindow(QMainWindow):
 
         ### Поле вывода результата
         # Размер текста "Результат"
-        self.res_size = 36
+        self.res_size = 28
         # Параметры геометрии полей вывода результата
         self.restxt_start_x = 240
         self.restxt_start_y = 70
-        self.res_start_x = self.restxt_start_x
-        self.res_start_y = self.restxt_start_y + 50
+        self.res_start_x = self.restxt_start_x + 170
+        self.res_start_y = self.restxt_start_y + 40
+        self.res_delta_y = 40
         self.res_size_x = 200
-        self.res_size_y = 50
+        self.res_size_y = 35
 
         ### Поле вывода итоговой формулы
         # Размер текста "Формула"
@@ -229,22 +238,56 @@ class MainWindow(QMainWindow):
         self.enter_4.returnPressed.connect(self.text_changed_4)
         self.enter_5.returnPressed.connect(self.text_changed_5)
         self.enter_6.returnPressed.connect(self.text_changed_6)
+        # Ограничение на ввод чисел
+        # self.enter_0.setValidator(QIntValidator())
+        # self.enter_1.setValidator(QIntValidator())
+        # self.enter_2.setValidator(QIntValidator())
+        # self.enter_3.setValidator(QIntValidator())
+        # self.enter_4.setValidator(QIntValidator())
+        # self.enter_5.setValidator(QIntValidator())
+        # self.enter_6.setValidator(QIntValidator())
+        self.enter_0.textChanged.connect(self.validate_input_0)
+        self.enter_1.textChanged.connect(self.validate_input_1)
+        self.enter_2.textChanged.connect(self.validate_input_2)
+        self.enter_3.textChanged.connect(self.validate_input_3)
+        self.enter_4.textChanged.connect(self.validate_input_4)
+        self.enter_5.textChanged.connect(self.validate_input_5)
+        self.enter_6.textChanged.connect(self.validate_input_6)
 
         #############################################################################
         ### Поля текста "Результат"
         self.result_txt.setText("Результат:")
-        self.result.setText("-")
         # Стиль для текста "Результат"
         self.result_txt.setStyleSheet(f"""font-size: {self.res_size}px;""")
-        self.result.setStyleSheet(f"""font-size: {self.res_size}px; background-color: 'gray'; text-align: right;""")
+        self.result_dih.setStyleSheet(f"""font-size: {self.res_size}px; background-color: 'gray';""")
+        self.result_chord.setStyleSheet(f"""font-size: {self.res_size}px; background-color: 'gray';""")
+        self.result_newt.setStyleSheet(f"""font-size: {self.res_size}px; background-color: 'gray';""")
+        self.result_newt_mod.setStyleSheet(f"""font-size: {self.res_size}px; background-color: 'gray';""")
+        self.result_comb.setStyleSheet(f"""font-size: {self.res_size}px; background-color: 'gray';""")
+        self.result_iter.setStyleSheet(f"""font-size: {self.res_size}px; background-color: 'gray';""")
         # Перемещение текста "Результат"
         self.result_txt.move(self.restxt_start_x, self.restxt_start_y)
-        self.result.move(self.res_start_x, self.res_start_y)
+        self.result_dih.move(self.res_start_x, self.res_start_y)
+        self.result_chord.move(self.res_start_x, self.res_start_y + self.res_delta_y)
+        self.result_newt.move(self.res_start_x, self.res_start_y + self.res_delta_y * 2)
+        self.result_newt_mod.move(self.res_start_x, self.res_start_y + self.res_delta_y * 3)
+        self.result_comb.move(self.res_start_x, self.res_start_y + self.res_delta_y * 4)
+        self.result_iter.move(self.res_start_x, self.res_start_y + self.res_delta_y * 5)
         # Изменение размера поля текста "Результат"
         self.result_txt.setFixedSize(self.res_size_x, self.res_size_y)
-        self.result.setFixedSize(self.res_size_x, self.res_size_y)
+        self.result_dih.setFixedSize(self.res_size_x, self.res_size_y)
+        self.result_chord.setFixedSize(self.res_size_x, self.res_size_y)
+        self.result_newt.setFixedSize(self.res_size_x, self.res_size_y)
+        self.result_newt_mod.setFixedSize(self.res_size_x, self.res_size_y)
+        self.result_comb.setFixedSize(self.res_size_x, self.res_size_y)
+        self.result_iter.setFixedSize(self.res_size_x, self.res_size_y)
         # Выравнивание текста "Результат"
-        self.result.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.result_dih.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.result_chord.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.result_newt.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.result_newt_mod.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.result_comb.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.result_iter.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         #############################################################################
         ### Поле текста "Формула"
@@ -256,12 +299,120 @@ class MainWindow(QMainWindow):
         self.equation.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         #############################################################################
-        ### Поле графика matplotlib
-        # Кнопка
+        ### Кнопка вывода графика
         self.button.setText("Показать график")
-        self.button.setGeometry(500, 200, 100, 100)
+        self.button.setGeometry(630, 190, 150, 150)
         self.button.clicked.connect(self.show_plot_window)
 
+    def validate_input_0(self):
+        # Получаем текущий текст из поля ввода
+        text = self.enter_0.text()
+
+        # Если текст пустой, просто возвращаем
+        if text == "":
+            return
+
+        if text != "-":
+            try:
+                # Проверяем, является ли текст корректным числом
+                float_value = float(text)
+            except ValueError:
+                # Если не является, удаляем последний символ для исправления
+                self.enter_0.setText(text[:-1])
+
+    def validate_input_1(self):
+        # Получаем текущий текст из поля ввода
+        text = self.enter_1.text()
+
+        # Если текст пустой, просто возвращаем
+        if text == "":
+            return
+        if text != "-":
+            try:
+                # Проверяем, является ли текст корректным числом
+                float_value = float(text)
+            except ValueError:
+                # Если не является, удаляем последний символ для исправления
+                self.enter_1.setText(text[:-1])
+
+    def validate_input_2(self):
+        # Получаем текущий текст из поля ввода
+        text = self.enter_2.text()
+
+        # Если текст пустой, просто возвращаем
+        if text == "":
+            return
+
+        try:
+            # Проверяем, является ли текст корректным числом
+            float_value = float(text)
+        except ValueError:
+            # Если не является, удаляем последний символ для исправления
+            self.enter_2.setText(text[:-1])
+
+    def validate_input_3(self):
+        # Получаем текущий текст из поля ввода
+        text = self.enter_3.text()
+
+        # Если текст пустой, просто возвращаем
+        if text == "":
+            return
+
+        if text != "-":
+            try:
+                # Проверяем, является ли текст корректным числом
+                float_value = float(text)
+            except ValueError:
+                # Если не является, удаляем последний символ для исправления
+                self.enter_3.setText(text[:-1])
+
+    def validate_input_4(self):
+        # Получаем текущий текст из поля ввода
+        text = self.enter_4.text()
+
+        # Если текст пустой, просто возвращаем
+        if text == "":
+            return
+
+        if text != "-":
+            try:
+                # Проверяем, является ли текст корректным числом
+                float_value = float(text)
+            except ValueError:
+                # Если не является, удаляем последний символ для исправления
+                self.enter_4.setText(text[:-1])
+
+    def validate_input_5(self):
+        # Получаем текущий текст из поля ввода
+        text = self.enter_5.text()
+
+        # Если текст пустой, просто возвращаем
+        if text == "":
+            return
+
+        if text != "-":
+            try:
+                # Проверяем, является ли текст корректным числом
+                float_value = float(text)
+            except ValueError:
+                # Если не является, удаляем последний символ для исправления
+                self.enter_5.setText(text[:-1])
+
+    def validate_input_6(self):
+        # Получаем текущий текст из поля ввода
+        text = self.enter_6.text()
+
+        # Если текст пустой, просто возвращаем
+        if text == "":
+            return
+
+        if text != "-":
+            try:
+                # Проверяем, является ли текст корректным числом
+                float_value = float(text)
+            except ValueError:
+                # Если не является, удаляем последний символ для исправления
+                self.enter_6.setText(text[:-1])
 
     def show_plot_window(self):
         # Создание нового окна для графика
@@ -302,21 +453,14 @@ class MainWindow(QMainWindow):
         arr = [self.g, self.f, self.e, self.d, self.c, self.b, self.a]
         for i in range(len(arr)):
             elem = arr[i]
-            if int(elem) != 0:
-                if int(elem) > 0:
-                    if i < 5:
-                        s += f"{str(elem)}x^{6 - i} + "
-                    elif i == 5:
-                        s += f"{str(elem)}x + "
-                    else:
-                        s += f"{str(elem)} + "
+            if abs(float(elem)) > 0.001:
+                if i < 5:
+                    s += f"{str(elem)}x^{6 - i} + "
+                elif i == 5:
+                    s += f"{str(elem)}x + "
                 else:
-                    if i < 5:
-                        s += f"{str(elem)}x^{6 - i} - "
-                    elif i == 5:
-                        s += f"{str(elem)}x - "
-                    else:
-                        s += f"{str(elem)} - "
+                    s += f"{str(elem)} + "
+
         s = s[:-2]
         self.equation.setText(s)
         raw_1 = (s.replace("^", "**")).replace("x", "*x")
@@ -324,9 +468,7 @@ class MainWindow(QMainWindow):
         print(f"Уравнение: {raw_1} = 0")
         raw_2 = raw_1.replace("x", "23")
         print(f"Имеет корень: {eval(raw_2)}\n")
-
-    def rechenie(self):
-        ...
+        self.run_solution()
 
     def index_changed(self, index):
         self.ent_clear()
@@ -409,7 +551,7 @@ class MainWindow(QMainWindow):
                 self.enter_4.setVisible(True)
                 self.enter_5.setVisible(True)
                 self.enter_6.setVisible(True)
-        print("Index changed", index)
+        # print("Index changed", index)
 
     def ent_clear(self):
         self.a = 0
@@ -430,10 +572,51 @@ class MainWindow(QMainWindow):
         self.enter_5.clear()
         self.enter_6.clear()
 
+    def set_results(self):
+        arr = self.results
+        self.result_dih.setText(arr[0])
+        self.result_chord.setText(arr[1])
+        self.result_newt.setText(arr[2])
+        self.result_newt_mod.setText(arr[3])
+        self.result_comb.setText(arr[4])
+        self.result_iter.setText(arr[5])
+
+    def func(self, x):
+        return float(self.g)*x**6 + float(self.f)*x**5 + float(self.e)*x**4 + float(self.d)*x**3 + float(self.c)*x**2 + float(self.b)*x + float(self.a)
+
+    def run_solution(self):
+        print(1)
+        self.dihotomia()
+        print(2)
+        self.set_results()
+        print(3)
+
+    def dihotomia(self):
+        l = -1e10 - 10
+        r = 1e10 + 10
+        eps = 1e-10
+        x = 0
+        fx = 10
+        while abs(fx) >= eps:
+            x = (r + l) / 2
+
+            # print(l, x, r)
+            fl = self.func(l)
+            fx = self.func(x)
+            if fl * fx <= 0:
+                r = x
+            else:
+                l = x
+        x = str(round(x, 5))
+        self.results[0] = x
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     main_window = MainWindow()
     main_window.resize(800, 600)
     main_window.show()
+
     sys.exit(app.exec())
+
+
