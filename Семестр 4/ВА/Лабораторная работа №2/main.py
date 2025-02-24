@@ -10,27 +10,38 @@ from PyQt6.QtCore import Qt
 
 
 class PlotWindow(QWidget):
-    def __init__(self):
+    def __init__(self, n0, n1, n2, n3, n4, n5, n6):
         super().__init__()
+
+        self.a = int(n0)
+        self.b = int(n1)
+        self.c = int(n2)
+        self.d = int(n3)
+        self.e = int(n4)
+        self.f = int(n5)
+        self.g = int(n6)
+
         self.initUI()
 
     def initUI(self):
         self.setWindowTitle("График")
         self.setGeometry(100, 100, 600, 400)
-
         # Генерация данных для графика
         x = np.linspace(0, 10, 100)
-        y = np.sin(x)
-
+        # print(self.a, self.b, self.c, self.d, self.e, self.f, self.g)
+        y = self.g * x ** 6 + self.f * x ** 5 + self.e * x ** 4 + self.d * x ** 3 + self.c * x ** 2 + self.b * x + self.a
         # Создание графика
         plt.figure()
-        plt.plot(x, y, label="sin(x)")
-        plt.title("График функции sin(x)")
+        plt.plot(x, y, label="y")
+        plt.title("График функции")
         plt.xlabel("x")
-        plt.ylabel("sin(x)")
+        plt.ylabel("y")
         plt.legend()
         plt.grid()
-
+        # Оси x и y
+        ax = plt.gca()
+        ax.axhline(y=0, color='k')
+        ax.axvline(x=0, color='k')
         # Отображение графика
         plt.show()
 
@@ -45,6 +56,16 @@ class MainWindow(QMainWindow):
 
         widget = QWidget()
         self.setCentralWidget(widget)
+
+        ########## Параметры уравнения
+        self.str_formula = ""
+        self.a = 0
+        self.b = 0
+        self.c = 0
+        self.d = 0
+        self.e = 0
+        self.f = 0
+        self.g = 0
 
         ########## Инициализация объектов
         # Создание текстовых сообщений со степенями x
@@ -200,6 +221,14 @@ class MainWindow(QMainWindow):
         self.enter_4.setVisible(False)
         self.enter_5.setVisible(False)
         self.enter_6.setVisible(False)
+        # Привязка действий к полям ввода
+        self.enter_0.returnPressed.connect(self.text_changed_0)
+        self.enter_1.returnPressed.connect(self.text_changed_1)
+        self.enter_2.returnPressed.connect(self.text_changed_2)
+        self.enter_3.returnPressed.connect(self.text_changed_3)
+        self.enter_4.returnPressed.connect(self.text_changed_4)
+        self.enter_5.returnPressed.connect(self.text_changed_5)
+        self.enter_6.returnPressed.connect(self.text_changed_6)
 
         #############################################################################
         ### Поля текста "Результат"
@@ -219,7 +248,7 @@ class MainWindow(QMainWindow):
 
         #############################################################################
         ### Поле текста "Формула"
-        self.equation.setText("1111x^6 + 1111x^5 + 1111x^4 + 1111x^3 + 1111x^2 + 1111x + 1111")
+        # self.equation.setText("1111x^6 + 1111x^5 + 1111x^4 + 1111x^3 + 1111x^2 + 1111x + 1111")
         self.equation.move(self.eq_start_x, self.eq_start_y)
         self.equation.setFixedSize(self.ex_size_x, self.ex_size_y)
 
@@ -236,10 +265,71 @@ class MainWindow(QMainWindow):
 
     def show_plot_window(self):
         # Создание нового окна для графика
-        plot_window = PlotWindow()
+        # print(self.a, self.b, self.c, self.d, self.e, self.f, self.g)
+        plot_window = PlotWindow(self.a, self.b, self.c, self.d, self.e, self.f, self.g)
         plot_window.show()
 
+    def text_changed_0(self):
+        self.a = self.enter_0.text()
+        self.equation_change()
+
+    def text_changed_1(self):
+        self.b = self.enter_1.text()
+        self.equation_change()
+
+    def text_changed_2(self):
+        self.c = self.enter_2.text()
+        self.equation_change()
+
+    def text_changed_3(self):
+        self.d = self.enter_3.text()
+        self.equation_change()
+
+    def text_changed_4(self):
+        self.e = self.enter_4.text()
+        self.equation_change()
+
+    def text_changed_5(self):
+        self.f = self.enter_5.text()
+        self.equation_change()
+
+    def text_changed_6(self):
+        self.g = self.enter_6.text()
+        self.equation_change()
+
+    def equation_change(self):
+        s = ""
+        arr = [self.g, self.f, self.e, self.d, self.c, self.b, self.a]
+        for i in range(len(arr)):
+            elem = arr[i]
+            if int(elem) != 0:
+                if int(elem) > 0:
+                    if i < 5:
+                        s += f"{str(elem)}x^{6 - i} + "
+                    elif i == 5:
+                        s += f"{str(elem)}x + "
+                    else:
+                        s += f"{str(elem)} + "
+                else:
+                    if i < 5:
+                        s += f"{str(elem)}x^{6 - i} - "
+                    elif i == 5:
+                        s += f"{str(elem)}x - "
+                    else:
+                        s += f"{str(elem)} - "
+        s = s[:-2]
+        self.equation.setText(s)
+        raw_1 = (s.replace("^", "**")).replace("x", "*x")
+        self.str_formula = raw_1
+        print(f"Уравнение: {raw_1} = 0")
+        raw_2 = raw_1.replace("x", "23")
+        print(f"Имеет корень: {eval(raw_2)}\n")
+
+    def rechenie(self):
+        ...
+
     def index_changed(self, index):
+        self.ent_clear()
         match index:
             case 0:
                 self.lbl_1.setVisible(True)
@@ -320,6 +410,25 @@ class MainWindow(QMainWindow):
                 self.enter_5.setVisible(True)
                 self.enter_6.setVisible(True)
         print("Index changed", index)
+
+    def ent_clear(self):
+        self.a = 0
+        self.b = 0
+        self.c = 0
+        self.d = 0
+        self.e = 0
+        self.f = 0
+        self.g = 0
+
+        self.equation.clear()
+
+        self.enter_0.clear()
+        self.enter_1.clear()
+        self.enter_2.clear()
+        self.enter_3.clear()
+        self.enter_4.clear()
+        self.enter_5.clear()
+        self.enter_6.clear()
 
 
 if __name__ == "__main__":
