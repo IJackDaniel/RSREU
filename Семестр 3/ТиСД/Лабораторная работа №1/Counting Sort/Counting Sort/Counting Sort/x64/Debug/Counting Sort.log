@@ -1,4 +1,0 @@
-﻿  Counting Sort.cpp
-C:\Users\TanKi\VisualStudioProjects\RSREU\Semester 3\TaSD\1.Sort\Counting Sort\Counting Sort\Counting Sort.cpp(1,10): warning C4067: непредвиденные лексемы за директивой препроцессора, требуется newline
-C:\Users\TanKi\VisualStudioProjects\RSREU\Semester 3\TaSD\1.Sort\Counting Sort\Counting Sort\Counting Sort.cpp(8,18): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
-  Counting Sort.vcxproj -> C:\Users\TanKi\VisualStudioProjects\RSREU\Semester 3\TaSD\1.Sort\Counting Sort\Counting Sort\x64\Debug\Counting Sort.exe

@@ -1,2 +1,0 @@
-"Laboratory Work 9.exe" "This installation! of the program? will remove from the proposed! text the sentence? that the user chooses. That is, the user simply entered the offer number, and the program will delete it from. the text. An important. note is that. the number of characters cannot! exceed three hundred!" -delete 2
-pause
