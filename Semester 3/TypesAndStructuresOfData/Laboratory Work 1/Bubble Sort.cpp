@@ -1,4 +1,4 @@
-﻿#include <iostream>;
+﻿#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -25,6 +25,7 @@ int BubbleSort(vector<int>& data) {
     return cnt;
 }
 
+// Задание по подсчёту количества перестановок
 int main() {
     int ln, x;
     cin >> ln;

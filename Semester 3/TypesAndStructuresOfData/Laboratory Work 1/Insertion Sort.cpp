@@ -1,4 +1,4 @@
-﻿#include <iostream>;
+﻿#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -10,7 +10,7 @@ void InsertionSort(vector<int>& data) {
     for (int i = 1; i < n; i++) {
         int key = data[i];
         int j = i;
-        while (j >= 1 and data[j - 1] > key) {
+        while (j >= 1 && data[j - 1] > key) {
             data[j] = data[j - 1];
             j -= 1;
         }
