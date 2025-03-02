@@ -1,5 +1,3 @@
-# В планах перевести этот код на С++ и дописать остальные методы
-
 from math import cos, acos, sin
 
 
@@ -75,9 +73,10 @@ def iteration_method(a, b):
     return x1
 
 
-a = 0
-b = 1
+# a = 0
+# b = 1
+#
+# print(chord_method(a, b))
+# print(half_division_method(a, b))
+# print(iteration_method(a, b))
 
-print(chord_method(a, b))
-print(half_division_method(a, b))
-print(iteration_method(a, b))
