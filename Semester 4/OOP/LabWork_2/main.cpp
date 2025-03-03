@@ -18,4 +18,8 @@ int main()
     test.test_mul(Fraction(19, 5, 1), Fraction(0, 6, 1), Fraction(0, 1, 1));
     test.test_comparing_fractions(Fraction(-3, 17, 1), Fraction(199, 5, 1), -1);
     test.test_comparing_fractions(Fraction(1, 3, 1), Fraction(19, 57, 1), 0);
+
+    int count = test.get_count_test();
+    int pass = test.get_count_pass();
+    std::cout << "Total tests completed: " << pass << "/" << count << std::endl << std::endl;
 }

@@ -4,8 +4,20 @@
 #include <iostream>
 #include <string>
 
+int UnitTest::get_count_test()
+{
+    return count_test;
+}
+
+int UnitTest::get_count_pass()
+{
+    return count_pass;
+}
+
 void UnitTest::test_add(Fraction f1, Fraction f2, Fraction result)
 {
+    count_test++;
+
     // assert 1
     std::cout << "_________________________________________" << std::endl;
     std::cout << "Fraction Sum Test" << std::endl;
@@ -24,6 +36,7 @@ void UnitTest::test_add(Fraction f1, Fraction f2, Fraction result)
     if(f1.get_numerator() == result.get_numerator() && f1.get_denominator() == result.get_denominator() && f1.get_sign() == result.get_sign() ) 
     {
         std::cout << "Test was passed" << std::endl;
+        count_pass++;
     } else {
         std::cout << "Test was not passed" << std::endl;
     }
@@ -33,6 +46,8 @@ void UnitTest::test_add(Fraction f1, Fraction f2, Fraction result)
 
 void UnitTest::test_sub(Fraction f1, Fraction f2, Fraction result)
 {
+    count_test++;
+
     // assert 1
     std::cout << "_________________________________________" << std::endl;
     std::cout << "Fraction Subtraction Test" << std::endl;
@@ -51,6 +66,7 @@ void UnitTest::test_sub(Fraction f1, Fraction f2, Fraction result)
     if(f1.get_numerator() == result.get_numerator() && f1.get_denominator() == result.get_denominator() && f1.get_sign() == result.get_sign() ) 
     {
         std::cout << "Test was passed" << std::endl;
+        count_pass++;
     } else {
         std::cout << "Test was not passed" << std::endl;
     }
@@ -60,6 +76,8 @@ void UnitTest::test_sub(Fraction f1, Fraction f2, Fraction result)
 
 void UnitTest::test_mul(Fraction f1, Fraction f2, Fraction result)
 {
+    count_test++;
+
     // assert 1
     std::cout << "_________________________________________" << std::endl;
     std::cout << "Fraction Multiplication Test" << std::endl;
@@ -78,6 +96,7 @@ void UnitTest::test_mul(Fraction f1, Fraction f2, Fraction result)
     if(f1.get_numerator() == result.get_numerator() && f1.get_denominator() == result.get_denominator() && f1.get_sign() == result.get_sign() ) 
     {
         std::cout << "Test was passed" << std::endl;
+        count_pass++;
     } else {
         std::cout << "Test was not passed" << std::endl;
     }
@@ -87,6 +106,8 @@ void UnitTest::test_mul(Fraction f1, Fraction f2, Fraction result)
 
 void UnitTest::test_div(Fraction f1, Fraction f2, Fraction result)
 {
+    count_test++;
+
     // assert 1
     std::cout << "_________________________________________" << std::endl;
     std::cout << "Fraction Division Test" << std::endl;
@@ -105,6 +126,7 @@ void UnitTest::test_div(Fraction f1, Fraction f2, Fraction result)
     if(f1.get_numerator() == result.get_numerator() && f1.get_denominator() == result.get_denominator() && f1.get_sign() == result.get_sign() ) 
     {
         std::cout << "Test was passed" << std::endl;
+        count_pass++;
     } else {
         std::cout << "Test was not passed" << std::endl;
     }
@@ -114,6 +136,8 @@ void UnitTest::test_div(Fraction f1, Fraction f2, Fraction result)
 
 void UnitTest::test_common_denominator(Fraction f1, Fraction f2, Fraction result_1, Fraction result_2)
 {
+    count_test++;
+
     // assert 1
     std::cout << "_________________________________________" << std::endl;
     std::cout << "Test of reduction to a common denominator" << std::endl;
@@ -135,6 +159,7 @@ void UnitTest::test_common_denominator(Fraction f1, Fraction f2, Fraction result
     f2.get_numerator() == result_2.get_numerator() && f2.get_denominator() == result_2.get_denominator() && f2.get_sign() == result_2.get_sign()) 
     {
         std::cout << "Test was passed" << std::endl;
+        count_pass++;
     } else {
         std::cout << "Test was not passed" << std::endl;
     }
@@ -144,6 +169,8 @@ void UnitTest::test_common_denominator(Fraction f1, Fraction f2, Fraction result
 
 void UnitTest::test_comparing_fractions(Fraction f1, Fraction f2, int result)
 {
+    count_test++;
+
     // act
     int real_val = f1.comparing_fractions(f2);
     
@@ -160,6 +187,7 @@ void UnitTest::test_comparing_fractions(Fraction f1, Fraction f2, int result)
     if(real_val == result) 
     {
         std::cout << "Test was passed" << std::endl;
+        count_pass++;
     } else {
         std::cout << "Test was not passed" << std::endl;
     }

@@ -5,7 +5,14 @@
 
 class UnitTest
 {
+private:
+    int count_test = 0;
+    int count_pass = 0;
 public:
+    // Геттеры
+    int get_count_test();
+    int get_count_pass();
+
     void test_add(Fraction f1, Fraction f2, Fraction result);
     void test_sub(Fraction f1, Fraction f2, Fraction result);
     void test_mul(Fraction f1, Fraction f2, Fraction result);
