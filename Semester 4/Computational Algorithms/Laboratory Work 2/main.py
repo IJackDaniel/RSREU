@@ -4,7 +4,7 @@
 """
 import sys
 from time import sleep
-from math import tan
+from math import tan, acos
 
 import numpy as np
 from PyQt6.QtGui import QPalette, QColor, QIntValidator
@@ -28,13 +28,10 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(widget)
 
         ###### Часть для решения уравнений
-        self.l_1 = 0
-        self.r_1 = 1e10
-        self.step_1 = 100
-        self.l = None
-        self.r = None
-        self.step = 0.5
-        self.eps = 1e-4
+        self.l = - 1e5
+        self.r = 1e5 + 1
+        self.step = 0.2
+        self.eps = 1e-6
         self.results = ["-", "-", "-", "-", "-", "-"]
         # Суть в чём. Сначала пойдёт первая стадия, на которой выделится большой промежуток, содержащий корень
         # На второй стадии мы будем работать в этом промежутке для определения новых границ с шагом 1
@@ -100,7 +97,7 @@ class MainWindow(QMainWindow):
     def start(self):
         # Текст "Уравнение"
         self.equation_text.setText(" Уравнение: ")
-        self.equation.setText("x = tg(x)")
+        self.equation.setText("x**5 - x - 0.2")
         self.equation_text.move(self.equation_start_x, self.equation_start_y)
         self.equation.move(self.equation_start_x, self.equation_start_y + self.equation_delta_y)
         self.equation_text.setFixedSize(self.equation_size_x, self.equation_size_y)
@@ -168,40 +165,47 @@ class MainWindow(QMainWindow):
         self.btn_solution.setFixedSize(self.btn_size_x, self.btn_size_y)
         self.btn_solution.clicked.connect(self.start_solution)
 
+    # Заданная функция
     def f(self, n):
-        # return tan(n) - n
-        return (n - 1005) ** 3 - 5
+        return n**5 - n - 0.2
+
+    # Первая производная заданной функции:
+    def f1(self, n):
+        return 5 * n ** 4 - 1
+
+    # Вторая производная заданной функции:
+    def f2(self, n):
+        return 20 * n ** 3
+
+    # Вспомогательная функция для реализации метода итераций:
+    # СХОДИТСЯ НЕ ТУДА, НУЖНО ПОДОБРАТЬ НОВОЕ ВЫРАЖЕНИЕ
+    def fi(self, n):
+        return n - (n**5 - n - 0.2) / 4
 
     def determine_boundaries(self):
         print("Произвожу определение границ первой стадии")
-        left = self.l_1
-        right = self.l_1 + self.step_1
-        f_l = self.f(left)
-        f_r = self.f(right)
-        while f_l * f_r > 0:
-            left = right
-            right += self.step_1
-            f_l = self.f(left)
-            f_r = self.f(right)
-
-        self.l = left
-        self.r = right
-        print(f"Искомый корень находится в промежутке [{left}, {right}]")
-
-        print("Произвожу уточнение границ второй стадии")
         left = self.l
         right = self.l + self.step
-        f_l = self.f(left)
-        f_r = self.f(right)
-        while f_l * f_r > 0:
-            left = right
-            right += self.step
+        result = []
+        while right <= self.r:
             f_l = self.f(left)
             f_r = self.f(right)
+            if f_l * f_r < 0:
+                result.append([left, right])
+            left = right
+            right += self.step
+        print(result)
+        print("Корни уравнения находятся в данных промежутках:")
+        for root in result:
+            print(*root)
+        print()
 
-        print(f"Искомый корень находится в промежутке [{left}, {right}]")
-        self.l = left
-        self.r = right
+        # Выбор необходимого корня
+        need = 0
+        self.l = result[need][0]
+        self.r = result[need][1]
+
+        print(f"Искомый корень находится в промежутке [{self.l}, {self.r}]")
 
     def dichotomia(self):
         left = self.l
@@ -239,11 +243,57 @@ class MainWindow(QMainWindow):
 
         self.results[1] = x
 
+    def newton_method(self):
+        error = False
+        left = self.l
+        right = self.r
+        x = None
+
+        if self.f(left) * self.f2(left) > 0:
+            x = left
+        elif self.f(right) * self.f2(right):
+            x = right
+        else:
+            error = True
+            print("Ошибка!")
+        if not error:
+            while True:
+                h = self.f(x) / self.f1(x)
+                x = x - h
+                if abs(h) < self.eps:
+                    break
+        self.results[2] = x
+
+    def nthtrh(self):
+        ...
+
+    def fgnigb(self):
+        ...
+
+    def iteration_method(self):
+        left = self.l
+        right = self.r
+        x = (left + right) / 2
+        while True:
+            if x > 0:
+                x1 = self.fi(x)
+            else:
+                x1 = -self.fi(x)
+            r = abs(x1 - x)
+            x = x1
+            if r < self.eps:
+                break
+        self.results[5] = x
+
     def start_solution(self):
         self.determine_boundaries()
 
         self.dichotomia()
         self.chord_method()
+        self.newton_method()
+        #
+        #
+        self.iteration_method()
 
         self.change_result_txt()
 
