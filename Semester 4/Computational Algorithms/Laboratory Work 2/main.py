@@ -33,8 +33,9 @@ class MainWindow(QMainWindow):
         self.step_1 = 100
         self.l = None
         self.r = None
-        self.step = 1
-        self.results = ["0", "0", "0", "0", "0", "0"]
+        self.step = 0.5
+        self.eps = 1e-4
+        self.results = ["-", "-", "-", "-", "-", "-"]
         # Суть в чём. Сначала пойдёт первая стадия, на которой выделится большой промежуток, содержащий корень
         # На второй стадии мы будем работать в этом промежутке для определения новых границ с шагом 1
 
@@ -135,12 +136,7 @@ class MainWindow(QMainWindow):
         self.result_txt_6.setFixedSize(self.result_txt_size_x, self.result_txt_size_y)
 
         # Результат
-        self.result_1.setText(" -")
-        self.result_2.setText(" -")
-        self.result_3.setText(" -")
-        self.result_4.setText(" -")
-        self.result_5.setText(" -")
-        self.result_6.setText(" -")
+        self.change_result_txt()
         self.result_1.move(self.result_start_x, self.result_start_y)
         self.result_2.move(self.result_start_x, self.result_start_y + self.result_delta_y)
         self.result_3.move(self.result_start_x, self.result_start_y + self.result_delta_y * 2)
@@ -173,8 +169,8 @@ class MainWindow(QMainWindow):
         self.btn_solution.clicked.connect(self.start_solution)
 
     def f(self, n):
-        return tan(n) - n
-        # return (n - 1005) ** 3 - 5
+        # return tan(n) - n
+        return (n - 1005) ** 3 - 5
 
     def determine_boundaries(self):
         print("Произвожу определение границ первой стадии")
@@ -190,7 +186,7 @@ class MainWindow(QMainWindow):
 
         self.l = left
         self.r = right
-        print(left, right)
+        print(f"Искомый корень находится в промежутке [{left}, {right}]")
 
         print("Произвожу уточнение границ второй стадии")
         left = self.l
@@ -203,23 +199,62 @@ class MainWindow(QMainWindow):
             f_l = self.f(left)
             f_r = self.f(right)
 
-        print(left, right)
+        print(f"Искомый корень находится в промежутке [{left}, {right}]")
         self.l = left
         self.r = right
+
+    def dichotomia(self):
+        left = self.l
+        right = self.r
+
+        while abs(right - left) >= self.eps:
+            x = (right + left) / 2
+            if self.f(left) * self.f(x) < 0:
+                right = x
+            else:
+                left = x
+
+        x = (right + left) / 2
+        self.results[0] = x
+
+    def chord_method(self):
+        left = self.l
+        right = self.r
+
+        z = self.f(left)
+        t = self.f(right)
+        x = left
+        while True:
+            n = x
+            x = left - ((right - left) / (t - z)) * z
+            y = self.f(x)
+            if y * z < 0:
+                right = x
+                t = y
+            else:
+                left = x
+                z = y
+            if abs(n - x) < self.eps:
+                break
+
+        self.results[1] = x
 
     def start_solution(self):
         self.determine_boundaries()
 
+        self.dichotomia()
+        self.chord_method()
+
         self.change_result_txt()
 
     def change_result_txt(self):
-        self.result_1.setText(self.results[0])
-        self.result_2.setText(self.results[1])
-        self.result_3.setText(self.results[2])
-        self.result_4.setText(self.results[3])
-        self.result_5.setText(self.results[4])
-        self.result_6.setText(self.results[5])
-
+        results = [str(i) for i in self.results]
+        self.result_1.setText(results[0])
+        self.result_2.setText(results[1])
+        self.result_3.setText(results[2])
+        self.result_4.setText(results[3])
+        self.result_5.setText(results[4])
+        self.result_6.setText(results[5])
 
 
 if __name__ == "__main__":
