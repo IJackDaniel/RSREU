@@ -15,6 +15,11 @@ class Fraction
     public:
         // Конструктор класса
         Fraction(int _numerator, int _denominator, int _sign);
+        // Конструктор класса для юнит тестов
+        Fraction(int _numerator, int _denominator, int _sign, int for_test);
+
+        // Вывод 
+        void show();
 
         // Геттеры
         int get_numerator();
@@ -27,6 +32,12 @@ class Fraction
         void set_sign(int new_sign);
 
         // Методы
-        void add_frac(Fraction f1, Fraction f2);
+        void add_frac(Fraction f);
+        void sub_frac(Fraction f);
+        void mul_frac(Fraction f);
+        void div_frac(Fraction f);
+
+        void common_denominator(Fraction& f);
+        int comparing_fractions(Fraction f);
 };
 #endif

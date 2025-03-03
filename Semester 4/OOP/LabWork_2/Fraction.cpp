@@ -20,8 +20,31 @@ Fraction::Fraction(int _numerator, int _denominator, int _sign)
     normalize(_numerator, _denominator);
     numerator = _numerator;
     denominator = _denominator;
-    
-    
+}
+
+// Конструктор для Utit тестов
+Fraction::Fraction(int _numerator, int _denominator, int _sign, int for_test)
+{
+    sign = (_sign == 1);
+    if (_numerator < 0)
+    {
+        sign = not(sign);
+        _numerator = _numerator * (-1);
+    }
+    if (_denominator < 0)
+    {
+        sign = not(sign);
+        _denominator = _denominator * (-1);
+    }
+    numerator = _numerator;
+    denominator = _denominator;
+}
+
+// Вывод
+void Fraction::show()
+{
+    std::string s = (sign) ? "+ ": "- ";
+    std::cout << s << numerator << "/" << denominator << std::endl;
 }
 
 // Геттеры
@@ -89,14 +112,14 @@ void Fraction::normalize(int& num1, int& num2)
 }
 
 // Метод сложения дробей
-void Fraction::add_frac(Fraction f1, Fraction f2)
+void Fraction::add_frac(Fraction f)
 {
-    int n1 = f1.get_numerator(), n2 = f2.get_numerator();
-    int d1 = f1.get_denominator(), d2 = f2.get_denominator();
-    n1 = f1.get_sign()? n1 : -n1;
-    n2 = f2.get_sign()? n2 : -n2;
-    int _numerator = n1 * d2 + n2 * d1;
-    int _denominator = d1 * d2;
+    int n = f.get_numerator();
+    int d = f.get_denominator();
+    numerator = (sign)? numerator : -numerator;
+    n = (f.get_sign())? n : -n;
+    int _numerator = numerator * d + n * denominator;
+    int _denominator = denominator * d;
 
     if (_numerator < 0)
     {
@@ -108,8 +131,147 @@ void Fraction::add_frac(Fraction f1, Fraction f2)
         sign = not(sign);
         _denominator = _denominator * (-1);
     }
+    if (_numerator == 0)
+    {
+        sign = 1;
+    }
 
     normalize(_numerator, _denominator);
     numerator = _numerator;
     denominator = _denominator;
+}
+
+// Метод вычитания дробей
+void Fraction::sub_frac(Fraction f)
+{
+    int n = f.get_numerator();
+    int d = f.get_denominator();
+    numerator = (sign)? numerator : -numerator;
+    n = (f.get_sign())? n : -n;
+    int _numerator = numerator * d - n * denominator;
+    int _denominator = denominator * d;
+
+    if (_numerator < 0)
+    {
+        sign = not(sign);
+        _numerator = _numerator * (-1);
+    }
+    if (_denominator < 0)
+    {
+        sign = not(sign);
+        _denominator = _denominator * (-1);
+    }
+    if (_numerator == 0)
+    {
+        sign = 1;
+    }
+
+    normalize(_numerator, _denominator);
+    numerator = _numerator;
+    denominator = _denominator;
+}
+
+// Метод умножения дробей
+void Fraction::mul_frac(Fraction f)
+{
+    int n = f.get_numerator();
+    int d = f.get_denominator();
+    numerator = (sign)? numerator : -numerator;
+    n = (f.get_sign())? n : -n;
+    int _numerator = numerator * n;
+    int _denominator = denominator * d;
+
+    if (_numerator < 0)
+    {
+        sign = not(sign);
+        _numerator = _numerator * (-1);
+    }
+    if (_denominator < 0)
+    {
+        sign = not(sign);
+        _denominator = _denominator * (-1);
+    }
+    if (_numerator == 0)
+    {
+        sign = 1;
+    }
+
+    normalize(_numerator, _denominator);
+    numerator = _numerator;
+    denominator = _denominator;
+}
+
+// Метод деления дробей
+void Fraction::div_frac(Fraction f)
+{
+    int n = f.get_numerator();
+    int d = f.get_denominator();
+    numerator = (sign)? numerator : -numerator;
+    n = (f.get_sign())? n : -n;
+    int _numerator = numerator * d;
+    int _denominator = denominator * n;
+
+    if (_numerator < 0)
+    {
+        sign = not(sign);
+        _numerator = _numerator * (-1);
+    }
+    if (_denominator < 0)
+    {
+        sign = not(sign);
+        _denominator = _denominator * (-1);
+    }
+    if (_numerator == 0)
+    {
+        sign = 1;
+    }
+
+    normalize(_numerator, _denominator);
+    numerator = _numerator;
+    denominator = _denominator;
+}
+
+void Fraction::common_denominator(Fraction& f)
+{
+    if (f.denominator != denominator)
+    {
+        int common = denominator * f.denominator;
+        numerator = numerator * f.denominator;
+        f.numerator = f.numerator * denominator;
+        denominator = common;
+        f.denominator = common;
+
+        int gcd = greatest_common_divisor_three_num(numerator, denominator, f.numerator);
+        denominator /= gcd;
+        f.denominator /= gcd;
+        numerator /= gcd;
+        f.numerator /= gcd;
+    }
+}
+
+int Fraction::comparing_fractions(Fraction f)
+{
+    int num1 = numerator * f.denominator;
+	int num2 = f.numerator * denominator;
+	if (!sign) 
+	{
+		num1 *= -1;
+	}
+	if (!f.sign) 
+	{
+		num2 *= -1;
+	}
+	
+	if (num1 == num2) 
+	{
+		return 0;
+	}
+	else if (num1 > num2) 
+	{
+		return 1;
+	}
+	else 
+	{
+		return -1;	
+	}
 }

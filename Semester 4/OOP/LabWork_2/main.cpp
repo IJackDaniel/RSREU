@@ -1,23 +1,21 @@
 #include <iostream>
 #include <string>
 #include "Fraction.hpp"
+#include "UTest.hpp"
 
 int main()
 {
-    std::cout << "Hello, from Lavoratory_Work_2!\n";
-    Fraction frac1 (4, 2, 1);
-    Fraction frac2 (3, 7, 0);
-
-    Fraction res (1, 1, 1);
-    res.add_frac(frac1, frac2);
-    int c = res.get_numerator();
-    int d = res.get_denominator();
-    std::string q = res.get_sign()? "+ " : "- ";
-    std::cout << q << c << " / " << d;
+    setlocale(LC_ALL, "Russian");
+    UnitTest test;
+    test.test_add(Fraction(1, 2, 1), Fraction(5, 6, 1), Fraction(4, 3, 1));
+    test.test_sub(Fraction(1, 2, 1), Fraction(5, 6, 1), Fraction(1, 3, 0));
+    test.test_mul(Fraction(1, 2, 1), Fraction(5, 6, 1), Fraction(5, 12, 1));
+    test.test_div(Fraction(1, 2, 1), Fraction(5, 6, 1), Fraction(3, 5, 1));
+    test.test_common_denominator(Fraction(7, 9, 1), Fraction(4, 5, 0), Fraction(35, 45, 1, 1), Fraction(36, 45, 0, 1));
+    test.test_comparing_fractions(Fraction(1, 2, 1), Fraction(1, 3, 1), 1);
+    test.test_add(Fraction(1, 2, 1), Fraction(1, 2, 0), Fraction(0, 1, 1));
+    test.test_sub(Fraction(7, 10, 1), Fraction(14, 20, 1), Fraction(0, 1, 1));
+    test.test_mul(Fraction(19, 5, 1), Fraction(0, 6, 1), Fraction(0, 1, 1));
+    test.test_comparing_fractions(Fraction(-3, 17, 1), Fraction(199, 5, 1), -1);
+    test.test_comparing_fractions(Fraction(1, 3, 1), Fraction(19, 57, 1), 0);
 }
-
-/*
-Создать квадратную матрицу и посчитать сумму элементов на главной диагонали
-
-Потом пишем программу транспонирования матрицы
-*/
