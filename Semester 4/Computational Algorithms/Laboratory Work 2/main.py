@@ -180,7 +180,7 @@ class MainWindow(QMainWindow):
     # Вспомогательная функция для реализации метода итераций:
     # СХОДИТСЯ НЕ ТУДА, НУЖНО ПОДОБРАТЬ НОВОЕ ВЫРАЖЕНИЕ
     def fi(self, n):
-        return n - (n**5 - n - 0.2) / 4
+        return n - (n**5 - n - 0.2)*2
 
     def determine_boundaries(self):
         print("Произвожу определение границ первой стадии")
@@ -271,19 +271,14 @@ class MainWindow(QMainWindow):
         ...
 
     def iteration_method(self):
-        left = self.l
-        right = self.r
-        x = (left + right) / 2
-        while True:
-            if x > 0:
-                x1 = self.fi(x)
-            else:
-                x1 = -self.fi(x)
-            r = abs(x1 - x)
-            x = x1
-            if r < self.eps:
-                break
-        self.results[5] = x
+        x_n = -0.942085
+        for i in range(1000):
+            x_next = self.fi(x_n)
+            if abs(x_next - x_n) < self.eps:
+                self.results[5] = x_n
+                return
+            x_n = x_next
+        self.results[5] = x_n
 
     def start_solution(self):
         self.determine_boundaries()
@@ -294,6 +289,8 @@ class MainWindow(QMainWindow):
         #
         #
         self.iteration_method()
+
+        print(self.results[5])
 
         self.change_result_txt()
 

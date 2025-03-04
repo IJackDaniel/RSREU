@@ -1,82 +1,39 @@
-from math import cos, acos, sin
+def f(x):
+    return x ** 5 - x - 0.2
 
 
-def f(n):
-    return (0.9 * n * n) - cos(2*n) - 1
+def f_prime(x):
+    return 5 * x ** 4 - 1
 
 
-def f_pr1(n):
-    return 1.8 * n + 2 * sin(2 * n)
+def newton_method(initial_guess, tolerance, max_iterations):
+    x_n = initial_guess
+    for i in range(max_iterations):
+        f_x = f(x_n)
+        f_prime_x = f_prime(x_n)
+
+        if abs(f_prime_x) < 1e-10:  # Проверка на нулевую производную
+            print("Производная близка к нулю. Метод не может быть применен.")
+            return None
+
+        x_next = x_n - f_x / f_prime_x  # Формула Ньютона
+
+        if abs(x_next - x_n) < tolerance:
+            print(f"Корень уточнен после {i + 1} итераций: {x_next}")
+            return x_next
+
+        x_n = x_next
+
+    print(f"Достигнуто максимальное количество итераций. Последнее значение: {x_n}")
+    return x_n
 
 
-def f_pr2(n):
-    return 1.8 + 4 * cos(2 * n)
+# Начальное приближение (близкое к корню -0.942086)
+initial_guess = -1.0  # Можно также попробовать -0.9
+# Точность
+tolerance = 1e-6
+# Максимальное количество итераций
+max_iterations = 1000
 
-
-# Вспомогательная функция для реализации метода итераций:
-def fi(n):
-    return acos(-1 + 0.9 * n * n) / 2
-
-
-def chord_method(a, b):
-    eps = 1e-4
-
-    z = f(a)
-    t = f(b)
-    x = a
-    while True:
-        n = x
-        x = a - ((b - a) / (t - z)) * z
-        y = f(x)
-        if y * z < 0:
-            b = x
-            t = y
-        else:
-            a = x
-            z = y
-        if abs(n - x) < eps:
-            break
-
-    return x
-
-
-def half_division_method(a, b):
-    eps = 1e-4
-
-    while abs(b - a) >= eps:
-        z = (a + b) / 2
-        if f(a) * f(z) < 0:
-            b = z
-        else:
-            a = z
-    x = (a + b) / 2
-    return x
-
-
-def iteration_method(a, b):
-    eps = 1e-4
-    x = (a+b)/2
-    while True:
-        if x > 0:
-            x1 = fi(x)
-            # print(x, x1)
-            if abs(x1 - x) <= eps:
-                break
-            x = x1
-        else:
-            x1 = -fi(x)
-            # print(x, x1)
-            if abs(x1 - x) <= eps:
-                break
-            x = x1
-
-    return x1
-
-
-# a = 0
-# b = 1
-#
-# print(chord_method(a, b))
-# print(half_division_method(a, b))
-# print(iteration_method(a, b))
-
+# Вызов метода Ньютона
+root = newton_method(initial_guess, tolerance, max_iterations)
