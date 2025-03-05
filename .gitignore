@@ -2,5 +2,6 @@
 *.bmp
 *.jpg
 *.exe
+*.xcf
 .vscode/
 build/
