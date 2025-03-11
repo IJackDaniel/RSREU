@@ -69,8 +69,8 @@ text       ends
 data       segment                                 
            MATRIX    DW 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
            
-           SIZEX     DW 8
-           SIZEY     DW 2
+           SIZEX     DW 2
+           SIZEY     DW 8
            MATRIX2   DW SIZEX * SIZEY dup (?)
        
 data       ends 
