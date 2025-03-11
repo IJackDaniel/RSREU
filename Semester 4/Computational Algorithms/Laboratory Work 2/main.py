@@ -4,7 +4,6 @@
 """
 import sys
 from time import sleep
-from math import tan, acos
 
 import numpy as np
 from PyQt6.QtGui import QPalette, QColor, QIntValidator
@@ -14,6 +13,35 @@ from matplotlib import pyplot as plt
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from PyQt6.QtCore import Qt
+
+
+class PlotWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle("График")
+        self.setGeometry(100, 100, 600, 400)
+        # Генерация данных для графика
+        x = np.linspace(-1.5, 1.5, 10000)
+        # print(self.a, self.b, self.c, self.d, self.e, self.f, self.g)
+        y = x**5 - x - 0.2
+        # Создание графика
+        plt.figure()
+        plt.plot(x, y, label="y")
+        plt.title("График функции")
+        plt.xlabel("x")
+        plt.ylabel("y")
+        plt.legend()
+        plt.grid()
+        # Оси x и y
+        ax = plt.gca()
+        ax.axhline(y=0, color='k')
+        ax.axvline(x=0, color='k')
+        # Отображение графика
+        plt.show()
 
 
 class MainWindow(QMainWindow):
@@ -57,6 +85,8 @@ class MainWindow(QMainWindow):
         self.result_6 = QLabel(widget)
         # Кнопка "Решить"
         self.btn_solution = QPushButton(widget)
+        # Кнопка "График"
+        self.btn_func = QPushButton(widget)
 
         ### Параметры
         # Текст "Уравнение"
@@ -89,6 +119,12 @@ class MainWindow(QMainWindow):
         self.btn_size_y = self.equation_size_y + self.equation_delta_y + 5
         self.btn_x = self.equation_start_x + self.equation_size_x + 10
         self.btn_y = 20
+
+        # Кнопка "График"
+        self.btn_func_size_x = self.result_size_x
+        self.btn_func_size_y = self.btn_size_y
+        self.btn_func_x = self.btn_x + self.btn_size_x + 20
+        self.btn_func_y = self.btn_y
 
         # Запуск
         self.start()
@@ -163,6 +199,12 @@ class MainWindow(QMainWindow):
         self.btn_solution.setText("Решить")
         self.btn_solution.setFixedSize(self.btn_size_x, self.btn_size_y)
         self.btn_solution.clicked.connect(self.start_solution)
+
+        # Кнопка "График"
+        self.btn_func.move(self.btn_func_x, self.btn_func_y)
+        self.btn_func.setText("График")
+        self.btn_func.setFixedSize(self.btn_func_size_x, self.btn_func_size_y)
+        self.btn_func.clicked.connect(self.show_plot_window)
 
     # Заданная функция
     def f(self, n):
@@ -319,6 +361,12 @@ class MainWindow(QMainWindow):
             x_new = x - self.f(x) / m
             m = max(m, self.f1(x_new))
             x = x_new
+
+    # Отображение графика
+    def show_plot_window(self):
+        # Создание нового окна для графика
+        plot_window = PlotWindow()
+        plot_window.show()
 
     # Запуск решения
     def start_solution(self):
