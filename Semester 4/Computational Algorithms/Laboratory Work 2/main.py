@@ -20,6 +20,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # Параметры окна
         self.setWindowTitle("Finding the smallest root")
         self.setGeometry(400, 150, 400, 600)
         self.setFixedSize(660, 385)
@@ -33,10 +34,9 @@ class MainWindow(QMainWindow):
         self.step = 0.2
         self.eps = 1e-8
         self.results = ["-", "-", "-", "-", "-", "-"]
-        # Суть в чём. Сначала пойдёт первая стадия, на которой выделится большой промежуток, содержащий корень
-        # На второй стадии мы будем работать в этом промежутке для определения новых границ с шагом 1
 
         ###### Графическая часть
+
         ### Объявления
         # Текст "Уравнение"
         self.equation_text = QLabel(widget)
@@ -85,13 +85,12 @@ class MainWindow(QMainWindow):
         self.result_delta_y = self.result_txt_delta_y
         self.result_style = f"font-size: {self.result_txt_size}px; background-color: 'lightGray'; color: black;"
         # Кнопка "Решить"
-        # self.btn_size_x = self.result_txt_start_x + self.result_txt_size_x - self.equation_size_x
-        # self.btn_size_y = self.equation_size_y * 2 + self.equation_delta_y
-        self.btn_size_x = self.result_start_x - self.equation_start_x - self.equation_size_x - self.result_between - 20
+        self.btn_size_x = self.result_start_x - self.equation_start_x - self.equation_size_x - self.result_between - 10
         self.btn_size_y = self.equation_size_y + self.equation_delta_y + 5
-        self.btn_x = self.equation_start_x + self.equation_size_x + 20
+        self.btn_x = self.equation_start_x + self.equation_size_x + 10
         self.btn_y = 20
 
+        # Запуск
         self.start()
 
     def start(self):
@@ -178,12 +177,11 @@ class MainWindow(QMainWindow):
         return 20 * n ** 3
 
     # Вспомогательная функция для реализации метода итераций:
-    # СХОДИТСЯ НЕ ТУДА, НУЖНО ПОДОБРАТЬ НОВОЕ ВЫРАЖЕНИЕ
     def fi(self, n):
-        return n - (n**5 - n - 0.2)*2
+        return n**5 - 0.2
 
     def determine_boundaries(self):
-        print("Произвожу определение границ первой стадии")
+        print("Произвожу определение границ")
         left = self.l
         right = self.l + self.step
         result = []
@@ -194,10 +192,13 @@ class MainWindow(QMainWindow):
                 result.append([left, right])
             left = right
             right += self.step
-        print(result)
         print("Корни уравнения находятся в данных промежутках:")
+        i = 1
         for root in result:
-            print(*root)
+            root[0] = round(root[0], 5)
+            root[1] = round(root[1], 5)
+            print(f"Корень {i} в промежутке: [{root[0]}, {root[1]}]")
+            i += 1
         print()
 
         # Выбор необходимого корня
@@ -205,8 +206,9 @@ class MainWindow(QMainWindow):
         self.l = result[need][0]
         self.r = result[need][1]
 
-        print(f"Искомый корень находится в промежутке [{self.l}, {self.r}]")
+        print(f"Искомый корень находится в промежутке [{self.l}, {self.r}]\n")
 
+    # Метод половинного деления (дихотомии, бисекции)
     def dichotomia(self):
         left = self.l
         right = self.r
@@ -221,6 +223,7 @@ class MainWindow(QMainWindow):
         x = (right + left) / 2
         self.results[0] = x
 
+    # Метод хорд
     def chord_method(self):
         left = self.l
         right = self.r
@@ -243,6 +246,7 @@ class MainWindow(QMainWindow):
 
         self.results[1] = x
 
+    # Метод касательных (Ньютона)
     def newton_method(self):
         error = False
         left = self.l
@@ -264,36 +268,75 @@ class MainWindow(QMainWindow):
                     break
         self.results[2] = x
 
-    def nthtrh(self):
-        ...
+    # Модифицированный метод касательных
+    def modified_newton_method(self):
+        left = self.l
+        right = self.r
 
-    def fgnigb(self):
-        ...
+        x_prev = float('inf')
+        x = left if self.f(left) * self.f2(left) > 0 else right
 
+        d = self.f1(x)
+
+        while abs(x - x_prev) > self.eps:
+            x_prev = x
+            x -= self.f(x) / d
+        self.results[3] = x
+
+    # Комбинированный метод
+    def combined_method(self):
+        left = self.l
+        right = self.r
+
+        if self.f(left) * self.f2(left) > 0:
+            x = left
+            y = right
+        else:
+            x = right
+            y = left
+
+        while abs(x - y) > self.eps:
+            x_new = x - self.f(x) / self.f1(x)
+            y_new = y - self.f(y) * (x - y) / (self.f(x) - self.f(y))
+
+            x = x_new
+            y = y_new
+
+        res = (x + y) / 2.0
+        self.results[4] = res
+
+    # Метод итераций
     def iteration_method(self):
-        x_n = -0.942085
-        for i in range(1000):
-            x_next = self.fi(x_n)
-            if abs(x_next - x_n) < self.eps:
-                self.results[5] = x_n
+        max_iterations = 100
+        left = self.l
+        right = self.r
+        x = (left + right) / 2
+        m = max([self.f(left), self.f(right), self.f(x)])
+        for _ in range(max_iterations):
+            if abs(self.f(x)) < self.eps:
+                self.results[5] = x
                 return
-            x_n = x_next
-        self.results[5] = x_n
+            x_new = x - self.f(x) / m
+            m = max(m, self.f1(x_new))
+            x = x_new
 
+    # Запуск решения
     def start_solution(self):
+        # Определение границ
         self.determine_boundaries()
 
+        # Использование различных методов
         self.dichotomia()
         self.chord_method()
         self.newton_method()
-        #
-        #
+        self.modified_newton_method()
+        self.combined_method()
         self.iteration_method()
 
-        print(self.results[5])
-
+        # Вызов отображения результата
         self.change_result_txt()
 
+    # Функция установки результатов в Label
     def change_result_txt(self):
         results = [str(i) for i in self.results]
         self.result_1.setText(results[0])
@@ -310,3 +353,13 @@ if __name__ == "__main__":
     main_window.show()
 
     sys.exit(app.exec())
+
+
+"""
+Лекция КГ
+Первая игра: SpaceWar
+1963 год - первая 3D-анимация
+Компьютерный балет
+1968 год - первая советская анимация "кошечка" на БСМ-4
+
+"""
