@@ -1,17 +1,9 @@
-"""
-Справа от уравнения можно добавить кнопку, для показа графика
-
-"""
 import sys
-from time import sleep
 
 import numpy as np
-from PyQt6.QtGui import QPalette, QColor, QIntValidator
-from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QHBoxLayout, QLabel, QCheckBox, \
-    QComboBox, QGridLayout, QLineEdit, QPushButton
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton
 from matplotlib import pyplot as plt
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.figure import Figure
+
 from PyQt6.QtCore import Qt
 
 
@@ -26,11 +18,11 @@ class PlotWindow(QWidget):
         self.setGeometry(100, 100, 600, 400)
         # Генерация данных для графика
         x = np.linspace(-1.5, 1.5, 10000)
-        # print(self.a, self.b, self.c, self.d, self.e, self.f, self.g)
         y = x**5 - x - 0.2
         # Создание графика
         plt.figure()
         plt.plot(x, y, label="y")
+        plt.plot(-0.942086, 0, 'ro')
         plt.title("График функции")
         plt.xlabel("x")
         plt.ylabel("y")
@@ -51,7 +43,8 @@ class MainWindow(QMainWindow):
         # Параметры окна
         self.setWindowTitle("Finding the smallest root")
         self.setGeometry(400, 150, 400, 600)
-        self.setFixedSize(660, 385)
+        # self.setFixedSize(660, 385)
+        self.setFixedSize(800, 385)
 
         widget = QWidget()
         self.setCentralWidget(widget)
@@ -60,8 +53,12 @@ class MainWindow(QMainWindow):
         self.l = - 1e5
         self.r = 1e5 + 1
         self.step = 0.2
-        self.eps = 1e-8
+        self.eps = 1e-10
+        self.rnd = 20
+        # self.eps = 1e-6
+        # self.rnd = 15
         self.results = ["-", "-", "-", "-", "-", "-"]
+        self.accuracy_list = ["-", "-", "-", "-", "-", "-"]
 
         ###### Графическая часть
 
@@ -87,8 +84,19 @@ class MainWindow(QMainWindow):
         self.btn_solution = QPushButton(widget)
         # Кнопка "График"
         self.btn_func = QPushButton(widget)
+        # Текст "Погрешность"
+        self.accuracy = QLabel(widget)
+        # Погрешность
+        self.accuracy_1 = QLabel(widget)
+        self.accuracy_2 = QLabel(widget)
+        self.accuracy_3 = QLabel(widget)
+        self.accuracy_4 = QLabel(widget)
+        self.accuracy_5 = QLabel(widget)
+        self.accuracy_6 = QLabel(widget)
 
         ### Параметры
+        # Общее
+        self.horizontal_between = 10
         # Текст "Уравнение"
         self.equation_txt_size = 32
         self.equation_size_x = 200
@@ -107,24 +115,37 @@ class MainWindow(QMainWindow):
         self.result_txt_style = f"font-size: {self.result_txt_size}px; background-color: 'lightGray'; color: black;"
         # Результат
         self.result_size = self.result_txt_size
-        self.result_size_x = 250
+        self.result_size_x = 200
         self.result_size_y = self.result_txt_size_y
-        self.result_between = 20
-        self.result_start_x = self.result_txt_start_x + self.result_txt_size_x + self.result_between
+        self.result_start_x = self.result_txt_start_x + self.result_txt_size_x + self.horizontal_between
         self.result_start_y = self.result_txt_start_y
         self.result_delta_y = self.result_txt_delta_y
         self.result_style = f"font-size: {self.result_txt_size}px; background-color: 'lightGray'; color: black;"
         # Кнопка "Решить"
-        self.btn_size_x = self.result_start_x - self.equation_start_x - self.equation_size_x - self.result_between - 10
-        self.btn_size_y = self.equation_size_y + self.equation_delta_y + 5
-        self.btn_x = self.equation_start_x + self.equation_size_x + 10
-        self.btn_y = 20
-
+        self.btn_size_x = self.result_start_x - self.equation_start_x - self.equation_size_x - self.horizontal_between - self.horizontal_between
+        self.btn_size_y = self.equation_size_y + self.equation_delta_y + 5 + 1
+        self.btn_x = self.equation_start_x + self.equation_size_x + self.horizontal_between
+        self.btn_y = 17
         # Кнопка "График"
+        self.btn_func_x = self.btn_x + self.btn_size_x + self.horizontal_between
+        self.btn_func_y = self.btn_y
         self.btn_func_size_x = self.result_size_x
         self.btn_func_size_y = self.btn_size_y
-        self.btn_func_x = self.btn_x + self.btn_size_x + 20
-        self.btn_func_y = self.btn_y
+        # Текст "Погрешность"
+        self.accuracy_txt_size = 24
+        self.accuracy_txt_x = self.btn_func_x + self.btn_func_size_x + self.horizontal_between
+        self.accuracy_txt_y = self.equation_start_y + self.equation_delta_y
+        self.accuracy_txt_size_x = 190
+        self.accuracy_txt_size_y = self.equation_size_y
+        self.accuracy_txt_style = f"font-size: {self.accuracy_txt_size}px; background-color: 'lightGray'; color: black;"
+        # Погрешность
+        self.accuracy_size = self.result_size
+        self.accuracy_x = self.result_start_x + self.result_size_x + self.horizontal_between
+        self.accuracy_y = self.result_txt_start_y
+        self.accuracy_delta_y = self.result_delta_y
+        self.accuracy_size_x = 190
+        self.accuracy_size_y = self.result_size_y
+        self.accuracy_style = f"font-size: {self.accuracy_size}px; background-color: 'lightGray'; color: black;"
 
         # Запуск
         self.start()
@@ -132,7 +153,7 @@ class MainWindow(QMainWindow):
     def start(self):
         # Текст "Уравнение"
         self.equation_text.setText(" Уравнение: ")
-        self.equation.setText("x**5 - x - 0.2")
+        self.equation.setText("x^5 - x - 0.2")
         self.equation_text.move(self.equation_start_x, self.equation_start_y)
         self.equation.move(self.equation_start_x, self.equation_start_y + self.equation_delta_y)
         self.equation_text.setFixedSize(self.equation_size_x, self.equation_size_y)
@@ -206,6 +227,40 @@ class MainWindow(QMainWindow):
         self.btn_func.setFixedSize(self.btn_func_size_x, self.btn_func_size_y)
         self.btn_func.clicked.connect(self.show_plot_window)
 
+        # Текст "Погрешность"
+        self.accuracy.move(self.accuracy_txt_x, self.accuracy_txt_y)
+        self.accuracy.setText("Погрешность")
+        self.accuracy.setFixedSize(self.accuracy_txt_size_x, self.accuracy_txt_size_y)
+        self.accuracy.setStyleSheet(self.accuracy_txt_style)
+        self.accuracy.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+
+        # Погрешность
+        self.change_result_txt()
+        self.accuracy_1.move(self.accuracy_x, self.accuracy_y)
+        self.accuracy_2.move(self.accuracy_x, self.accuracy_y + self.accuracy_delta_y)
+        self.accuracy_3.move(self.accuracy_x, self.accuracy_y + self.accuracy_delta_y * 2)
+        self.accuracy_4.move(self.accuracy_x, self.accuracy_y + self.accuracy_delta_y * 3)
+        self.accuracy_5.move(self.accuracy_x, self.accuracy_y + self.accuracy_delta_y * 4)
+        self.accuracy_6.move(self.accuracy_x, self.accuracy_y + self.accuracy_delta_y * 5)
+        self.accuracy_1.setStyleSheet(self.accuracy_style)
+        self.accuracy_2.setStyleSheet(self.accuracy_style)
+        self.accuracy_3.setStyleSheet(self.accuracy_style)
+        self.accuracy_4.setStyleSheet(self.accuracy_style)
+        self.accuracy_5.setStyleSheet(self.accuracy_style)
+        self.accuracy_6.setStyleSheet(self.accuracy_style)
+        self.accuracy_1.setFixedSize(self.accuracy_size_x, self.accuracy_size_y)
+        self.accuracy_2.setFixedSize(self.accuracy_size_x, self.accuracy_size_y)
+        self.accuracy_3.setFixedSize(self.accuracy_size_x, self.accuracy_size_y)
+        self.accuracy_4.setFixedSize(self.accuracy_size_x, self.accuracy_size_y)
+        self.accuracy_5.setFixedSize(self.accuracy_size_x, self.accuracy_size_y)
+        self.accuracy_6.setFixedSize(self.accuracy_size_x, self.accuracy_size_y)
+        self.accuracy_1.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        self.accuracy_2.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        self.accuracy_3.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        self.accuracy_4.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        self.accuracy_5.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        self.accuracy_6.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+
     # Заданная функция
     def f(self, n):
         return n**5 - n - 0.2
@@ -250,7 +305,7 @@ class MainWindow(QMainWindow):
 
         print(f"Искомый корень находится в промежутке [{self.l}, {self.r}]\n")
 
-    # Метод половинного деления (дихотомии, бисекции)
+    # Метод половинного деления (дихотомии, биссекции)
     def dichotomia(self):
         left = self.l
         right = self.r
@@ -261,9 +316,11 @@ class MainWindow(QMainWindow):
                 right = x
             else:
                 left = x
-
+        acc = x
         x = (right + left) / 2
+        acc = round(abs(acc - x), self.rnd)
         self.results[0] = x
+        self.accuracy_list[0] = acc
 
     # Метод хорд
     def chord_method(self):
@@ -274,7 +331,7 @@ class MainWindow(QMainWindow):
         t = self.f(right)
         x = left
         while True:
-            n = x
+            last = x
             x = left - ((right - left) / (t - z)) * z
             y = self.f(x)
             if y * z < 0:
@@ -283,10 +340,11 @@ class MainWindow(QMainWindow):
             else:
                 left = x
                 z = y
-            if abs(n - x) < self.eps:
+            if abs(last - x) < self.eps:
+                acc = round(abs(last - x), self.rnd)
                 break
-
         self.results[1] = x
+        self.accuracy_list[1] = acc
 
     # Метод касательных (Ньютона)
     def newton_method(self):
@@ -294,6 +352,7 @@ class MainWindow(QMainWindow):
         left = self.l
         right = self.r
         x = None
+        acc = 0
 
         if self.f(left) * self.f2(left) > 0:
             x = left
@@ -307,8 +366,10 @@ class MainWindow(QMainWindow):
                 h = self.f(x) / self.f1(x)
                 x = x - h
                 if abs(h) < self.eps:
+                    acc = abs(h)
                     break
         self.results[2] = x
+        self.accuracy_list[2] = round(acc, self.rnd)
 
     # Модифицированный метод касательных
     def modified_newton_method(self):
@@ -323,12 +384,15 @@ class MainWindow(QMainWindow):
         while abs(x - x_prev) > self.eps:
             x_prev = x
             x -= self.f(x) / d
+        acc = round(abs(x - x_prev), self.rnd)
         self.results[3] = x
+        self.accuracy_list[3] = acc
 
     # Комбинированный метод
     def combined_method(self):
         left = self.l
         right = self.r
+        last = 0
 
         if self.f(left) * self.f2(left) > 0:
             x = left
@@ -340,26 +404,33 @@ class MainWindow(QMainWindow):
         while abs(x - y) > self.eps:
             x_new = x - self.f(x) / self.f1(x)
             y_new = y - self.f(y) * (x - y) / (self.f(x) - self.f(y))
+            last = x
 
             x = x_new
             y = y_new
 
         res = (x + y) / 2.0
+        acc = round(abs(x - last), self.rnd)
         self.results[4] = res
+        self.accuracy_list[4] = acc
 
     # Метод итераций
     def iteration_method(self):
         max_iterations = 100
         left = self.l
         right = self.r
+        last = 0
         x = (left + right) / 2
         m = max([self.f(left), self.f(right), self.f(x)])
         for _ in range(max_iterations):
             if abs(self.f(x)) < self.eps:
+                acc = round(abs(x - last), self.rnd)
                 self.results[5] = x
+                self.accuracy_list[5] = acc
                 return
             x_new = x - self.f(x) / m
             m = max(m, self.f1(x_new))
+            last = x
             x = x_new
 
     # Отображение графика
@@ -393,6 +464,13 @@ class MainWindow(QMainWindow):
         self.result_4.setText(results[3])
         self.result_5.setText(results[4])
         self.result_6.setText(results[5])
+        accuracy = [str(j) for j in self.accuracy_list]
+        self.accuracy_1.setText((accuracy[0]))
+        self.accuracy_2.setText((accuracy[1]))
+        self.accuracy_3.setText((accuracy[2]))
+        self.accuracy_4.setText((accuracy[3]))
+        self.accuracy_5.setText((accuracy[4]))
+        self.accuracy_6.setText((accuracy[5]))
 
 
 if __name__ == "__main__":
@@ -401,13 +479,3 @@ if __name__ == "__main__":
     main_window.show()
 
     sys.exit(app.exec())
-
-
-"""
-Лекция КГ
-Первая игра: SpaceWar
-1963 год - первая 3D-анимация
-Компьютерный балет
-1968 год - первая советская анимация "кошечка" на БСМ-4
-
-"""
