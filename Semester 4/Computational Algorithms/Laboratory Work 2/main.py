@@ -273,10 +273,6 @@ class MainWindow(QMainWindow):
     def f2(self, n):
         return 20 * n ** 3
 
-    # Вспомогательная функция для реализации метода итераций:
-    def fi(self, n):
-        return n**5 - 0.2
-
     def determine_boundaries(self):
         print("Произвожу определение границ")
         left = self.l
@@ -316,9 +312,8 @@ class MainWindow(QMainWindow):
                 right = x
             else:
                 left = x
-        acc = x
         x = (right + left) / 2
-        acc = round(abs(acc - x), self.rnd)
+        acc = round(((right - left) / 2), self.rnd)
         self.results[0] = x
         self.accuracy_list[0] = acc
 
@@ -332,7 +327,7 @@ class MainWindow(QMainWindow):
         x = left
         while True:
             last = x
-            x = left - ((right - left) / (t - z)) * z
+            x = left - z * ((right - left) / (t - z))
             y = self.f(x)
             if y * z < 0:
                 right = x
@@ -348,26 +343,17 @@ class MainWindow(QMainWindow):
 
     # Метод касательных (Ньютона)
     def newton_method(self):
-        error = False
         left = self.l
         right = self.r
-        x = None
-        acc = 0
 
-        if self.f(left) * self.f2(left) > 0:
-            x = left
-        elif self.f(right) * self.f2(right):
-            x = right
-        else:
-            error = True
-            print("Ошибка!")
-        if not error:
-            while True:
-                h = self.f(x) / self.f1(x)
-                x = x - h
-                if abs(h) < self.eps:
-                    acc = abs(h)
-                    break
+        x_prev = float('inf')
+        x = left if self.f(left) * self.f2(left) > 0 else right
+
+        while abs(x - x_prev) > self.eps:
+            x_prev = x
+            x -= self.f(x) / self.f1(x)
+        acc = round(abs(x - x_prev), self.rnd)
+
         self.results[2] = x
         self.accuracy_list[2] = round(acc, self.rnd)
 
@@ -385,6 +371,7 @@ class MainWindow(QMainWindow):
             x_prev = x
             x -= self.f(x) / d
         acc = round(abs(x - x_prev), self.rnd)
+
         self.results[3] = x
         self.accuracy_list[3] = acc
 
@@ -403,7 +390,7 @@ class MainWindow(QMainWindow):
 
         while abs(x - y) > self.eps:
             x_new = x - self.f(x) / self.f1(x)
-            y_new = y - self.f(y) * (x - y) / (self.f(x) - self.f(y))
+            y_new = y - self.f(y) * (x_new - y) / (self.f(x_new) - self.f(y))
             last = x
 
             x = x_new
@@ -419,18 +406,19 @@ class MainWindow(QMainWindow):
         max_iterations = 100
         left = self.l
         right = self.r
-        last = 0
+
         x = (left + right) / 2
         m = max([self.f(left), self.f(right), self.f(x)])
         for _ in range(max_iterations):
-            if abs(self.f(x)) < self.eps:
-                acc = round(abs(x - last), self.rnd)
+
+            x_new = x - self.f(x) / m
+            m = max(m, self.f1(x_new))
+
+            if abs(x_new - x) < self.eps:
+                acc = round(abs(x_new - x), self.rnd)
                 self.results[5] = x
                 self.accuracy_list[5] = acc
                 return
-            x_new = x - self.f(x) / m
-            m = max(m, self.f1(x_new))
-            last = x
             x = x_new
 
     # Отображение графика
