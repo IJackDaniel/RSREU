@@ -42,8 +42,7 @@ class MainWindow(QMainWindow):
 
         # Параметры окна
         self.setWindowTitle("Finding the smallest root")
-        self.setGeometry(400, 150, 400, 600)
-        # self.setFixedSize(660, 385)
+        self.setGeometry(400, 150, 800, 385)
         self.setFixedSize(800, 385)
 
         widget = QWidget()
@@ -84,6 +83,8 @@ class MainWindow(QMainWindow):
         self.btn_solution = QPushButton(widget)
         # Кнопка "График"
         self.btn_func = QPushButton(widget)
+        # Текст "Результат" - одиночный
+        self.result = QLabel(widget)
         # Текст "Погрешность"
         self.accuracy = QLabel(widget)
         # Погрешность
@@ -127,14 +128,21 @@ class MainWindow(QMainWindow):
         self.btn_x = self.equation_start_x + self.equation_size_x + self.horizontal_between
         self.btn_y = 17
         # Кнопка "График"
-        self.btn_func_x = self.btn_x + self.btn_size_x + self.horizontal_between
+        self.btn_func_x = self.btn_x + self.btn_size_x + self.horizontal_between - 2
         self.btn_func_y = self.btn_y
-        self.btn_func_size_x = self.result_size_x
-        self.btn_func_size_y = self.btn_size_y
+        self.btn_func_size_x = self.result_size_x * 2 + 4
+        self.btn_func_size_y = self.btn_size_y // 2
+        # Текст "Результат" - одиночный
+        self.result_one_txt_size = 24
+        self.result_one_x = self.result_start_x
+        self.result_one_y = self.btn_func_y + self.btn_func_size_y + 10
+        self.result_one_size_x = self.result_size_x
+        self.result_one_size_y = self.equation_size_y
+        self.result_one_style = f"font-size: {self.result_one_txt_size}px; background-color: 'lightGray'; color: black;"
         # Текст "Погрешность"
         self.accuracy_txt_size = 24
-        self.accuracy_txt_x = self.btn_func_x + self.btn_func_size_x + self.horizontal_between
-        self.accuracy_txt_y = self.equation_start_y + self.equation_delta_y
+        self.accuracy_txt_x = self.result_one_x + self.result_one_size_x + 10
+        self.accuracy_txt_y = self.result_one_y
         self.accuracy_txt_size_x = 190
         self.accuracy_txt_size_y = self.equation_size_y
         self.accuracy_txt_style = f"font-size: {self.accuracy_txt_size}px; background-color: 'lightGray'; color: black;"
@@ -168,7 +176,7 @@ class MainWindow(QMainWindow):
         self.result_txt_3.setText(" Метод Касательных")
         self.result_txt_4.setText(" Модифицированный метод касательных")
         self.result_txt_5.setText(" Комбинированный метод")
-        self.result_txt_6.setText(" Итерационный метод")
+        self.result_txt_6.setText(" Метод итераций")
         self.result_txt_1.move(self.result_txt_start_x, self.result_txt_start_y)
         self.result_txt_2.move(self.result_txt_start_x, self.result_txt_start_y + self.result_txt_delta_y)
         self.result_txt_3.move(self.result_txt_start_x, self.result_txt_start_y + self.result_txt_delta_y * 2)
@@ -226,6 +234,13 @@ class MainWindow(QMainWindow):
         self.btn_func.setText("График")
         self.btn_func.setFixedSize(self.btn_func_size_x, self.btn_func_size_y)
         self.btn_func.clicked.connect(self.show_plot_window)
+
+        # Текст "Результат" - одиночный
+        self.result.move(self.result_one_x, self.result_one_y)
+        self.result.setText("Результат")
+        self.result.setFixedSize(self.result_one_size_x, self.result_one_size_y)
+        self.result.setStyleSheet(self.result_one_style)
+        self.result.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
 
         # Текст "Погрешность"
         self.accuracy.move(self.accuracy_txt_x, self.accuracy_txt_y)
