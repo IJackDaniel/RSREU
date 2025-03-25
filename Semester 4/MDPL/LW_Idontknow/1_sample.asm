@@ -7,13 +7,9 @@ int 10h
 mov ax, 1003h
 mov bx, 0
 int 10h
-
-
-
+    
 mov     ax, 0b800h
 mov     ds, ax
-
-; first byte is ascii code, second byte is color code.
 
 mov [02h], 'H'
 
@@ -37,13 +33,7 @@ mov [14h], 'l'
 
 mov [16h], 'd'  
 
-mov [18h], '!'
-
-
-
-
-
-
+mov [18h], '!'                          
 
 mov cx, 12
 mov di, 03h

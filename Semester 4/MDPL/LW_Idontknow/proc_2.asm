@@ -9,10 +9,10 @@ x dw 0
 
 start:
     push 3                  ;c=3
-    push b                ;b
-    push a                ;a
+    push b                  ;b
+    push a                  ;a
     call primer             ;????? ?????????
-    mov x,ax              ;x=(a+b)/c
+    mov x,ax                ;x=(a+b)/
  
     mov ax,4C00h            ;\
     int 21h 
@@ -23,7 +23,7 @@ primer:
     push dx
  
     mov ax,[bp+4]           ;AX=a
-    add ax,[bp+6]          ;AX=(a+b)
+    add ax,[bp+6]           ;AX=(a+b)
     cwd                     ;DX:AX=(a+b)
  
     pop dx

@@ -1,14 +1,14 @@
                                                                              
 .data
-big db 10
-small db 3
+n1 db 3
+n2 db 10
 res db 0
    
 .code
 
 calc	proc
-    mov al, big
-    mov bl, small
+    mov al, n1
+    mov bl, n2
 cont:      
     sub al, bl
     mov res, al

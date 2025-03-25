@@ -1,31 +1,29 @@
                                                                                                                                                                                        
 .data
 a db 0
-b db 0
-c db 1
-f1 db 0
-f2 db 0 
+b db 1
+c db 0
 f db 0
    
 .code
-
+              ; (a or not(b) or c) and not(a) and b and c
 calc	proc
     mov al, a
     mov bl, b 
+    not bl    
     or al, bl
-    not al
-    mov cl, al                                                                               
+    mov bl, c
+    or al, bl
     
-    mov al, a
-    mov bl, c 
-    or al, bl 
-    not al
+    mov bl, a
+    not bl
+    and al, bl
+    mov bl, b
+    and al, bl
+    mov bl, c
+    and al, bl                                                                               
     
-    mov bl, cl 
-    mov f1, bl
-    mov f2, al
      
-    xor al, bl
     mov f, al
     
 exit:
