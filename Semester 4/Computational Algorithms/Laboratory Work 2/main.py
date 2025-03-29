@@ -1,15 +1,21 @@
 import sys
 
 import numpy as np
-from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton
+from PyQt6.QtGui import QDoubleValidator
+from PyQt6.QtWidgets import QApplication, QMainWindow, QWidget, QLabel, QPushButton, QLineEdit
 from matplotlib import pyplot as plt
 
 from PyQt6.QtCore import Qt
 
 
 class PlotWindow(QWidget):
-    def __init__(self):
+    def __init__(self, a, b, c, ans):
         super().__init__()
+
+        self.a = a
+        self.b = b
+        self.c = c
+        self.dot = ans
 
         self.initUI()
 
@@ -17,12 +23,13 @@ class PlotWindow(QWidget):
         self.setWindowTitle("График")
         self.setGeometry(100, 100, 600, 400)
         # Генерация данных для графика
-        x = np.linspace(-1.5, 1.5, 10000)
-        y = x**5 - x - 0.2
+        x = np.linspace(self.dot - 0.1, self.dot + 0.1, 10000)
+        # y = x**5 - x - 0.2
+        y = self.a * x**5 + self.b * x + self.c
         # Создание графика
         plt.figure()
         plt.plot(x, y, label="y")
-        plt.plot(-0.942086, 0, 'ro')
+        plt.plot(self.dot, 0, 'ro')
         plt.title("График функции")
         plt.xlabel("x")
         plt.ylabel("y")
@@ -42,18 +49,23 @@ class MainWindow(QMainWindow):
 
         # Параметры окна
         self.setWindowTitle("Finding the smallest root")
-        self.setGeometry(400, 150, 800, 385)
-        self.setFixedSize(800, 385)
+        self.setGeometry(400, 150, 800, 385 + 70)
+        self.setFixedSize(800, 385 + 70)
 
         widget = QWidget()
         self.setCentralWidget(widget)
 
         ###### Часть для решения уравнений
-        self.l = - 1e5
-        self.r = 1e5 + 1
+        self.start_l = - 1e5
+        self.start_r = 1e5 + 1
+        self.l = self.start_l
+        self.r = self.start_r
         self.step = 0.2
         self.eps = 1e-10
         self.rnd = 20
+        self.a = 1
+        self.b = -1
+        self.c = -0.2
         # self.eps = 1e-6
         # self.rnd = 15
         self.results = ["-", "-", "-", "-", "-", "-"]
@@ -62,6 +74,12 @@ class MainWindow(QMainWindow):
         ###### Графическая часть
 
         ### Объявления
+        # Текст "Коэффициенты"
+        self.txt_coef = QLabel(widget)
+        # Ввод коэффициентов
+        self.ent_a = QLineEdit(widget)
+        self.ent_b = QLineEdit(widget)
+        self.ent_c = QLineEdit(widget)
         # Текст "Уравнение"
         self.equation_text = QLabel(widget)
         self.equation = QLabel(widget)
@@ -98,20 +116,36 @@ class MainWindow(QMainWindow):
         ### Параметры
         # Общее
         self.horizontal_between = 10
+        # Текст "Коэффициенты"
+        self.coef_start_x = 20
+        self.coef_start_y = 20
+        self.coef_size_x = 200
+        self.coef_size_y = 50
+        self.coef_txt_size = 26
+        self.coef_style = f"font-size: {self.coef_txt_size}px; background-color: 'lightGray'; color: black;"
+        # Ввод коэффициентов
+        self.ent_x = self.coef_start_x + self.coef_size_x + 10
+        self.ent_y = self.coef_start_y
+        self.ent_size_x = 176
+        self.ent_size_y = self.coef_size_y
+        self.ent_btw_x = self.ent_size_x + 10
+        self.ent_txt_size = 26
+        self.ent_style = f"font-size: {self.ent_txt_size}px; background-color: 'lightGray'; color: black;"
         # Текст "Уравнение"
         self.equation_txt_size = 32
         self.equation_size_x = 200
         self.equation_size_y = 45
         self.equation_start_x = 20
-        self.equation_start_y = 20
+        self.equation_start_y = 20 + 70
         self.equation_delta_y = self.equation_size_y + 10
         self.equation_style = f"font-size: {self.equation_txt_size}px; background-color: 'lightGray'; color: black;"
+        self.equation_style_2 = f"font-size: {self.equation_txt_size - 8}px; background-color: 'lightGray'; color: black;"
         # Текст "Результат"
         self.result_txt_size = 18
         self.result_txt_size_x = 350
         self.result_txt_size_y = 30
         self.result_txt_start_x = 20
-        self.result_txt_start_y = 135
+        self.result_txt_start_y = 135 + 70
         self.result_txt_delta_y = self.result_txt_size_y + 10
         self.result_txt_style = f"font-size: {self.result_txt_size}px; background-color: 'lightGray'; color: black;"
         # Результат
@@ -126,7 +160,7 @@ class MainWindow(QMainWindow):
         self.btn_size_x = self.result_start_x - self.equation_start_x - self.equation_size_x - self.horizontal_between - self.horizontal_between
         self.btn_size_y = self.equation_size_y + self.equation_delta_y + 5 + 1
         self.btn_x = self.equation_start_x + self.equation_size_x + self.horizontal_between
-        self.btn_y = 17
+        self.btn_y = 17 + 70
         # Кнопка "График"
         self.btn_func_x = self.btn_x + self.btn_size_x + self.horizontal_between - 2
         self.btn_func_y = self.btn_y
@@ -159,6 +193,37 @@ class MainWindow(QMainWindow):
         self.start()
 
     def start(self):
+        # Текст "Коэффициенты"
+        self.txt_coef.move(self.coef_start_x, self.coef_start_y)
+        self.txt_coef.setText(" Коэффициенты:")
+        self.txt_coef.setFixedSize(self.coef_size_x, self.coef_size_y)
+        self.txt_coef.setStyleSheet(self.coef_style)
+
+        # Ввод коэффициентов
+        self.ent_a.move(self.ent_x, self.ent_y)
+        self.ent_b.move(self.ent_x + self.ent_btw_x, self.ent_y)
+        self.ent_c.move(self.ent_x + self.ent_btw_x * 2, self.ent_y)
+        self.ent_a.setFixedSize(self.ent_size_x, self.ent_size_y)
+        self.ent_b.setFixedSize(self.ent_size_x, self.ent_size_y)
+        self.ent_c.setFixedSize(self.ent_size_x, self.ent_size_y)
+        self.ent_a.setText("1")
+        self.ent_b.setText("-1")
+        self.ent_c.setText("-0,2")
+        self.ent_a.setStyleSheet(self.ent_style)
+        self.ent_b.setStyleSheet(self.ent_style)
+        self.ent_c.setStyleSheet(self.ent_style)
+        self.ent_a.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        self.ent_b.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        self.ent_c.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+        validator = QDoubleValidator()
+        validator.setNotation(QDoubleValidator.Notation.StandardNotation)
+        self.ent_a.editingFinished.connect(self.text_changed_a)
+        self.ent_b.editingFinished.connect(self.text_changed_b)
+        self.ent_c.editingFinished.connect(self.text_changed_c)
+        self.ent_a.setValidator(validator)
+        self.ent_b.setValidator(validator)
+        self.ent_c.setValidator(validator)
+
         # Текст "Уравнение"
         self.equation_text.setText(" Уравнение: ")
         self.equation.setText("x^5 - x - 0.2")
@@ -168,7 +233,7 @@ class MainWindow(QMainWindow):
         self.equation.setFixedSize(self.equation_size_x, self.equation_size_y)
         self.equation.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
         self.equation_text.setStyleSheet(self.equation_style)
-        self.equation.setStyleSheet(self.equation_style)
+        self.equation.setStyleSheet(self.equation_style_2)
 
         # Текст "Результат"
         self.result_txt_1.setText(" Метод Дихотомии")
@@ -276,17 +341,68 @@ class MainWindow(QMainWindow):
         self.accuracy_5.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
         self.accuracy_6.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
 
+    def text_changed_a(self):
+        self.a = float(self.ent_a.text().replace(",", "."))
+        self.eq_change()
+
+    def text_changed_b(self):
+        self.b = float(self.ent_b.text().replace(",", "."))
+        self.eq_change()
+
+    def text_changed_c(self):
+        self.c = float(self.ent_c.text().replace(",", "."))
+        self.eq_change()
+
+    def eq_change(self):
+        a = ""
+        a_s = ""
+        if abs(self.a) != 1:
+            if int(self.a) != float(self.a):
+                a = str(abs(self.a))
+            else:
+                a = str(abs(int(self.a)))
+        if self.a < 0:
+            a_s = "-"
+
+        b = ""
+        b_s = ""
+        if abs(self.b) != 1:
+            if int(self.b) != float(self.b):
+                b = str(abs(self.b))
+            else:
+                b = str(abs(int(self.b)))
+        if self.b >= 0:
+            b_s = "+"
+        else:
+            b_s = "-"
+
+        c = ""
+        c_s = ""
+        if abs(self.c) != 1:
+            if int(self.c) != float(self.c):
+                c = str(abs(self.c))
+            else:
+                c = str(abs(int(self.c)))
+        if self.c >= 0:
+            c_s = "+"
+        else:
+            c_s = "-"
+
+        eq = f"{a_s}{a}x^5 {b_s} {b}x {c_s} {c}"
+
+        self.equation.setText(eq)
+
     # Заданная функция
     def f(self, n):
-        return n**5 - n - 0.2
+        return self.a * n**5 + self.b * n + self.c
 
     # Первая производная заданной функции:
     def f1(self, n):
-        return 5 * n ** 4 - 1
+        return 5 * self.a * n ** 4 - self.b
 
     # Вторая производная заданной функции:
     def f2(self, n):
-        return 20 * n ** 3
+        return 20 * self.a * n ** 3
 
     def determine_boundaries(self):
         print("Произвожу определение границ")
@@ -367,6 +483,7 @@ class MainWindow(QMainWindow):
         while abs(x - x_prev) > self.eps:
             x_prev = x
             x -= self.f(x) / self.f1(x)
+
         acc = round(abs(x - x_prev), self.rnd)
 
         self.results[2] = x
@@ -405,7 +522,12 @@ class MainWindow(QMainWindow):
 
         while abs(x - y) > self.eps:
             x_new = x - self.f(x) / self.f1(x)
-            y_new = y - self.f(y) * (x_new - y) / (self.f(x_new) - self.f(y))
+            if (self.f(x_new) - self.f(y)) != 0:
+                y_new = y - self.f(y) * (x_new - y) / (self.f(x_new) - self.f(y))
+            else:
+                last = x
+                x = x_new
+                continue
             last = x
 
             x = x_new
@@ -418,7 +540,7 @@ class MainWindow(QMainWindow):
 
     # Метод итераций
     def iteration_method(self):
-        max_iterations = 100
+        max_iterations = 1000
         left = self.l
         right = self.r
 
@@ -435,28 +557,71 @@ class MainWindow(QMainWindow):
                 self.accuracy_list[5] = acc
                 return
             x = x_new
+        self.results[5] = "Не сошёлся"
+        self.accuracy_list[5] = "-"
 
     # Отображение графика
     def show_plot_window(self):
         # Создание нового окна для графика
-        plot_window = PlotWindow()
+        plot_window = PlotWindow(self.a, self.b, self.c, self.results[2])
         plot_window.show()
 
     # Запуск решения
     def start_solution(self):
+        self.l = self.start_l
+        self.r = self.start_r
         # Определение границ
         self.determine_boundaries()
 
         # Использование различных методов
-        self.dichotomia()
-        self.chord_method()
-        self.newton_method()
-        self.modified_newton_method()
-        self.combined_method()
-        self.iteration_method()
-
-        # Вызов отображения результата
+        try:
+            self.dichotomia()
+        except:
+            self.results[0] = "Не сошёлся"
+            self.accuracy_list[0] = "-"
         self.change_result_txt()
+        print("Метод дихотомии выполнен")
+
+        try:
+            self.chord_method()
+        except:
+            self.results[1] = "Не сошёлся"
+            self.accuracy_list[1] = "-"
+        self.change_result_txt()
+        print("Метод хорд выполнен")
+
+        try:
+            self.newton_method()
+        except:
+            self.results[2] = "Не сошёлся"
+            self.accuracy_list[2] = "-"
+        self.change_result_txt()
+        print("Метод касательных выполнен")
+
+        try:
+            self.modified_newton_method()
+        except:
+            self.results[3] = "Не сошёлся"
+            self.accuracy_list[3] = "-"
+        self.change_result_txt()
+        print("Метод касательных (модифицированный) выполнен")
+
+        try:
+            self.combined_method()
+        except:
+            self.results[4] = "Не сошёлся"
+            self.accuracy_list[4] = "-"
+        self.change_result_txt()
+        print("Метод комбинированный выполнен")
+
+        try:
+            self.iteration_method()
+        except:
+            self.results[5] = "Не сошёлся"
+            self.accuracy_list[5] = "-"
+        self.change_result_txt()
+        print("Метод итераций выполнен")
+        print()
 
     # Функция установки результатов в Label
     def change_result_txt(self):
