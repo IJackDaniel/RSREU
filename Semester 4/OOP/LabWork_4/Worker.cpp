@@ -8,42 +8,40 @@
 #include <limits> 
 #include <unordered_map>
 
-#include "Employee.cpp"
-#include "Part.cpp"
+using namespace std;
 
-// Ð Ð°Ð±Ð¾Ñ‡Ð¸Ð¹
-class Worker : public Employee {
-    vector<Part> parts;
-public:
-    Worker(const string& name, int age, double baseSalary)
-        : Employee(name, age, baseSalary) {}
+#include "Worker.hpp"
+#include "Employee.hpp"
+#include "Part.hpp"
 
-    void addPart(const Part& part) { parts.push_back(part); }
+Worker::Worker(const string& name, int age, double baseSalary)
+    : Employee(name, age, baseSalary) {}
 
-    double calculateProductivity() const {
-        if (parts.empty()) return 1.0;
-        double sum = 0.0;
-        for (const auto& part : parts) {
-            sum += part.getCompletionRatio();
-        }
-        return sum / parts.size();
+void Worker::addPart(const Part& part) { parts.push_back(part); }
+
+double Worker::calculateProductivity() const {
+    if (parts.empty()) return 1.0;
+    double sum = 0.0;
+    for (const auto& part : parts) {
+        sum += part.getCompletionRatio();
     }
+    return sum / parts.size();
+}
 
-    double calculateSalary() const override {
-        return baseSalary * calculateProductivity();
+double Worker::calculateSalary() const {
+    return baseSalary * calculateProductivity();
+}
+
+string Worker::getPosition() const { return "Ðàáî÷èé"; }
+
+void Worker::printInfo() const {
+    Employee::printInfo();
+    cout << "Äåòàëè:" << endl;
+    for (const auto& part : parts) {
+        cout << "  " << part.getName() << ": íîðìà=" << part.getNorm() 
+                << ", ôàêò=" << part.getActual() 
+                << ", êîýô.=" << part.getCompletionRatio() << endl;
     }
+}
 
-    string getPosition() const override { return "Ð Ð°Ð±Ð¾Ñ‡Ð¸Ð¹"; }
-
-    void printInfo() const override {
-        Employee::printInfo();
-        cout << "Ð”ÐµÑ‚Ð°Ð»Ð¸:" << endl;
-        for (const auto& part : parts) {
-            cout << "  " << part.getName() << ": Ð½Ð¾Ñ€Ð¼Ð°=" << part.getNorm() 
-                 << ", Ñ„Ð°ÐºÑ‚=" << part.getActual() 
-                 << ", ÐºÐ¾ÑÑ„.=" << part.getCompletionRatio() << endl;
-        }
-    }
-
-    const vector<Part>& getParts() const { return parts; }
-};
+const vector<Part>& Worker::getParts() const { return parts; }

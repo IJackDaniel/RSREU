@@ -5,18 +5,17 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+#include <limits> 
+#include <unordered_map>
 
-// Класс для детали
-class Part {
-    string name;
-    double norm;        // Норма выработки
-    double actual;      // Фактическая выработка
-public:
-    Part(const string& name, double norm, double actual)
-        : name(name), norm(norm), actual(actual) {}
+using namespace std;
 
-    double getNorm() const { return norm; }
-    double getActual() const { return actual; }
-    double getCompletionRatio() const { return actual / norm; }
-    const string& getName() const { return name; }
-};
+#include "Part.hpp"
+
+Part::Part(const string& name, double norm, double actual)
+    : name(name), norm(norm), actual(actual) {}
+
+double Part::getNorm() const { return norm; }
+double Part::getActual() const { return actual; }
+double Part::getCompletionRatio() const { return actual / norm; }
+const string& Part::getName() const { return name; }

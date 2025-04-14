@@ -8,45 +8,43 @@
 #include <limits> 
 #include <unordered_map>
 
-#include "Employee.cpp"
-#include "Worker.cpp"
+using namespace std;
 
-// Инженер
-class Engineer : public Employee {
-    vector<Worker*> subordinates;
-public:
-    Engineer(const string& name, int age, double baseSalary)
-        : Employee(name, age, baseSalary) {}
+#include "Engineer.hpp"
+#include "Employee.hpp"
+#include "Worker.hpp"
 
-    void addSubordinate(Worker* worker) { subordinates.push_back(worker); }
+Engineer::Engineer(const string& name, int age, double baseSalary)
+    : Employee(name, age, baseSalary) {}
 
-    double calculateProductivity() const {
-        if (subordinates.empty()) return 1.0;
-        double sum = 0.0;
-        for (const auto worker : subordinates) {
-            sum += worker->calculateProductivity();
-        }
-        return sum / subordinates.size();
+void Engineer::addSubordinate(Worker* worker) { subordinates.push_back(worker); }
+
+double Engineer::calculateProductivity() const {
+    if (subordinates.empty()) return 1.0;
+    double sum = 0.0;
+    for (const auto worker : subordinates) {
+        sum += worker->calculateProductivity();
     }
+    return sum / subordinates.size();
+}
 
-    double calculateSalary() const override {
-        double productivity = calculateProductivity();
-        double salary = baseSalary * productivity;
-        if (productivity > 1.0) {
-            salary *= 1.1; // 10% надбавка за перевыполнение
-        }
-        return salary;
+double Engineer::calculateSalary() const {
+    double productivity = calculateProductivity();
+    double salary = baseSalary * productivity;
+    if (productivity > 1.0) {
+        salary *= 1.1; // 10% надбавка за перевыполнение
     }
+    return salary;
+}
 
-    string getPosition() const override { return "Инженер"; }
+string Engineer::getPosition() const { return "�������"; }
 
-    void printInfo() const override {
-        Employee::printInfo();
-        cout << "Подчиненные рабочие:" << endl;
-        for (const auto worker : subordinates) {
-            cout << "  " << worker->getName() << endl;
-        }
+void Engineer::printInfo() const {
+    Employee::printInfo();
+    cout << "����������� �������:" << endl;
+    for (const auto worker : subordinates) {
+        cout << "  " << worker->getName() << endl;
     }
+}
 
-    const vector<Worker*>& getSubordinates() const { return subordinates; }
-};
+const vector<Worker*>& Engineer::getSubordinates() const { return subordinates; }

@@ -8,59 +8,34 @@
 #include <limits> 
 #include <unordered_map>
 
-#include "Worker.cpp"
-#include "Engineer.cpp"
-#include "WorkshopManager.cpp"
-#include "Staff.cpp"
-#include "Storekeeper.cpp"
-#include "RandomGenerator.cpp"
+#include "Worker.hpp"
+#include "Engineer.hpp"
+#include "WorkshopManager.hpp"
+#include "Staff.hpp"
+#include "Storekeeper.hpp"
+#include "RandomGenerator.hpp"
 
 int main() {
+    setlocale(LC_ALL, "Russian");
     srand(time(nullptr));
     Staff staff;
 
-    // –°–æ–∑–¥–∞–µ–º –Ω–µ—Å–∫–æ–ª—å–∫–æ –∑–∞–≤—Ö–æ–∑–æ–≤
     vector<Storekeeper*> storekeepers;
-    for (int i = 0; i < 2; ++i) {
-        storekeepers.push_back(RandomGenerator::createRandomStorekeeper());
-    }
-
-    // –°–æ–∑–¥–∞–µ–º —Ä–∞–±–æ—á–∏—Ö
     vector<Worker*> workers;
-    for (int i = 0; i < 10; ++i) {
-        workers.push_back(RandomGenerator::createRandomWorker());
-    }
-
-    // –°–æ–∑–¥–∞–µ–º –∏–Ω–∂–µ–Ω–µ—Ä–æ–≤
     vector<Engineer*> engineers;
-    for (int i = 0; i < 5; ++i) {
-        engineers.push_back(RandomGenerator::createRandomEngineer(workers));
-    }
-
-    // –°–æ–∑–¥–∞–µ–º –Ω–∞—á–∞–ª—å–Ω–∏–∫–æ–≤ —Ü–µ—Ö–æ–≤
     vector<WorkshopManager*> managers;
-    for (int i = 0; i < 3; ++i) {
-        managers.push_back(RandomGenerator::createRandomWorkshopManager(engineers, storekeepers[rand() % storekeepers.size()]));
-    }
 
-    // –î–æ–±–∞–≤–ª—è–µ–º –≤—Å–µ—Ö –≤ –ø–µ—Ä—Å–æ–Ω–∞–ª
-    for (auto worker : workers) staff.add(worker);
-    for (auto engineer : engineers) staff.add(engineer);
-    for (auto manager : managers) staff.add(manager);
-    for (auto storekeeper : storekeepers) staff.add(storekeeper);
-
-    // –û—Å–Ω–æ–≤–Ω–æ–µ –º–µ–Ω—é
     while (true) {
-        cout << "\n–ú–µ–Ω—é:" << endl;
-        cout << "1. –í—ã–≤–µ—Å—Ç–∏ —Å–ø–∏—Å–æ–∫ —Å–æ—Ç—Ä—É–¥–Ω–∏–∫–æ–≤" << endl;
-        cout << "2. –î–æ–±–∞–≤–∏—Ç—å —Å–ª—É—á–∞–π–Ω–æ–≥–æ —Å–æ—Ç—Ä—É–¥–Ω–∏–∫–∞" << endl;
-        cout << "3. –£–¥–∞–ª–∏—Ç—å —Å–æ—Ç—Ä—É–¥–Ω–∏–∫–∞" << endl;
-        cout << "4. –†–∞—Å—Å—á–∏—Ç–∞—Ç—å —Å—É–º–º–∞—Ä–Ω—ã–µ –≤—ã–ø–ª–∞—Ç—ã" << endl;
-        cout << "5. –ü–æ–∫–∞–∑–∞—Ç—å —Å—Ç–∞—Ç–∏—Å—Ç–∏–∫—É –ø–æ –∑–∞—Ä–ø–ª–∞—Ç–∞–º" << endl;
-        cout << "0. –í—ã—Ö–æ–¥" << endl;
+        cout << "\nÃÂÌ˛:" << endl;
+        cout << "1. ¬˚‚ÂÒÚË ÒÔËÒÓÍ ÒÓÚÛ‰ÌËÍÓ‚" << endl;
+        cout << "2. ƒÓ·‡‚ËÚ¸ ÒÎÛ˜‡ÈÌÓ„Ó ÒÓÚÛ‰ÌËÍ‡" << endl;
+        cout << "3. ”‰‡ÎËÚ¸ ÒÓÚÛ‰ÌËÍ‡" << endl;
+        cout << "4. –‡ÒÒ˜ËÚ‡Ú¸ ÒÛÏÏ‡Ì˚Â ‚˚ÔÎ‡Ú˚" << endl;
+        cout << "5. œÓÍ‡Á‡Ú¸ ÒÚ‡ÚËÒÚËÍÛ ÔÓ Á‡ÔÎ‡Ú‡Ï" << endl;
+        cout << "0. ¬˚ıÓ‰" << endl;
 
         int choice;
-        cout << "–í—ã–±–µ—Ä–∏—Ç–µ –¥–µ–π—Å—Ç–≤–∏–µ: ";
+        cout << "¬˚·ÂËÚÂ ‰ÂÈÒÚ‚ËÂ: ";
         cin >> choice;
 
         switch (choice) {
@@ -68,52 +43,71 @@ int main() {
                 staff.printAll();
                 break;
             case 2: {
-                cout << "–í—ã–±–µ—Ä–∏—Ç–µ —Ç–∏–ø —Å–æ—Ç—Ä—É–¥–Ω–∏–∫–∞:" << endl;
-                cout << "1. –†–∞–±–æ—á–∏–π" << endl;
-                cout << "2. –ò–Ω–∂–µ–Ω–µ—Ä" << endl;
-                cout << "3. –ù–∞—á–∞–ª—å–Ω–∏–∫ —Ü–µ—Ö–∞" << endl;
-                cout << "4. –ó–∞–≤—Ö–æ–∑" << endl;
+                cout << "¬˚·ÂËÚÂ ÚËÔ ÒÓÚÛ‰ÌËÍ‡:" << endl;
+                cout << "1. –‡·Ó˜ËÈ" << endl;
+                cout << "2. »ÌÊÂÌÂ" << endl;
+                cout << "3. Õ‡˜‡Î¸ÌËÍ ˆÂı‡" << endl;
+                cout << "4. «‡‚ıÓÁ" << endl;
                 int type;
                 cin >> type;
 
                 Employee* newEmp = nullptr;
                 switch (type) {
-                    case 1:
-                        newEmp = RandomGenerator::createRandomWorker();
+                    case 1: {
+                        Worker* worker = RandomGenerator::createRandomWorker();
+                        workers.push_back(worker);
+                        staff.add(worker);
+                        newEmp = worker;
                         break;
-                    case 2:
-                        newEmp = RandomGenerator::createRandomEngineer(workers);
+                    }
+                    case 2: {
+                        Engineer* engineer = RandomGenerator::createRandomEngineer(workers);
+                        engineers.push_back(engineer);
+                        staff.add(engineer);
+                        newEmp = engineer;
                         break;
-                    case 3:
-                        newEmp = RandomGenerator::createRandomWorkshopManager(engineers, storekeepers[rand() % storekeepers.size()]);
+                    }
+                    case 3: {
+                        if (storekeepers.empty() || engineers.empty()) {
+                            cout << "Œ¯Ë·Í‡: ‰Îˇ ÒÓÁ‰‡ÌËˇ Ì‡˜‡Î¸ÌËÍ‡ ˆÂı‡ ÌÛÊÂÌ ıÓÚˇ ·˚ Ó‰ËÌ Á‡‚ıÓÁ Ë Ó‰ËÌ ËÌÊÂÌÂ" << endl;
+                            break;
+                        }
+                        WorkshopManager* manager = RandomGenerator::createRandomWorkshopManager(
+                            engineers, storekeepers[rand() % storekeepers.size()]);
+                        managers.push_back(manager);
+                        staff.add(manager);
+                        newEmp = manager;
                         break;
-                    case 4:
-                        newEmp = RandomGenerator::createRandomStorekeeper();
-                        storekeepers.push_back(dynamic_cast<Storekeeper*>(newEmp));
+                    }
+                    case 4: {
+                        Storekeeper* storekeeper = RandomGenerator::createRandomStorekeeper();
+                        storekeepers.push_back(storekeeper);
+                        staff.add(storekeeper);
+                        newEmp = storekeeper;
                         break;
+                    }
                     default:
-                        cout << "–ù–µ–≤–µ—Ä–Ω—ã–π –≤—ã–±–æ—Ä" << endl;
+                        cout << "ÕÂ‚ÂÌ˚È ‚˚·Ó" << endl;
                         break;
                 }
                 if (newEmp) {
-                    staff.add(newEmp);
-                    cout << "–°–æ—Ç—Ä—É–¥–Ω–∏–∫ –¥–æ–±–∞–≤–ª–µ–Ω" << endl;
+                    cout << "—ÓÚÛ‰ÌËÍ ‰Ó·‡‚ÎÂÌ: " << newEmp->getName() << endl;
                 }
                 break;
             }
             case 3: {
                 int index;
-                cout << "–í–≤–µ–¥–∏—Ç–µ –Ω–æ–º–µ—Ä —Å–æ—Ç—Ä—É–¥–Ω–∏–∫–∞ –¥–ª—è —É–¥–∞–ª–µ–Ω–∏—è: ";
+                cout << "¬‚Â‰ËÚÂ ÌÓÏÂ ÒÓÚÛ‰ÌËÍ‡ ‰Îˇ Û‰‡ÎÂÌËˇ: ";
                 cin >> index;
                 if (staff.remove(index)) {
-                    cout << "–°–æ—Ç—Ä—É–¥–Ω–∏–∫ —É–¥–∞–ª–µ–Ω" << endl;
+                    cout << "—ÓÚÛ‰ÌËÍ Û‰‡ÎÂÌ" << endl;
                 } else {
-                    cout << "–ù–µ–≤–µ—Ä–Ω—ã–π –Ω–æ–º–µ—Ä" << endl;
+                    cout << "ÕÂ‚ÂÌ˚È ÌÓÏÂ" << endl;
                 }
                 break;
             }
             case 4:
-                cout << "–°—É–º–º–∞—Ä–Ω—ã–µ –≤—ã–ø–ª–∞—Ç—ã: " << staff.calculateTotalPayments() << endl;
+                cout << "—ÛÏÏ‡Ì˚Â ‚˚ÔÎ‡Ú˚: " << staff.calculateTotalPayments() << endl;
                 break;
             case 5:
                 staff.printSalaryStatsByPosition();
@@ -121,7 +115,7 @@ int main() {
             case 0:
                 return 0;
             default:
-                cout << "–ù–µ–≤–µ—Ä–Ω—ã–π –≤—ã–±–æ—Ä" << endl;
+                cout << "ÕÂ‚ÂÌ˚È ‚˚·Ó" << endl;
         }
     }
 

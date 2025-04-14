@@ -8,6 +8,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+#include <limits> 
+#include <unordered_map>
 
 using namespace std;
 
@@ -18,8 +20,7 @@ protected:
     int age;
     double baseSalary;
 public:
-    Employee(const string& name, int age, double baseSalary)
-        : name(name), age(age), baseSalary(baseSalary) {}
+    Employee(const string& name, int age, double baseSalary);
 
     virtual ~Employee() {}
 
@@ -29,7 +30,7 @@ public:
 
     const string& getName() const;
     int getAge() const;
-    double getBaseSalary();
+    double getBaseSalary() const;
 };
 
 #endif
