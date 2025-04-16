@@ -23,8 +23,8 @@ namespace Laboratory_Work_5
         public Form1()
         {
             InitializeComponent();
-            //this.Paint += new PaintEventHandler(Form1_Paint);
-            this.Paint += new PaintEventHandler(DrawFootballPlayer);
+            this.Paint += new PaintEventHandler(Form1_Paint);
+            //this.Paint += new PaintEventHandler(DrawFootballPlayer);
             this.ClientSize = new Size(width, height);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -79,6 +79,7 @@ namespace Laboratory_Work_5
             DrawGrass(graphics);
             DrawFootballGoal(graphics, skyHeight, transitionHeight);
             DrawFootballBall(graphics);
+            DrawFootballPlayer(graphics);
         }
         
         private void DrawGrass(Graphics g)
@@ -178,22 +179,188 @@ namespace Laboratory_Work_5
                 ballRadius * 2);
         }
 
-        private PictureBox pictureBox;
-        private void DrawFootballPlayer(object sender, PaintEventArgs e)
+        //private PictureBox pictureBox;
+        //private void DrawFootballPlayer(object sender, PaintEventArgs e)
+        //{
+        //    pictureBox = new PictureBox
+        //    {
+        //        SizeMode = PictureBoxSizeMode.Zoom,
+        //        Dock = DockStyle.Fill
+        //    };
+        //    this.Controls.Add(pictureBox);
+        //    try
+        //    {
+        //        pictureBox.Image = new Bitmap("C:\\Programming\\RSREU\\Semester 4\\Computer Graphics\\Laboratory_Work_5\\sourse\\man.png");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Ошибка: {ex.Message}");
+        //    }
+        //}
+
+        private void DrawFootballPlayer(Graphics g)
         {
-            pictureBox = new PictureBox
+            // Кисти и карандаши
+            using (Pen blackPen = new Pen(Color.Black, 2))
+            using (Brush hairBrush = new SolidBrush(Color.SaddleBrown))
+            using (Brush bodyBrush = new SolidBrush(Color.Red))
+            using (Brush pantsBrush = new SolidBrush(Color.Blue))
+            using (Brush shoesBrush = new SolidBrush(Color.Black))
+            using (Brush handsBrush = new SolidBrush(Color.White))
+            using (Brush skinBrush = new SolidBrush(Color.PeachPuff))
             {
-                SizeMode = PictureBoxSizeMode.Zoom,
-                Dock = DockStyle.Fill
-            };
-            this.Controls.Add(pictureBox);
-            try
-            {
-                pictureBox.Image = new Bitmap("C:\\Programming\\RSREU\\Semester 4\\Computer Graphics\\Laboratory_Work_5\\sourse\\man.png");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}");
+
+
+                // Туловище
+                Point[] body = {
+                    new Point(189, 557),
+                    new Point(247, 525),
+                    new Point(319, 512), // Начало шеи
+                    new Point(344, 532),
+                    new Point(361, 524), // Конец шеи
+                    new Point(382, 531),
+                    new Point(405, 591),
+                    new Point(390, 608),
+                    new Point(341, 601), // начало кисти
+                    new Point(338, 587), // конец кисти
+                    new Point(378, 590),
+                    new Point(366, 574),
+
+                    new Point(359, 588),
+                    new Point(338, 587),
+                    new Point(341, 601),
+                    new Point(353, 604),
+
+                    new Point(345, 623), // правые штаны
+                    new Point(300, 631),
+                    new Point(262, 614), // левые штаны
+                    new Point(278, 602),
+                    new Point(293, 547),
+                    new Point(264, 552),
+                    new Point(194, 574),
+                };
+                g.FillPolygon(bodyBrush, body);
+                g.DrawPolygon(blackPen, body);
+
+                // Кисть 1
+                Point[] hand_1 = {
+                    new Point(341, 601), // начало кисти
+                    new Point(301, 596),
+                    new Point(310, 586), 
+                    new Point(338, 587), // конец кисти
+                };
+                g.FillPolygon(handsBrush, hand_1);
+                g.DrawPolygon(blackPen, hand_1);
+
+                // Кисть 2
+                Point[] hand_2 = {
+                    new Point(189, 557),
+                    new Point(192, 565),
+                    new Point(166, 600),
+                    new Point(166, 587),
+                    new Point(135, 592),
+                    new Point(137, 573),
+                    new Point(160, 573),
+                };
+                g.FillPolygon(handsBrush, hand_2);
+                g.DrawPolygon(blackPen, hand_2);
+
+
+                // левая нога
+                Point[] left_leg = {
+                    new Point(345, 623), // правые штаны
+                    new Point(300, 631),
+                    new Point(262, 614), // левые штаны
+                    new Point(298, 704),
+                    new Point(323, 712),
+                    new Point(340, 748),
+                    new Point(295, 800), //
+                    new Point(331, 816),
+                    new Point(374, 751),
+                };
+                g.FillPolygon(pantsBrush, left_leg);
+                g.DrawPolygon(blackPen, left_leg);
+
+
+                // правая нога
+                Point[] right_leg = {
+                    new Point(345, 623), // правые штаны
+                    new Point(300, 631),
+                    new Point(262, 614), // левые штаны
+                    new Point(275, 655),
+                    new Point(310, 689),
+                    new Point(396, 665),
+                    new Point(453, 707),
+                    new Point(476, 694), // Начало ступни
+                    new Point(410, 637),
+                };
+                g.FillPolygon(pantsBrush, right_leg);
+                g.DrawPolygon(blackPen, right_leg);
+
+                // левея ступня
+                Point[] left_foot = {
+                    new Point(295, 800),
+                    new Point(276, 819),
+                    new Point(338, 865),
+                    new Point(361, 856),
+                    new Point(349, 836),
+                    new Point(331, 816)
+                };
+                g.FillPolygon(shoesBrush, left_foot);
+                g.DrawPolygon(blackPen, left_foot);
+
+                // правая ступня
+                Point[] right_foot = {
+                    new Point(476, 694),
+                    new Point(437, 717),
+                    new Point(498, 758),
+                    new Point(495, 727),
+                };
+                g.FillPolygon(shoesBrush, right_foot);
+                g.DrawPolygon(blackPen, right_foot);
+
+                // Белая тыква
+                Point[] head = {
+                    new Point(333, 523),
+                    new Point(351, 490),
+                    new Point(367, 490),
+                    new Point(390, 463),
+                    new Point(406, 460),
+                    new Point(425, 478),
+                    new Point(396, 509),
+                    new Point(384, 509),
+                    new Point(360, 520),
+                    new Point(361, 524),
+                    new Point(344, 532),
+                };
+                g.FillPolygon(handsBrush, head);
+                g.DrawPolygon(blackPen, head);
+
+                // волосы
+                Point[] hair = {
+                    new Point(333, 523),
+                    new Point(319, 512),
+                    new Point(321, 451),
+                    new Point(350, 428),
+                    new Point(398, 428),
+                    new Point(415, 442),
+                    new Point(406, 460),
+                    new Point(390, 463),
+                    new Point(367, 490),
+                    new Point(351, 490),
+                };
+                g.FillPolygon(hairBrush, hair);
+                g.DrawPolygon(blackPen, hair);
+
+                // глаз
+                Point[] eye = {
+                    new Point(404, 482),
+                    new Point(394, 480),
+                    new Point(404, 470),
+                };
+                g.FillPolygon(shoesBrush, eye);
+                g.DrawPolygon(blackPen, eye);
+
             }
         }
 
