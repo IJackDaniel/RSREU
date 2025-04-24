@@ -111,7 +111,7 @@ namespace Laboratory_Work_5
             int goalHeight = goalBottom - goalTop;
 
             // Увеличенная толщина перекладин
-            int goalPostThickness = 15; // Было 10
+            int goalPostThickness = 15; 
             int crossbarThickness = 15; // Новая переменная для горизонтальной перекладины
 
             // Цвета
