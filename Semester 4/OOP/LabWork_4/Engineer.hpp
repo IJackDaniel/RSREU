@@ -15,13 +15,16 @@ using namespace std;
 
 #include "Worker.hpp"
 
-// РРЅР¶РµРЅРµСЂ
+// Инженер
 class Engineer : public Employee {
     vector<Worker*> subordinates;
 public:
     Engineer(const string& name, int age, double baseSalary);
 
     void addSubordinate(Worker* worker);
+    
+    // Новый метод для обновления списка подчиненных
+    void updateSubordinates(const vector<Worker*>& newSubordinates);
 
     double calculateProductivity() const;
 
@@ -32,6 +35,7 @@ public:
     void printInfo() const override;
 
     const vector<Worker*>& getSubordinates() const;
+
 };
 
 #endif

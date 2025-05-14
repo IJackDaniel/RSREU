@@ -15,7 +15,7 @@ using namespace std;
 
 #include "Employee.hpp"
 
-// РљРѕРјРїРѕР·РёС‚РЅР°СЏ СЃСѓС‰РЅРѕСЃС‚СЊ - РџРµСЂСЃРѕРЅР°Р»
+// Композитная сущность - Персонал
 class Staff {
     struct Node {
         Employee* employee;
@@ -33,6 +33,7 @@ public:
 
     void add(Employee* emp);
 
+
     bool remove(int index);
 
     void clear();
@@ -41,13 +42,13 @@ public:
 
     Employee* get(int index) const;
 
-    // РЎСѓРјРјР°СЂРЅС‹Рµ РІС‹РїР»Р°С‚С‹
+    // Суммарные выплаты
     double calculateTotalPayments() const;
 
-    // РњРёРЅРёРјР°Р»СЊРЅР°СЏ Рё РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ Р·Р°СЂРїР»Р°С‚Р° РїРѕ РґРѕР»Р¶РЅРѕСЃС‚Рё
+    // Минимальная и максимальная зарплата по должности
     void printSalaryStatsByPosition() const;
 
-    // Р’С‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РІСЃРµС… СЃРѕС‚СЂСѓРґРЅРёРєР°С…
+    // Вывод информации о всех сотрудниках
     void printAll() const;
 };
 

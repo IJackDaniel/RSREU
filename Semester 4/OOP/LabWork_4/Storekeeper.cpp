@@ -18,7 +18,7 @@ Storekeeper::Storekeeper(const string& name, int age, double baseSalary)
     : Employee(name, age, baseSalary) {}
 
 double Storekeeper::calculateSalary() const {
-    return baseSalary * 1.6; // 60% РЅР°РґР±Р°РІРєР°
+    return baseSalary * 1.6; // 60% надбавка
 }
 
 string Storekeeper::getPosition() const { return "Завхоз"; }

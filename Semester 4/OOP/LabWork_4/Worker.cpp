@@ -38,9 +38,9 @@ void Worker::printInfo() const {
     Employee::printInfo();
     cout << "Детали:" << endl;
     for (const auto& part : parts) {
-        cout << "  " << part.getName() << ": норма=" << part.getNorm() 
-                << ", факт=" << part.getActual() 
-                << ", коэф.=" << part.getCompletionRatio() << endl;
+        cout << "  " << part.getName() << ": Норма=" << part.getNorm() 
+                << ", Факт=" << part.getActual() 
+                << ", Коэфф.=" << part.getCompletionRatio() << endl;
     }
 }
 

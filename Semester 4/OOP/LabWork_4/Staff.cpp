@@ -12,8 +12,10 @@ using namespace std;
 
 #include "Staff.hpp"
 #include "Employee.hpp"
+#include "Worker.hpp"
+#include "Engineer.hpp"
 
-// РљРѕРјРїРѕР·РёС‚РЅР°СЏ СЃСѓС‰РЅРѕСЃС‚СЊ - РџРµСЂСЃРѕРЅР°Р»
+// Композитная сущность - Персонал
 
 Staff::Staff() : head(nullptr), size(0) {}
 Staff::~Staff() {
@@ -34,6 +36,28 @@ bool Staff::remove(int index) {
     }
 
     Node* temp = *ptr;
+    Employee* empToRemove = temp->employee;
+    
+    if (empToRemove->getPosition() == "Рабочий") {
+        Node* current = head;
+        while (current) {
+            if (current->employee->getPosition() == "Инженер") {
+                Engineer* engineer = static_cast<Engineer*>(current->employee);
+                vector<Worker*> newSubordinates;
+                const vector<Worker*>& subordinates = engineer->getSubordinates();
+                
+                for (Worker* worker : subordinates) {
+                    if (worker != static_cast<Worker*>(empToRemove)) {
+                        newSubordinates.push_back(worker);
+                    }
+                }
+                
+                engineer->updateSubordinates(newSubordinates);
+            }
+            current = current->next;
+        }
+    }
+    
     *ptr = temp->next;
     delete temp;
     size--;
@@ -60,7 +84,7 @@ Employee* Staff::get(int index) const {
     return current->employee;
 }
 
-// РЎСѓРјРјР°СЂРЅС‹Рµ РІС‹РїР»Р°С‚С‹
+// Суммарные выплаты
 double Staff::calculateTotalPayments() const {
     double total = 0.0;
     Node* current = head;
@@ -71,7 +95,7 @@ double Staff::calculateTotalPayments() const {
     return total;
 }
 
-// РњРёРЅРёРјР°Р»СЊРЅР°СЏ Рё РјР°РєСЃРёРјР°Р»СЊРЅР°СЏ Р·Р°СЂРїР»Р°С‚Р° РїРѕ РґРѕР»Р¶РЅРѕСЃС‚Рё
+// Минимальная и максимальная зарплата по должности
 void Staff::printSalaryStatsByPosition() const {
     struct Stats {
         double min = numeric_limits<double>::max();
@@ -93,14 +117,14 @@ void Staff::printSalaryStatsByPosition() const {
         current = current->next;
     }
 
-    cout << "Статистика по зарплатам:" << endl;
+    cout << "Статистика по должностям:" << endl;
     for (const auto& [position, stat] : stats) {
         cout << position << ": мин=" << stat.min << ", макс=" << stat.max 
                 << ", количество=" << stat.count << endl;
     }
 }
 
-// Р’С‹РІРѕРґ РёРЅС„РѕСЂРјР°С†РёРё Рѕ РІСЃРµС… СЃРѕС‚СЂСѓРґРЅРёРєР°С…
+// Вывод информации о всех сотрудниках
 void Staff::printAll() const {
     cout << "Список сотрудников (" << size << "):" << endl;
     Node* current = head;

@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <limits> 
 #include <unordered_map>
+#include <algorithm>
+#include <random> // Добавляем для std::shuffle
 
 using namespace std;
 
@@ -16,12 +18,13 @@ using namespace std;
 #include "WorkshopManager.hpp"
 #include "Storekeeper.hpp"
 
-// Р“РµРЅРµСЂР°С†РёСЏ СЃР»СѓС‡Р°Р№РЅС‹С… РґР°РЅРЅС‹С…
+// Генерация случайных данных
 string RandomGenerator::randomName() {
-    static vector<string> names = {"Иван", "Петр", "Сергей", "Алексей", "Дмитрий", 
-                                    "Анна", "Елена", "Ольга", "Наталья", "Мария"};
+    // Имена и фамилии в кодировке Windows-1251
+    static vector<string> names = {"Иван", "Петр", "Алексей", "Дмитрий", "Николай", 
+                                    "Олег", "Сергей", "Андрей", "Василий", "Михаил"};
     static vector<string> surnames = {"Иванов", "Петров", "Сидоров", "Смирнов", "Кузнецов",
-                                    "Васильев", "Попов", "Соколов", "Михайлов", "Уткин"};
+                                    "Соколов", "Попов", "Лебедев", "Козловский", "Новак"};
     return surnames[rand() % surnames.size()] + " " + names[rand() % names.size()];
 }
 
@@ -32,7 +35,7 @@ Worker* RandomGenerator::createRandomWorker() {
 
     Worker* worker = new Worker(name, age, baseSalary);
 
-    // Р”РѕР±Р°РІР»СЏРµРј СЃР»СѓС‡Р°Р№РЅС‹Рµ РґРµС‚Р°Р»Рё
+    // Добавляем случайные детали
     int partsCount = 1 + rand() % 5;
     for (int i = 0; i < partsCount; ++i) {
         string partName = "Деталь-" + to_string(i+1);
@@ -44,6 +47,7 @@ Worker* RandomGenerator::createRandomWorker() {
     return worker;
 }
 
+// Исправляем метод создания случайного инженера, чтобы избежать дублирования рабочих
 Engineer* RandomGenerator::createRandomEngineer(const vector<Worker*>& workers) {
     if (workers.empty()) return nullptr;
 
@@ -53,10 +57,24 @@ Engineer* RandomGenerator::createRandomEngineer(const vector<Worker*>& workers) 
 
     Engineer* engineer = new Engineer(name, age, baseSalary);
 
-    // Р”РѕР±Р°РІР»СЏРµРј СЃР»СѓС‡Р°Р№РЅС‹С… РїРѕРґС‡РёРЅРµРЅРЅС‹С…
-    int subCount = 1 + rand() % 4;
-    for (int i = 0; i < subCount && i < workers.size(); ++i) {
-        engineer->addSubordinate(workers[rand() % workers.size()]);
+    // Создаем вектор индексов для выбора уникальных рабочих
+    vector<int> indices;
+    for (int i = 0; i < workers.size(); ++i) {
+        indices.push_back(i);
+    }
+    
+    // Перемешиваем индексы для случайного выбора
+    // Заменяем устаревший random_shuffle на современный std::shuffle
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(indices.begin(), indices.end(), g);
+    
+    // Определяем количество подчиненных (не больше, чем доступно рабочих)
+    int subCount = 1 + rand() % min(4, static_cast<int>(workers.size()));
+    
+    // Добавляем уникальных подчиненных
+    for (int i = 0; i < subCount; ++i) {
+        engineer->addSubordinate(workers[indices[i]]);
     }
 
     return engineer;
@@ -71,7 +89,7 @@ WorkshopManager* RandomGenerator::createRandomWorkshopManager(const vector<Engin
 
     WorkshopManager* manager = new WorkshopManager(name, age, baseSalary, storekeeper);
 
-    // Р”РѕР±Р°РІР»СЏРµРј СЃР»СѓС‡Р°Р№РЅС‹С… РїРѕРґС‡РёРЅРµРЅРЅС‹С…
+    // Добавляем случайных подчиненных
     int subCount = 1 + rand() % 3;
     for (int i = 0; i < subCount && i < engineers.size(); ++i) {
         manager->addSubordinate(engineers[rand() % engineers.size()]);

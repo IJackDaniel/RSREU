@@ -16,6 +16,7 @@
 #include "RandomGenerator.hpp"
 
 int main() {
+    // Изменяем настройку локали для корректного отображения русских символов в Windows-1251
     setlocale(LC_ALL, "Russian");
     srand(time(nullptr));
     Staff staff;
@@ -31,7 +32,7 @@ int main() {
         cout << "2. Добавить случайного сотрудника" << endl;
         cout << "3. Удалить сотрудника" << endl;
         cout << "4. Рассчитать суммарные выплаты" << endl;
-        cout << "5. Показать статистику по зарплатам" << endl;
+        cout << "5. Показать статистику по должностям" << endl;
         cout << "0. Выход" << endl;
 
         int choice;
@@ -102,7 +103,7 @@ int main() {
                 if (staff.remove(index)) {
                     cout << "Сотрудник удален" << endl;
                 } else {
-                    cout << "Неверный номер" << endl;
+                    cout << "Неверный индекс" << endl;
                 }
                 break;
             }

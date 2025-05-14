@@ -17,7 +17,7 @@ using namespace std;
 #include "Employee.hpp"
 #include "Part.hpp"
 
-// Р Р°Р±РѕС‡РёР№
+// Рабочий
 class Worker : public Employee {
     vector<Part> parts;
 public:

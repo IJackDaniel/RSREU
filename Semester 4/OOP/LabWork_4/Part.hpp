@@ -13,11 +13,11 @@
 
 using namespace std;
 
-// РљР»Р°СЃСЃ РґР»СЏ РґРµС‚Р°Р»Рё
+// Класс для детали
 class Part {
     string name;
-    double norm;        // РќРѕСЂРјР° РІС‹СЂР°Р±РѕС‚РєРё
-    double actual;      // Р¤Р°РєС‚РёС‡РµСЃРєР°СЏ РІС‹СЂР°Р±РѕС‚РєР°
+    double norm;        // Норма выработки
+    double actual;      // Фактическая выработка
 public:
     Part(const string& name, double norm, double actual);
 

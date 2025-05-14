@@ -5,4 +5,3 @@ add_executable(LabWork4 main.cpp RandomGenerator.cpp Employee.cpp Engineer.cpp P
 
 include(CTest)
 enable_testing()
-

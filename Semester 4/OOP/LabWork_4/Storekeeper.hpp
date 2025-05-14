@@ -15,7 +15,7 @@ using namespace std;
 
 #include "WorkshopManager.hpp"
 
-// Р—Р°РІС…РѕР· (РјРѕР¶РµС‚ Р±С‹С‚СЊ Р»СЋР±С‹Рј СЂР°Р±РѕС‚РЅРёРєРѕРј)
+// Завхоз (может быть любым работником)
 class Storekeeper : public Employee {
     vector<WorkshopManager*> managers;
 public:

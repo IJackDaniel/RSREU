@@ -16,7 +16,7 @@ Employee::Employee(const string& name, int age, double baseSalary)
     : name(name), age(age), baseSalary(baseSalary) {}
 
 void Employee::printInfo() const {
-    cout << "ФИО: " << name << ", Возраст: " << age 
+    cout << "Имя: " << name << ", Возраст: " << age 
             << ", Должность: " << getPosition() 
             << ", Зарплата: " << calculateSalary() << endl;
 }

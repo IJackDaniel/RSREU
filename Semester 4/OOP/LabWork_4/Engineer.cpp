@@ -32,7 +32,7 @@ double Engineer::calculateSalary() const {
     double productivity = calculateProductivity();
     double salary = baseSalary * productivity;
     if (productivity > 1.0) {
-        salary *= 1.1; // 10% РЅР°РґР±Р°РІРєР° Р·Р° РїРµСЂРµРІС‹РїРѕР»РЅРµРЅРёРµ
+        salary *= 1.1; // 10% надбавка за перевыполнение
     }
     return salary;
 }
@@ -41,10 +41,16 @@ string Engineer::getPosition() const { return "Инженер"; }
 
 void Engineer::printInfo() const {
     Employee::printInfo();
-    cout << "Подчинённые рабочие:" << endl;
-    for (const auto worker : subordinates) {
-        cout << "  " << worker->getName() << endl;
+    if (subordinates.size() != 0) {
+        cout << "Подчиненные рабочие:" << endl;
+        for (const auto worker : subordinates) {
+            cout << "  " << worker->getName() << endl;
+        }
     }
 }
 
 const vector<Worker*>& Engineer::getSubordinates() const { return subordinates; }
+
+void Engineer::updateSubordinates(const vector<Worker*>& newSubordinates) {
+    subordinates = newSubordinates;
+}

@@ -32,9 +32,9 @@ double WorkshopManager::calculateSalary() const {
     double productivity = calculateProductivity();
     double bonus = 0.0;
     if (productivity > 1.3) {
-        bonus = baseSalary * 0.5; // 50% РїСЂРµРјРёСЏ
+        bonus = baseSalary * 0.5; // 50% премия
     } else if (productivity > 1.1) {
-        bonus = baseSalary * 0.25; // 25% РїСЂРµРјРёСЏ
+        bonus = baseSalary * 0.25; // 25% премия
     }
     return baseSalary + bonus;
 }
@@ -43,11 +43,11 @@ string WorkshopManager::getPosition() const { return "Начальник цеха"; }
 
 void WorkshopManager::printInfo() const {
     Employee::printInfo();
-    cout << "Подчинённые инженеры:" << endl;
+    cout << "Подчиненные инженеры:" << endl;
     for (const auto engineer : subordinates) {
         cout << "  " << engineer->getName() << endl;
     }
-    cout << "Закреплённый завод: " << storekeeper->getName() << endl;
+    cout << "Обслуживающий завхоз: " << storekeeper->getName() << endl;
 }
 
 const vector<Engineer*>& WorkshopManager::getSubordinates() const { return subordinates; }

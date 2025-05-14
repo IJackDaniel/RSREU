@@ -10,6 +10,8 @@
 #include <iomanip>
 #include <limits> 
 #include <unordered_map>
+#include <algorithm>  // Для std::shuffle
+#include <random>     // Для std::mt19937 и std::random_device
 
 using namespace std;
 
@@ -18,7 +20,7 @@ using namespace std;
 #include "WorkshopManager.hpp"
 #include "Storekeeper.hpp"
 
-// Р“РµРЅРµСЂР°С†РёСЏ СЃР»СѓС‡Р°Р№РЅС‹С… РґР°РЅРЅС‹С…
+// Генерация случайных данных
 class RandomGenerator {
     public:
         static string randomName();
