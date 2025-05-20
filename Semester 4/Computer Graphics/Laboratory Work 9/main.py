@@ -47,7 +47,7 @@ def generate_fractal(num_points=50000):
 
 
 # Генерация фрактала
-points = generate_fractal(100000)
+points = generate_fractal(1000000)
 
 # Построение графика
 plt.figure(figsize=(10, 10))
