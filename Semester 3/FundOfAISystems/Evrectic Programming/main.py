@@ -24,8 +24,7 @@ class Situation:
     # На вход подаётся ситуация
     # На выход поступает результат проверки ситуации на целевую
     def target_situation(self, arr):
-        x, y = arr[0], arr[1]
-        return x == self.target[0] and y == self.target[1]
+        return arr[0] == self.target[0] and arr[1] == self.target[1]
 
     # Функция определения тупика/стенки
     # На вход подаётся ситуация

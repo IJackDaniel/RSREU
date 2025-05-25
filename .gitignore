@@ -3,6 +3,7 @@
 *.jpg
 *.exe
 *.xcf
+*.zip
 .vscode/
 build/
 NoGit/

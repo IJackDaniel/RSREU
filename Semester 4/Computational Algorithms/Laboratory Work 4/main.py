@@ -98,7 +98,4 @@ if __name__ == '__main__':
     quantity = 5
     args = make_points_x(x_start, x_end, quantity)
     ys = make_points_y(args)
-    print(args)
-    print(ys)
-    print(divided_difference(args[0:3], ys[0:3]))
     PlotWindow(args, ys)
