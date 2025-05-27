@@ -1,0 +1,12 @@
+#define MI_OPEN 101
+#define MI_EXIT 102
+
+1000 MENU
+BEGIN
+    POPUP "&????"
+    BEGIN
+        MENUITEM "&???????...", MI_OPEN
+        MENUITEM SEPARATOR
+        MENUITEM "?&????", MI_EXIT
+    END
+END

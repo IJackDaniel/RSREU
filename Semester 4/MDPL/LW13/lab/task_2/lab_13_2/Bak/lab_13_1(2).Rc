@@ -1,0 +1,35 @@
+#include <windows.h>
+#include <commctrl.h>
+
+#define IDD_SETTINGS 300
+#define MI_OPEN 101
+#define MI_EXIT 102
+#define MI_SETTINGS 103
+#define ID_DOTS 201
+#define ID_CURVE 202
+#define ID_SCALE 203
+#define IDOK 1
+
+Main MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open...\tCtrl+O", MI_OPEN
+        MENUITEM "&Settings...\tCtrl+S", MI_SETTINGS
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4", MI_EXIT
+    END
+END
+
+IDD_SETTINGS DIALOGEX 150, 0, 135, 90
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Display Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT "View Mode:", -1, 10, 10, 60, 10
+    CONTROL "Dots", ID_DOTS, "Button", BS_AUTORADIOBUTTON | WS_TABSTOP, 15, 25, 45, 15
+    CONTROL "Curve", ID_CURVE, "Button", BS_AUTORADIOBUTTON, 15, 40, 55, 15
+    LTEXT "Scale Factor:", -1, 85, 10, 60, 10
+    LISTBOX ID_SCALE, 85, 20, 40, 50, LBS_NOTIFY | WS_VSCROLL | WS_BORDER | WS_TABSTOP
+    DEFPUSHBUTTON "Close", IDOK, 40, 70, 50, 15, WS_GROUP
+END

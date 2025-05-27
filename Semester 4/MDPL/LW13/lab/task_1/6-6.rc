@@ -1,0 +1,11 @@
+#include "6-6.h"
+
+Main MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open...", MI_OPEN
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit", MI_EXIT
+    END
+END

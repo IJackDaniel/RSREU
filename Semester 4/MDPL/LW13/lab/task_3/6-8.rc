@@ -1,0 +1,6 @@
+#include "6-8.h"
+
+Dlg DIALOG 20, 20, 200, 160
+CAPTION "Epicycloids"
+BEGIN
+END
