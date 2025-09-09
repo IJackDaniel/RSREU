@@ -14,6 +14,17 @@ from matplotlib.patches import Circle
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
+# Функция моделирования определённого количества точек
+def simulate_points(num_points):
+    x = np.random.uniform(-1, 1, num_points)
+    y = np.random.uniform(-1, 1, num_points)
+
+    dist = np.sqrt(x ** 2 + y ** 2)
+    inside_circle = dist <= 1
+
+    return x, y, inside_circle
+
+
 def update_plot():
     ...
 
