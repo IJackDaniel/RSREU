@@ -27,6 +27,7 @@ def simulate_points(num_points):
 
 # Функция для генерации и отрисовки точек, а также для подсчёта вероятности
 def update_plot():
+    # Проверка введённого значения
     try:
         num_points = int(entry.get())
         if num_points <= 0:
@@ -35,28 +36,34 @@ def update_plot():
         result_label.config(text="Введите положительное целое число")
         return
 
+    # Очищаем пространство
     ax.clear()
 
+    # Обратно рисуем квадрат и круг
     ax.plot([-1, 1, 1, -1, -1], [-1, -1, 1, 1, -1], 'r-', linewidth=2)
-
     circle = Circle((0, 0), 1, fill=False, color='green', linewidth=2)
     ax.add_patch(circle)
 
+    # Генерируем и рисуем точки
     x, y, inside_circle = simulate_points(num_points)
     ax.scatter(x[inside_circle], y[inside_circle], color='blue', s=5, alpha=0.6)
     ax.scatter(x[~inside_circle], y[~inside_circle], color='red', s=5, alpha=0.6)
 
+    # Настраиваем график
     ax.set_xlim(-1.1, 1.1)
     ax.set_ylim(-1.1, 1.1)
     ax.set_aspect('equal')
     ax.set_title(f'Метод Монте-Карло для оценки π (точек: {num_points})')
 
+    # Обновляем canvas
     canvas.draw()
 
+    # Вычисляем результат
     points_inside = np.sum(inside_circle)
     hit_probability = points_inside / num_points
     target_probability = np.pi / 4
 
+    # Выводим результат в текстовое поле
     result_text = (f"Точек в круге: {points_inside}\n"
                    f"Всего точек: {num_points}\n"
                    f"Вероятность попадания: {hit_probability:.4f}\n"
