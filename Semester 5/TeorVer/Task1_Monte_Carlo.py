@@ -61,6 +61,15 @@ label.pack(pady=10)
 entry.pack(pady=10)
 button.pack(pady=20)
 
+# Отдельный контейнер для результатов
+result_frame = tk.Frame(right_frame)
+result_frame.pack(side=tk.BOTTOM, fill=tk.X, pady=20)
+
+# Поле для результатов
+result_label = tk.Label(result_frame, text="Введите количество точек и нажмите 'Смоделировать'",
+                        justify=tk.LEFT, font=("Arial", 20), wraplength=350)
+result_label.pack()
+
 # Размещаем график слева
 canvas.get_tk_widget().pack(side=tk.LEFT, padx=10, pady=10, fill=tk.BOTH, expand=True)
 
