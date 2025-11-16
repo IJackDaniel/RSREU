@@ -61,3 +61,14 @@ summary = pd.DataFrame({
 
 print("\n Сравнение частотной вероятности и классической")
 print(summary.to_string(index=False))
+
+plt.figure(figsize=(8, 4))
+s = 7  # Выбор интересующей суммы
+plt.plot(range(1, NUM_EXPERIMENTS + 1), freqHistory[s], label=f"Частотная P(Σ={s})")
+plt.axhline(y=classicalProb[s], color="red", linestyle="--", label=f"Классическая P(Σ={s}) = {classicalProb[s]:.3f}")
+plt.title("Сходимость частотной вероятности к классической (Σ=7)")
+plt.xlabel("Количество испытаний")
+plt.ylabel("Вероятность")
+plt.legend()
+plt.grid(True)
+plt.show()
