@@ -1,7 +1,5 @@
 package com.IJackDaniel;
 
-import java.util.Arrays;
-
 public class UniversalGenerator {
     private static int K = 3;
     // Вспомогательные массивы
