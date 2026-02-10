@@ -1,7 +1,5 @@
 package com.IJackDaniel;
 
-import java.util.Arrays;
-
 import static com.IJackDaniel.UniversalGenerator.rnd;
 
 public class Main {
@@ -13,6 +11,7 @@ public class Main {
 
 
     public static void main(String[] args) {
+        // Инициализация числовых характеристик
         double expectedValue = 0;
         double dispersion = 0;
 
@@ -24,13 +23,14 @@ public class Main {
             dispersion += arrOfValues[i] * arrOfValues[i];
         }
 
-        // Значения для гистограммы
+        // Массив значений для гистограммы
         int[] valuesForGist = new int[countOfParts];
         for (int i = 0; i < n; i++) {
             int j = (int) (arrOfValues[i] / stepOfParts);
             valuesForGist[j] += 1;
         }
 
+        // Вывод гистограммы (пока без самой гистограммы
         for (int i = 0; i < countOfParts; i++) {
             System.out.println("Диапазон " + (i + 1) + " [" + stepOfParts * i + "; " + stepOfParts * (i + 1) +
                     "]. Количество значений: " + valuesForGist[i]);
@@ -45,11 +45,15 @@ public class Main {
         System.out.println("Проверка суммы значений: " + sumCheck);
 
         // Числовые характеристики
+        // Математическое ожидание
         expectedValue *= 1.0 / n;
         System.out.println("Матожидание: " + expectedValue);
 
+        // Дисперсия
         dispersion *= 1.0 / n;
         dispersion = dispersion - expectedValue * expectedValue;
         System.out.println("Дисперсия: " + dispersion);
+
+        //
     }
 }
