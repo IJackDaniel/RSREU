@@ -4,11 +4,9 @@ import static com.IJackDaniel.UniversalGenerator.rnd;
 
 public class Main {
     // Параметры по варианту 2
-    private static int n = 500;
-    private static int countOfParts = 16;
-    private static double stepOfParts = 1.0 / countOfParts;
-
-
+    private static final int N = 500;
+    private static final int COUNT_OF_PARTS = 16;
+    private static final double STEP_OF_PARTS = 1.0 / COUNT_OF_PARTS;
 
     public static void main(String[] args) {
         // Инициализация числовых характеристик
@@ -16,26 +14,28 @@ public class Main {
         double dispersion = 0;
 
         // Массив случайных значений
-        double[] arrOfValues = new double[n];
-        for (int i = 0; i < n; i++) {
+        double[] arrOfValues = new double[N];
+        for (int i = 0; i < N; i++) {
             arrOfValues[i] = rnd();
             expectedValue += arrOfValues[i];
             dispersion += arrOfValues[i] * arrOfValues[i];
         }
 
         // Массив значений для гистограммы
-        int[] valuesForGist = new int[countOfParts];
-        for (int i = 0; i < n; i++) {
-            int j = (int) (arrOfValues[i] / stepOfParts);
+        int[] valuesForGist = new int[COUNT_OF_PARTS];
+        for (int i = 0; i < N; i++) {
+            int j = (int) (arrOfValues[i] / STEP_OF_PARTS);
             valuesForGist[j] += 1;
         }
 
-        // Вывод гистограммы (пока без самой гистограммы
-        for (int i = 0; i < countOfParts; i++) {
-            System.out.println("Диапазон " + (i + 1) + " [" + stepOfParts * i + "; " + stepOfParts * (i + 1) +
-                    "]. Количество значений: " + valuesForGist[i]);
+        // Составление названий столбцов гистограммы
+        String[] labels = new String[valuesForGist.length];
+        for (int i = 0; i < COUNT_OF_PARTS; i++) {
+            labels[i] = "[" + STEP_OF_PARTS * i + "; " + STEP_OF_PARTS * (i + 1) + "]";
         }
-        System.out.println();
+
+        // Вывод гистограммы
+        HistogramPrinter.printHistogram(labels, valuesForGist);
 
         // Проверка количества значений
         int sumCheck = 0;
@@ -46,14 +46,15 @@ public class Main {
 
         // Числовые характеристики
         // Математическое ожидание
-        expectedValue *= 1.0 / n;
+        expectedValue *= 1.0 / N;
         System.out.println("Матожидание: " + expectedValue);
 
         // Дисперсия
-        dispersion *= 1.0 / n;
+        dispersion *= 1.0 / N;
         dispersion = dispersion - expectedValue * expectedValue;
         System.out.println("Дисперсия: " + dispersion);
 
         //
+
     }
 }
