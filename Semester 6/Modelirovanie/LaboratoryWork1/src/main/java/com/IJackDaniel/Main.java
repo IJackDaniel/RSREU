@@ -1,15 +1,17 @@
 package com.IJackDaniel;
 
-import static com.IJackDaniel.UniversalGenerator.rnd;
-
 public class Main {
     // Параметры по варианту 2
     private static final int N = 500;
     private static final int COUNT_OF_PARTS = 16;
     private static final double STEP_OF_PARTS = 1.0 / COUNT_OF_PARTS;
+
     private static final StatisticsCollector STATISTICS_COLLECTOR = new StatisticsCollector();
 
     public static void main(String[] args) {
+        // Ввод seed для генератора
+        UniversalGenerator.setSeed(new int[]{1, 1, 1});
+
         // Массив случайных значений
         double[] arrOfValues = generateValues();
 
@@ -46,7 +48,7 @@ public class Main {
     private static double[] generateValues() {
         double[] arrOfValues = new double[N];
         for (int i = 0; i < N; i++) {
-            double value = rnd();
+            double value = UniversalGenerator.rnd();
             arrOfValues[i] = value;
 
             // Для характеристик

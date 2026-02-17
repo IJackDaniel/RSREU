@@ -10,6 +10,9 @@ public class UniversalGenerator {
 
     private static int[] _Y = new int[] {1, 1, 1};
 
+    public UniversalGenerator() {
+    }
+
     public static double rnd() {
         double s = 0.0;
         double[] x = new double[K];
