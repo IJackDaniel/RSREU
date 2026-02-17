@@ -10,15 +10,19 @@ public class Main {
 
     public static void main(String[] args) {
         // Инициализация числовых характеристик
-        double expectedValue = 0;
-        double dispersion = 0;
+        double sumValues = 0;
+        double sumSquaresValues = 0;
+        double sumCubedValues = 0;
 
         // Массив случайных значений
         double[] arrOfValues = new double[N];
         for (int i = 0; i < N; i++) {
             arrOfValues[i] = rnd();
-            expectedValue += arrOfValues[i];
-            dispersion += arrOfValues[i] * arrOfValues[i];
+
+            // Для характеристик
+            sumValues += arrOfValues[i];
+            sumSquaresValues += arrOfValues[i] * arrOfValues[i];
+            sumCubedValues += arrOfValues[i] * arrOfValues[i] * arrOfValues[i];
         }
 
         // Массив значений для гистограммы
@@ -46,15 +50,32 @@ public class Main {
 
         // Числовые характеристики
         // Математическое ожидание
-        expectedValue *= 1.0 / N;
+        double expectedValue = sumValues *  (1.0 / N);
         System.out.println("Матожидание: " + expectedValue);
 
         // Дисперсия
-        dispersion *= 1.0 / N;
+        double dispersion = sumSquaresValues * (1.0 / N);
         dispersion = dispersion - expectedValue * expectedValue;
         System.out.println("Дисперсия: " + dispersion);
 
-        //
+        // Второй начальный момент
+        double secondStartMoment = sumSquaresValues * (1.0 / N);
+        System.out.println("Второй начальный момент: " + secondStartMoment);
 
+        // Третий начальный момент
+        double thirdStartMoment = sumCubedValues * (1.0 / N);
+        System.out.println("Третий начальный момент: " + thirdStartMoment);
+
+        // Статистическая функция распределения
+        double[] statDistribution = new double[COUNT_OF_PARTS];
+        int cumulativeSum = 0;
+        for (int i = 0; i < COUNT_OF_PARTS; i++) {
+            cumulativeSum += valuesForGist[i];
+            statDistribution[i] = (double) cumulativeSum / N;
+        }
+        System.out.println("\nСтатистическая функция распределения:");
+        for (int i = 0; i < COUNT_OF_PARTS; i++) {
+            System.out.printf("%s: F(x)=%.4f\n", labels[i], statDistribution[i]);
+        }
     }
 }
