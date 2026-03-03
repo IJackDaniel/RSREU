@@ -147,6 +147,10 @@ public class QualityAppraiser {
         return R;
     }
 
+    public int[] getFrequencies() {
+        return this.frequencies.clone();
+    }
+
     private void computeBoundsForR() {
         double expValue = computeExpValue();
         double dispersion = computeDispersion();
