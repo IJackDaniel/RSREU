@@ -25,9 +25,13 @@ public class QualityAppraiser {
     // Параметры для критерия числа серий
     private final double p;
     private final double tb;
-    private double R;
     private double rH;
     private double rB;
+
+    // Значения критериев
+    private double pirson;
+    private double kolmogorov;
+    private int R;
 
     // Параметры для вывода
     private final String SEPARATOR1 = "=";
@@ -53,6 +57,10 @@ public class QualityAppraiser {
         this.p = p;
         this.tb = NormalQuantiles.getTB(this.alpha);
         computeBoundsForR();
+
+        computePirson();
+        computeKolmogorov();
+        computeR();
     }
 
     public void printParam() {
@@ -74,16 +82,16 @@ public class QualityAppraiser {
                 "\n" + createSeparatorLine("", this.SEPARATOR1, this.LENGTH_OF_INPUT) + "\n");
     }
 
-    public double computePirson() {
+    public void computePirson() {
         double xi = 0.0;
         for (int i = 0; i < this.countOfParts; i++) {
             xi += Math.pow(this.frequencies[i] - this.length * this.probabilities[i], 2) /
                     (this.length * this.probabilities[i]);
         }
-        return xi;
+        this.pirson = xi;
     }
 
-    public double computeKolmogorov() {
+    public void computeKolmogorov() {
         double dMax = 0.0;
         for (int i = 0; i < this.length; i++) {
             double ft = (double) (i + 1) / this.length;
@@ -92,10 +100,10 @@ public class QualityAppraiser {
             if (dp > dMax) dMax = dp;
             if (dm > dMax) dMax = dm;
         }
-        return dMax * Math.sqrt(this.length);
+        this.kolmogorov = dMax * Math.sqrt(this.length);
     }
 
-    public int getR() {
+    public void computeR() {
         boolean y1;
         boolean y2;
         int r = 0;
@@ -109,7 +117,6 @@ public class QualityAppraiser {
             y1 = y2;
         }
         this.R = r;
-        return r;
     }
 
     public double getrH() {
@@ -126,6 +133,18 @@ public class QualityAppraiser {
 
     public boolean checkBoundsForR() {
         return (this.rH <= this.R && this.R <= this.rB);
+    }
+
+    public double getPirson() {
+        return pirson;
+    }
+
+    public double getKolmogorov() {
+        return kolmogorov;
+    }
+
+    public int getR() {
+        return R;
     }
 
     private void computeBoundsForR() {

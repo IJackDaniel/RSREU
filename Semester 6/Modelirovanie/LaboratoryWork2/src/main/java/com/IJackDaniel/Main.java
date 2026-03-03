@@ -19,14 +19,14 @@ public class Main {
         appraiser.printParam();
 
         // Критерий Пирсона
-        double pirson = appraiser.computePirson();
+        double pirson = appraiser.getPirson();
         double criticalValue = appraiser.getPirsonCriticalValue();
         String checkPirson = (pirson <= criticalValue)? "выполнено" : "не выполнено";
         System.out.println("Критерий Пирсона: " + round(pirson));
         System.out.println("Проверка равенства: " + round(pirson) + " < " + criticalValue + " - " + checkPirson);
 
         // Критерий Колмогорова
-        double kolmogorov = appraiser.computeKolmogorov();
+        double kolmogorov = appraiser.getKolmogorov();
         System.out.println("\nКритерий Колмогорова: " + round(kolmogorov));
 
         // Критерий числа серий (p=0.25)
