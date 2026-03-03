@@ -10,7 +10,22 @@ public class UniversalGenerator {
 
     private static int[] _Y = new int[] {1, 1, 1};
 
-    public static double rnd() {
+    public static void setSeed(int[] seed) {
+        if (seed.length == K) {
+            _Y = seed.clone();
+        }
+    }
+
+    public static double[] generateValues(int n) {
+        double[] arrOfValues = new double[n];
+        for (int i = 0; i < n; i++) {
+            double value = UniversalGenerator.rnd();
+            arrOfValues[i] = value;
+        }
+        return arrOfValues;
+    }
+
+    private static double rnd() {
         double s = 0.0;
         double[] x = new double[K];
         int[] yN = new int[K];
@@ -23,11 +38,5 @@ public class UniversalGenerator {
         }
 
         return Math.abs(s - Math.floor(s));
-    }
-
-    public static void setSeed(int[] seed) {
-        if (seed.length == K) {
-            _Y = seed.clone();
-        }
     }
 }
