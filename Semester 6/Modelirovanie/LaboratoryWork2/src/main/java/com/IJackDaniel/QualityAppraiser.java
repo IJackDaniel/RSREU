@@ -22,14 +22,12 @@ public class QualityAppraiser {
     private double rH;
     private double rB;
 
-    public QualityAppraiser(double[] values, int parts, double alpha, double p, double tb) {
+    public QualityAppraiser(double[] values, int parts, double alpha, double p) {
         this.length = values.length;
         this.countOfParts = parts;
         this.stepOfParts = 1.0 / this.countOfParts;
-
-        this.p = p;
-        this.tb = tb;
-        computeBoundsForR();
+        this.alpha = alpha;
+        this.beta = 1 - alpha;
 
         this.values = values;
         this.sortedValues = values.clone();
@@ -37,17 +35,26 @@ public class QualityAppraiser {
         this.probabilities = computeTheoreticalProbabilities();
         this.frequencies = generateFrequencies();
 
-        this.alpha = alpha;
-        this.beta = 1 - alpha;
         this.r = this.countOfParts - 1;
+
+        this.p = p;
+        this.tb = NormalQuantiles.getTB(this.alpha);
+        computeBoundsForR();
     }
 
     public void printParam() {
         String separator = "==============================";
         System.out.println(separator + "Параметры" + separator +
+                "\nОбщие:" +
                 "\nЧисло значений (N): " + this.length +
                 "\nЧисло интервалов (k): " + this.countOfParts +
                 "\nДлина интервала: " + this.stepOfParts +
+                "\nУровень значимости (alpha)" + this.alpha +
+                "\nНадёжность (beta)" + this.beta +
+                "\n\nДля критерия Пирсона " +
+                "\nЧисло степеней свободы (r): " + this.r +
+                "\n\nДля критерия числа серий: " +
+                "\nРазделительный элемент (p): " + this.p +
                 "\nЗначение квантиля стандартного нормального распределения: " + this.tb + "\n\n");
     }
 
