@@ -34,23 +34,23 @@ public class QualityAppraiser {
     private int R;
 
     // Параметры для вывода
-    private final String SEPARATOR1 = "=";
-    private final String SEPARATOR2 = "_";
+    private final String SEPARATOR_1 = "=";
+    private final String SEPARATOR_2 = "_";
     private final int LENGTH_OF_INPUT = 65;
+    private static final int ACCURACY = 5;
 
     public QualityAppraiser(double[] values, int parts, double alpha, double p) {
         this.length = values.length;
         this.countOfParts = parts;
-        this.stepOfParts = 1.0 / this.countOfParts;
+        this.stepOfParts = this.round(1.0 / this.countOfParts);
         this.alpha = alpha;
-        this.beta = 1 - alpha;
+        this.beta = this.round(1 - this.alpha);
 
         this.values = values;
         this.sortedValues = values.clone();
         Arrays.sort(this.sortedValues);
         this.probabilities = computeTheoreticalProbabilities();
         this.frequencies = generateFrequencies();
-
         this.r = this.countOfParts - 1;
         this.criticalValuePirson = PirsonCriticalValues.getPirsonCriticalValue(this.r, this.beta);
 
@@ -64,22 +64,22 @@ public class QualityAppraiser {
     }
 
     public void printParam() {
-        System.out.println(createSeparatorLine("Параметры", this.SEPARATOR1, this.LENGTH_OF_INPUT) +
-                "\n" + createSeparatorLine("Общие", this.SEPARATOR2, this.LENGTH_OF_INPUT) +
+        System.out.println(createSeparatorLine("Параметры", this.SEPARATOR_1, this.LENGTH_OF_INPUT) +
+                "\n" + createSeparatorLine("Общие", this.SEPARATOR_2, this.LENGTH_OF_INPUT) +
                 "\nЧисло значений (N): " + this.length +
                 "\nЧисло интервалов (k): " + this.countOfParts +
                 "\nДлина интервала: " + this.stepOfParts +
                 "\nУровень значимости (alpha): " + this.alpha +
                 "\nНадёжность (beta): " + this.beta +
-                "\n\n" + createSeparatorLine("Для критерия Пирсона", this.SEPARATOR2, this.LENGTH_OF_INPUT) +
+                "\n\n" + createSeparatorLine("Для критерия Пирсона", this.SEPARATOR_2, this.LENGTH_OF_INPUT) +
                 "\nЧисло степеней свободы (r): " + this.r +
                 "\nКритическое значение: " + this.criticalValuePirson +
-                "\n\n" + createSeparatorLine("Для критерия числа серий", this.SEPARATOR2, this.LENGTH_OF_INPUT) +
+                "\n\n" + createSeparatorLine("Для критерия числа серий", this.SEPARATOR_2, this.LENGTH_OF_INPUT) +
                 "\nРазделительный элемент (p): " + this.p +
                 "\nЗначение квантиля стандартного нормального распределения: " + this.tb +
                 "\nНижняя граница (RH): " + this.rH +
                 "\nВерхняя граница (RB): " + this.rB +
-                "\n" + createSeparatorLine("", this.SEPARATOR1, this.LENGTH_OF_INPUT) + "\n");
+                "\n" + createSeparatorLine("", this.SEPARATOR_1, this.LENGTH_OF_INPUT) + "\n");
     }
 
     public void computePirson() {
@@ -88,7 +88,7 @@ public class QualityAppraiser {
             xi += Math.pow(this.frequencies[i] - this.length * this.probabilities[i], 2) /
                     (this.length * this.probabilities[i]);
         }
-        this.pirson = xi;
+        this.pirson = this.round(xi);
     }
 
     public void computeKolmogorov() {
@@ -100,7 +100,7 @@ public class QualityAppraiser {
             if (dp > dMax) dMax = dp;
             if (dm > dMax) dMax = dm;
         }
-        this.kolmogorov = dMax * Math.sqrt(this.length);
+        this.kolmogorov = this.round(dMax * Math.sqrt(this.length));
     }
 
     public void computeR() {
@@ -191,5 +191,10 @@ public class QualityAppraiser {
         int rightPadding = remainingLength - leftPadding;
 
         return separatorChar.repeat(leftPadding) + processedWord + separatorChar.repeat(rightPadding);
+    }
+
+    private double round(double value) {
+        int divider = (int) Math.pow(10, ACCURACY);
+        return (double) Math.round(value * divider) / divider;
     }
 }
