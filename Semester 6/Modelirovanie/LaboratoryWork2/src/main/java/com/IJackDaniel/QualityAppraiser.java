@@ -3,24 +3,36 @@ package com.IJackDaniel;
 import java.util.Arrays;
 
 public class QualityAppraiser {
+    // Параметры последовательности
     private final int length;
     private final int countOfParts;
     private final double stepOfParts;
 
+    // Последовательности данных
     private final double[] values;
     private double[] sortedValues;
     private final double[] probabilities;
     private final int[] frequencies;
 
+    // Общие параметры
     private final double alpha;
     private final double beta;
-    private final int r;
 
+    // Параметры для критерия Пирсона
+    private final int r;
+    private final double criticalValuePirson;
+
+    // Параметры для критерия числа серий
     private final double p;
     private final double tb;
     private double R;
     private double rH;
     private double rB;
+
+    // Параметры для вывода
+    private final String SEPARATOR1 = "=";
+    private final String SEPARATOR2 = "_";
+    private final int LENGTH_OF_INPUT = 65;
 
     public QualityAppraiser(double[] values, int parts, double alpha, double p) {
         this.length = values.length;
@@ -36,6 +48,7 @@ public class QualityAppraiser {
         this.frequencies = generateFrequencies();
 
         this.r = this.countOfParts - 1;
+        this.criticalValuePirson = PirsonCriticalValues.getPirsonCriticalValue(this.r, this.beta);
 
         this.p = p;
         this.tb = NormalQuantiles.getTB(this.alpha);
@@ -43,19 +56,22 @@ public class QualityAppraiser {
     }
 
     public void printParam() {
-        String separator = "==============================";
-        System.out.println(separator + "Параметры" + separator +
-                "\nОбщие:" +
+        System.out.println(createSeparatorLine("Параметры", this.SEPARATOR1, this.LENGTH_OF_INPUT) +
+                "\n" + createSeparatorLine("Общие", this.SEPARATOR2, this.LENGTH_OF_INPUT) +
                 "\nЧисло значений (N): " + this.length +
                 "\nЧисло интервалов (k): " + this.countOfParts +
                 "\nДлина интервала: " + this.stepOfParts +
-                "\nУровень значимости (alpha)" + this.alpha +
-                "\nНадёжность (beta)" + this.beta +
-                "\n\nДля критерия Пирсона " +
+                "\nУровень значимости (alpha): " + this.alpha +
+                "\nНадёжность (beta): " + this.beta +
+                "\n\n" + createSeparatorLine("Для критерия Пирсона", this.SEPARATOR2, this.LENGTH_OF_INPUT) +
                 "\nЧисло степеней свободы (r): " + this.r +
-                "\n\nДля критерия числа серий: " +
+                "\nКритическое значение: " + this.criticalValuePirson +
+                "\n\n" + createSeparatorLine("Для критерия числа серий", this.SEPARATOR2, this.LENGTH_OF_INPUT) +
                 "\nРазделительный элемент (p): " + this.p +
-                "\nЗначение квантиля стандартного нормального распределения: " + this.tb + "\n\n");
+                "\nЗначение квантиля стандартного нормального распределения: " + this.tb +
+                "\nНижняя граница (RH): " + this.rH +
+                "\nВерхняя граница (RB): " + this.rB +
+                "\n" + createSeparatorLine("", this.SEPARATOR1, this.LENGTH_OF_INPUT) + "\n");
     }
 
     public double computePirson() {
@@ -105,7 +121,7 @@ public class QualityAppraiser {
     }
 
     public double getPirsonCriticalValue() {
-        return PirsonCriticalValues.getPirsonCriticalValue(this.r, this.beta);
+        return this.criticalValuePirson;
     }
 
     public boolean checkBoundsForR() {
@@ -142,5 +158,19 @@ public class QualityAppraiser {
         double[] result = new double[this.countOfParts];
         Arrays.fill(result, 1.0 / this.countOfParts);
         return result;
+    }
+
+    private String createSeparatorLine(String word, String separatorChar, int totalLength) {
+        String processedWord = word;
+
+        if (processedWord.length() >= totalLength) {
+            return processedWord;
+        }
+
+        int remainingLength = totalLength - processedWord.length();
+        int leftPadding = remainingLength / 2;
+        int rightPadding = remainingLength - leftPadding;
+
+        return separatorChar.repeat(leftPadding) + processedWord + separatorChar.repeat(rightPadding);
     }
 }

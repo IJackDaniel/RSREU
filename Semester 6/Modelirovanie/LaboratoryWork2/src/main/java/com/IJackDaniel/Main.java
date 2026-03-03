@@ -8,8 +8,6 @@ public class Main {
 
     // Параметры для проверки
     private static final double ALPHA = 0.05;
-    private static final double BETA = 1 - ALPHA;
-    private static final double TB = 1.96;
 
     // Параметры округления
     private static final int ACCURACY = 5;
