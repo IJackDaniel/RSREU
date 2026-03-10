@@ -3,10 +3,34 @@
 *.jpg
 *.exe
 *.xcf
-*.zip
-.vscode/
-build/
 NoGit/
-.idea/
-target/
 .mvn/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Build tools
+target/
+build/
+out/
+bin/
+
+# Log file
+*.log
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.7z
+
+# for Eclipse
+.metadata/
