@@ -5,6 +5,7 @@
 *.xcf
 NoGit/
 .mvn/
+*.xml
 
 # IDE
 .idea/
