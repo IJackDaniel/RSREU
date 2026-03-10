@@ -11,7 +11,9 @@ public class Main {
 
     public static void main(String[] args) {
         UniversalGenerator.setSeed(new int[]{5, 11, 3});
-        QualityAppraiser appraiser = new QualityAppraiser(UniversalGenerator.generateValues(N), COUNT_OF_PARTS, ALPHA, P);
+
+        double[] values = UniversalGenerator.generateValues(N);
+        QualityAppraiser appraiser = new QualityAppraiser(values, COUNT_OF_PARTS, ALPHA, P);
 
         appraiser.printParam();
 

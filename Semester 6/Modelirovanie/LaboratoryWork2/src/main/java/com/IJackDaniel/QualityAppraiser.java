@@ -155,8 +155,8 @@ public class QualityAppraiser {
         double expValue = computeExpValue();
         double dispersion = computeDispersion();
         double sigma = Math.sqrt(dispersion);
-        this.rH = expValue - this.tb * sigma;
-        this.rB = expValue + this.tb * sigma;
+        this.rH = this.round(expValue - this.tb * sigma);
+        this.rB = this.round(expValue + this.tb * sigma);
     }
 
     private double computeExpValue() {
