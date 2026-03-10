@@ -19,8 +19,14 @@ public class ClientRunner {
 			return;
 		}
 
-		String[] resultOne = CharacterInStringSorter.sortCharactersInStringsFromArray(strings);
-		System.out.println(RESOURCER.getString("message.output.string") + convertArrayToString(resultOne));
+//		String[] resultOne = CharacterInStringSorter.sortCharactersInStringsFromArray(strings);
+//		System.out.println(RESOURCER.getString("message.output.string") + convertArrayToString(resultOne));
+		
+		String[] resultTwo = WordsInStringProcesser.processArray(strings);
+		System.out.println(RESOURCER.getString("message.output.word") + convertArrayToString(resultTwo));
+		
+//		String[] resultThree = WordsInStringProcesser.processArray(strings);
+//		System.out.println(RESOURCER.getString("message.output.word") + convertArrayToString(resultThree));
 	}
 
 	private static String[] inputValues() {
