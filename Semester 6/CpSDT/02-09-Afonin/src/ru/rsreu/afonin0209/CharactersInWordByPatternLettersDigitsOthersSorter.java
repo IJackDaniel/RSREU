@@ -13,39 +13,20 @@ public class CharactersInWordByPatternLettersDigitsOthersSorter {
 	}
 
 	private static String sortCharactersInStringByPatternLettersDigitsOther(String string) {
-		int length = string.length();
-		char[] alpha = new char[length];
-		char[] digits = new char[length];
-		char[] other = new char[length];
-
-		for (int currentIndex = 0; currentIndex < length; currentIndex++) {
-			char character = string.charAt(currentIndex);
+		String letters = "";
+		String digits = "";
+		String otherSymbols = "";
+		
+		for (char character : string.toCharArray()) {
 			if (Character.isLetter(character)) {
-				alpha[currentIndex] = character;
+				letters += character;
 			} else if (Character.isDigit(character)) {
-				digits[currentIndex] = character;
+				digits += character;
 			} else {
-				other[currentIndex] = character;
+				otherSymbols += character;
 			}
 		}
-
-		return concatinateCharArrays(alpha, digits, other);
-	}
-
-	private static String concatinateCharArrays(char[]... charLists) {
-		String resultString = "";
-		for (char[] characters : charLists) {
-			resultString = addCharactersFromArrayToString(resultString, characters);
-		}
-		return resultString;
-	}
-
-	private static String addCharactersFromArrayToString(String string, char[] characters) {
-		for (char character : characters) {
-			if (character != '\0') {
-				string = string + character;
-			}
-		}
-		return string;
+		
+		return letters + digits + otherSymbols;
 	}
 }
