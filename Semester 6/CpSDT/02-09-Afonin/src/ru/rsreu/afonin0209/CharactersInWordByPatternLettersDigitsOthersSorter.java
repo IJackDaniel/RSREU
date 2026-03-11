@@ -1,18 +1,18 @@
 package ru.rsreu.afonin0209;
 
-public class CharacterInStringSorter {
-	private CharacterInStringSorter() {
+public class CharactersInWordByPatternLettersDigitsOthersSorter {
+	private CharactersInWordByPatternLettersDigitsOthersSorter() {
 
 	}
 
-	public static String[] sortCharactersInStringsFromArray(String[] strings) {
+	public static String[] sortCharactersInStringFromArrayByPatternLettersDigitsOther(String[] strings) {
 		for (int i = 0; i < strings.length; i++) {
-			strings[i] = sortCharactersInString(strings[i]);
+			strings[i] = sortCharactersInStringByPatternLettersDigitsOther(strings[i]);
 		}
 		return strings;
 	}
 
-	private static String sortCharactersInString(String string) {
+	private static String sortCharactersInStringByPatternLettersDigitsOther(String string) {
 		int length = string.length();
 		char[] alpha = new char[length];
 		char[] digits = new char[length];
