@@ -18,15 +18,15 @@ public class ClientRunner {
 		if (strings == null || strings.length == 0) {
 			return;
 		}
-
-//		String[] resultOne = CharacterInStringSorter.sortCharactersInStringsFromArray(strings);
-//		System.out.println(RESOURCER.getString("message.output.string") + convertArrayToString(resultOne));
+			
+		Boolean[] resultThree = CarNumberChecker.checkCarNumberInArray(strings);
+		System.out.println(RESOURCER.getString("message.output.regex") + convertArrayToString(resultThree));
 		
 		String[] resultTwo = WordsInStringProcesser.processArray(strings);
 		System.out.println(RESOURCER.getString("message.output.word") + convertArrayToString(resultTwo));
 		
-//		String[] resultThree = WordsInStringProcesser.processArray(strings);
-//		System.out.println(RESOURCER.getString("message.output.word") + convertArrayToString(resultThree));
+		String[] resultOne = CharacterInStringSorter.sortCharactersInStringsFromArray(strings);
+		System.out.println(RESOURCER.getString("message.output.string") + convertArrayToString(resultOne));
 	}
 
 	private static String[] inputValues() {

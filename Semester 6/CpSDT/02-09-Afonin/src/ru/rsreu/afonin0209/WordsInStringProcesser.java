@@ -23,7 +23,7 @@ public class WordsInStringProcesser {
 			
 			if (character == ' ') {
 				if (!currentWord.isEmpty()) {
-					if (!isContainOnlyMask(countSymbolsInWord(string), new int[]{0, 2})) {
+					if (!isContainOnlyMask(countSymbolsInWord(currentWord), new int[]{0, 2})) {
 						resultString += currentWord;
 					}
 					currentWord = "";
@@ -33,13 +33,20 @@ public class WordsInStringProcesser {
 				currentWord += character;
 			}
 		}
+		
+		if (!currentWord.isEmpty() && !isContainOnlyMask(countSymbolsInWord(currentWord), new int[]{0, 2})) {
+			resultString += currentWord;
+		}
+		
 		return resultString;
 	}
 	
 	private static int[] countSymbolsInWord(String word) {
 		int[] counter = new int[128];
 		for (char character : word.toCharArray()) {
-			counter[character] = counter[character] + 1;
+			if (Character.isLetter(character)) {
+				counter[character] = counter[character] + 1;
+			}
 		}
 		return counter;
 	}
@@ -55,7 +62,7 @@ public class WordsInStringProcesser {
 	
 	private static boolean isContainOnlyMask(int[] integers, int[] maska) {
 		for (int num : integers) {
-			if (contain(num, maska)) {
+			if (!contain(num, maska)) {
 				return false;
 			}
 		}
