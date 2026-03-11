@@ -4,6 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CarNumberChecker {
+	private static final String CAR_NUMBER_REGEX = "^[а-яё]\\d{3}[а-яё]{2}\\d{2}rus$";
+	private static final Pattern CAR_NUMBER_PATTERN = Pattern.compile(CAR_NUMBER_REGEX);
+	
 	private CarNumberChecker() {
 		
 	}
@@ -16,15 +19,12 @@ public class CarNumberChecker {
 		return result;
 	}
 	
-	private static boolean isCarNumber(String string) {
-		String regex = "^[а-яА-ЯёЁ]\\d{3}[а-яА-ЯёЁ]{3}\\d{2}rus$";
-		
+	private static boolean isCarNumber(String string) {	
 		if (string == null || string.isEmpty()) {
 			return false;
 		}
 		
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(string);
+		Matcher matcher = CAR_NUMBER_PATTERN.matcher(string.toLowerCase());
 		return matcher.matches();
 	}
 }
