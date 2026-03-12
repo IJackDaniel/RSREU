@@ -32,7 +32,7 @@ public class ClientRunner {
 		String[] resultTwo = WordsInStringProcesser.processArray(strings, COUNT);
 		System.out.println(RESOURCER.getString("message.output.word") + convertArrayToString(resultTwo));
 		
-		String[] resultOne = CharactersInWordByPatternLettersDigitsOthersSorter.sortCharactersInStringFromArrayByPatternLettersDigitsOther(strings);
+		String[] resultOne = CharactersInWordByPatternLettersDigitsOthersSorter.sortStringsByCharacterType(strings);
 		System.out.println(RESOURCER.getString("message.output.string") + convertArrayToString(resultOne));
 	}
 

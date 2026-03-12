@@ -5,18 +5,18 @@ public class CharactersInWordByPatternLettersDigitsOthersSorter {
 
 	}
 
-	public static String[] sortCharactersInStringFromArrayByPatternLettersDigitsOther(String[] strings) {
+	public static String[] sortStringsByCharacterType(String[] strings) {
 		for (int i = 0; i < strings.length; i++) {
-			strings[i] = sortCharactersInStringByPatternLettersDigitsOther(strings[i]);
+			strings[i] = sortCharactersByPatternLettersDigitsOther(strings[i]);
 		}
 		return strings;
 	}
 
-	private static String sortCharactersInStringByPatternLettersDigitsOther(String string) {
+	private static String sortCharactersByPatternLettersDigitsOther(String string) {
 		String letters = "";
 		String digits = "";
 		String otherSymbols = "";
-		
+
 		for (char character : string.toCharArray()) {
 			if (Character.isLetter(character)) {
 				letters += character;
@@ -26,7 +26,7 @@ public class CharactersInWordByPatternLettersDigitsOthersSorter {
 				otherSymbols += character;
 			}
 		}
-		
+
 		return letters + digits + otherSymbols;
 	}
 }
