@@ -25,11 +25,10 @@ public class ClientRunner {
 		if (strings == null || strings.length == 0) {
 			return;
 		}
-			
 		Boolean[] resultThree = CarNumberChecker.checkCarNumberInArray(strings);
 		System.out.println(RESOURCER.getString("message.output.regex") + convertArrayToString(resultThree));
 		
-		String[] resultTwo = WordsInStringProcesser.processArray(strings, COUNT);
+		String[] resultTwo = WordLetterFrequencyFilter.filterWordsInStringsFromListByLetterFrequency(strings, COUNT);
 		System.out.println(RESOURCER.getString("message.output.word") + convertArrayToString(resultTwo));
 		
 		String[] resultOne = CharactersInWordByPatternLettersDigitsOthersSorter.sortStringsByCharacterType(strings);
