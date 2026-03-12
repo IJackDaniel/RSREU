@@ -7,32 +7,25 @@ import com.prutzkow.resourcer.Resourcer;
 
 public class ClientRunner {
 	private static final Resourcer RESOURCER = ProjectResourcer.getInstance();
-	private static final int COUNT = 2;
-	
+
 	private ClientRunner() {
 
 	}
 
 	public static void main(String[] args) {
-//		 String[] strings = inputValues();
-		String[] strings = new String[] {
-				"39few#($$  3frifjewrfiEFE 34 ###$",
-				"EErrww",
-				"ввУУгг",
-				"у777ор62rus"
-		};
-		
+		String[] strings = inputValues();
+
 		if (strings == null || strings.length == 0) {
 			return;
 		}
-		Boolean[] resultThree = CarNumberChecker.checkCarNumberInArray(strings);
-		System.out.println(RESOURCER.getString("message.output.regex") + convertArrayToString(resultThree));
-		
-		String[] resultTwo = WordLetterFrequencyFilter.filterWordsInStringsFromListByLetterFrequency(strings, COUNT);
+		Boolean[] resultOne = RussianCarNumberValidator.validateRussianCarNumbers(strings);
+		System.out.println(RESOURCER.getString("message.output.regex") + convertArrayToString(resultOne));
+
+		String[] resultTwo = WordLetterFrequencyFilter.filterWordsInStringsFromListByLetterFrequency(strings);
 		System.out.println(RESOURCER.getString("message.output.word") + convertArrayToString(resultTwo));
-		
-		String[] resultOne = CharactersInWordByPatternLettersDigitsOthersSorter.sortStringsByCharacterType(strings);
-		System.out.println(RESOURCER.getString("message.output.string") + convertArrayToString(resultOne));
+
+		String[] resultThree = CharactersInWordByPatternLettersDigitsOthersSorter.sortStringsByCharacterType(strings);
+		System.out.println(RESOURCER.getString("message.output.string") + convertArrayToString(resultThree));
 	}
 
 	private static String[] inputValues() {

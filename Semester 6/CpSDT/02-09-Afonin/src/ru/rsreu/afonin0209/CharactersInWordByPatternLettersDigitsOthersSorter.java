@@ -7,7 +7,8 @@ public class CharactersInWordByPatternLettersDigitsOthersSorter {
 
 	public static String[] sortStringsByCharacterType(String[] strings) {
 		for (int i = 0; i < strings.length; i++) {
-			strings[i] = sortCharactersByPatternLettersDigitsOther(strings[i]);
+			strings[i] = CharactersInWordByPatternLettersDigitsOthersSorter
+					.sortCharactersByPatternLettersDigitsOther(strings[i]);
 		}
 		return strings;
 	}
