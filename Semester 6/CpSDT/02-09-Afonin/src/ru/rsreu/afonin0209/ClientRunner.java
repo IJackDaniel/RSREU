@@ -7,13 +7,20 @@ import com.prutzkow.resourcer.Resourcer;
 
 public class ClientRunner {
 	private static final Resourcer RESOURCER = ProjectResourcer.getInstance();
-
+	private static final int COUNT = 2;
+	
 	private ClientRunner() {
 
 	}
 
 	public static void main(String[] args) {
-		 String[] strings = inputValues();
+//		 String[] strings = inputValues();
+		String[] strings = new String[] {
+				"39few#($$  3frifjewrfiEFE 34 ###$",
+				"EErrww",
+				"ввУУгг",
+				"у777ор62rus"
+		};
 		
 		if (strings == null || strings.length == 0) {
 			return;
@@ -22,7 +29,7 @@ public class ClientRunner {
 		Boolean[] resultThree = CarNumberChecker.checkCarNumberInArray(strings);
 		System.out.println(RESOURCER.getString("message.output.regex") + convertArrayToString(resultThree));
 		
-		String[] resultTwo = WordsInStringProcesser.processArray(strings);
+		String[] resultTwo = WordsInStringProcesser.processArray(strings, COUNT);
 		System.out.println(RESOURCER.getString("message.output.word") + convertArrayToString(resultTwo));
 		
 		String[] resultOne = CharactersInWordByPatternLettersDigitsOthersSorter.sortCharactersInStringFromArrayByPatternLettersDigitsOther(strings);
