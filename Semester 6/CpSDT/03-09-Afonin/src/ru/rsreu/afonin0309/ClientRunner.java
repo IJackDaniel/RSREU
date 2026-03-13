@@ -16,14 +16,16 @@ public class ClientRunner {
 
 	public static void main(String[] args) {
 		StringBuilder stringBuilder = new StringBuilder();
-		OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor b = new OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor(new NumbersList(ClientRunner.NUMBERS));
-		b.method();
+		OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor substractor = 
+				new OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor(new NumbersList(ClientRunner.NUMBERS));
+		
+		substractor.subtrackEvenIndexAverageFromOddIndex();
 
-		ClientRunner.appendResultToBuilder(stringBuilder, b);
+		ClientRunner.appendResultToBuilder(stringBuilder, substractor);
 
 		Locale.setDefault(Locale.US);
 
-		ClientRunner.appendResultToBuilder(stringBuilder, b);
+		ClientRunner.appendResultToBuilder(stringBuilder, substractor);
 
 		System.out.println(stringBuilder.toString());
 	}
