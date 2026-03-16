@@ -29,10 +29,10 @@ public class ClientRunner {
 		System.out.println(stringBuilder.toString());
 	}
 
-	private static void appendResultToBuilder(StringBuilder stringBuilder, OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor b) {
+	private static void appendResultToBuilder(StringBuilder stringBuilder, OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor substractor) {
 		stringBuilder.append(RESOURCER.getString("message.output.originalArray"));
 		stringBuilder.append(Arrays.toString(ClientRunner.NUMBERS));
 		stringBuilder.append(RESOURCER.getString("message.output.processedArray"));
-		stringBuilder.append(b.getData());
+		stringBuilder.append(substractor.getData());
 	}
 }

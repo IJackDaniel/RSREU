@@ -8,8 +8,8 @@ public class OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor {
 	}
 	
 	public void subtrackEvenIndexAverageFromOddIndex(){
-		int avg = this.averageOfNonZeroValuesWithEvenIndex();
-		this.substractValueFromOddIndexes(avg);
+		int average = this.averageOfNonZeroValuesWithEvenIndex();
+		this.substractValueFromOddIndexes(average);
 	}
 	
 	public String getData() {
