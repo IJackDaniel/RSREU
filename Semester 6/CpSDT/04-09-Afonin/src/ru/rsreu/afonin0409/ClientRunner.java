@@ -18,7 +18,7 @@ public class ClientRunner {
 		a.method();
 		
 		// Add processed two dimension array to stringBuilder
-
+		System.out.println(a.toString());
 	}
 
 }

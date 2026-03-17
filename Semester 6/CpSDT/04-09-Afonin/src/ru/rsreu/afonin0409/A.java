@@ -16,7 +16,7 @@ public class A extends TwoDimArray {
 	}
 	
 	public void fillRandomValuesFromInterval(int lowerBound, int upperBound) {
-		for (int[] row : super.arrayBody) {
+		for (int[] row : this.arrayBody) {
 			this.fillRowRandomValuesFromInterval(row, lowerBound, upperBound);
 		}
 	}
@@ -31,14 +31,10 @@ public class A extends TwoDimArray {
 		return (int) (Math.random() * (upperBound - lowerBound + 1)) + lowerBound;
 	}
 	
-	private int getCountElementsOfFirstColumn() {
-		return super.arrayBody.length;
-	}
-	
-	// Add count of elements for first column
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		return "";
+		builder.append("Count of elements for first column: " + super.getRowCount());
+		return builder.toString();
 	}
 }
