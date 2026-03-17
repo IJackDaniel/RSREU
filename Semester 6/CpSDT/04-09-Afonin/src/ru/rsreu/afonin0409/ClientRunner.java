@@ -10,15 +10,16 @@ public class ClientRunner {
 	private static final int UPPER_BOUND = 5;
 	
 	public static void main(String[] args) {
+		StringBuilder builder = new StringBuilder();
 		A a = new A(ClientRunner.SIZES);
 		a.fillRandomValuesFromInterval(ClientRunner.LOWER_BOUND, ClientRunner.UPPER_BOUND);
 		
-		// Add original two dimension array to stringBuilder
+		builder.append(RESOURCER.getString("message.output.originalTwoDimArray") + a.toString());
 		
 		a.method();
 		
-		// Add processed two dimension array to stringBuilder
-		System.out.println(a.toString());
+		builder.append(RESOURCER.getString("message.output.processedTwoDimArray") + a.toString());
+		
+		System.out.println(builder.toString());
 	}
-
 }

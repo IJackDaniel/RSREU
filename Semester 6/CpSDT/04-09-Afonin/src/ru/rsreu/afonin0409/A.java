@@ -45,6 +45,7 @@ public class A extends TwoDimArray {
 		for (int[] row : this.arrayBody) {
 			addArrayToStringBuilderWithFormat(builder, row);
 		}
+		builder.append("\n");
 		return builder.toString();
 	}
 }
