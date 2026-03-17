@@ -16,8 +16,9 @@ public class ClientRunner {
 
 	public static void main(String[] args) {
 		StringBuilder stringBuilder = new StringBuilder();
-		OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor substractor = new OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor(new NumbersList(ClientRunner.NUMBERS));
-		
+		OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor substractor = new OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor(
+				new NumbersList(ClientRunner.NUMBERS));
+
 		substractor.subtrackEvenIndexAverageFromOddIndex();
 
 		ClientRunner.appendResultToBuilder(stringBuilder, substractor);
@@ -29,7 +30,8 @@ public class ClientRunner {
 		System.out.println(stringBuilder.toString());
 	}
 
-	private static void appendResultToBuilder(StringBuilder stringBuilder, OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor substractor) {
+	private static void appendResultToBuilder(StringBuilder stringBuilder,
+			OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor substractor) {
 		stringBuilder.append(RESOURCER.getString("message.output.originalArray"));
 		stringBuilder.append(Arrays.toString(ClientRunner.NUMBERS));
 		stringBuilder.append(RESOURCER.getString("message.output.processedArray"));
