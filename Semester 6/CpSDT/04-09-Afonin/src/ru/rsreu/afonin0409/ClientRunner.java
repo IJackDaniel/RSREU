@@ -11,14 +11,14 @@ public class ClientRunner {
 	
 	public static void main(String[] args) {
 		StringBuilder builder = new StringBuilder();
-		A a = new A(ClientRunner.SIZES);
-		a.fillRandomValuesFromInterval(ClientRunner.LOWER_BOUND, ClientRunner.UPPER_BOUND);
+		ZerosToEndShiftingTwoDimArray twoDimArray = new ZerosToEndShiftingTwoDimArray(ClientRunner.SIZES);
+		twoDimArray.fillRandomValuesFromInterval(ClientRunner.LOWER_BOUND, ClientRunner.UPPER_BOUND);
 		
-		builder.append(RESOURCER.getString("message.output.originalTwoDimArray") + a.toString());
+		builder.append(RESOURCER.getString("message.output.originalTwoDimArray") + twoDimArray.toString());
 		
-		a.method();
+		twoDimArray.moveZerosToEndForListsInTwoDimensionArray();
 		
-		builder.append(RESOURCER.getString("message.output.processedTwoDimArray") + a.toString());
+		builder.append(RESOURCER.getString("message.output.processedTwoDimArray") + twoDimArray.toString());
 		
 		System.out.println(builder.toString());
 	}
