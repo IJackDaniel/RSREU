@@ -31,10 +31,20 @@ public class A extends TwoDimArray {
 		return (int) (Math.random() * (upperBound - lowerBound + 1)) + lowerBound;
 	}
 	
+	private void addArrayToStringBuilderWithFormat(StringBuilder builder, int[] integers) {
+		for (int element : integers) {
+			builder.append(String.format(this.FORMAT, element));
+		}
+		builder.append("\n");
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Count of elements for first column: " + super.getRowCount());
+		builder.append("Count of elements for first column: " + super.getRowCount() + "\n");
+		for (int[] row : this.arrayBody) {
+			addArrayToStringBuilderWithFormat(builder, row);
+		}
 		return builder.toString();
 	}
 }
