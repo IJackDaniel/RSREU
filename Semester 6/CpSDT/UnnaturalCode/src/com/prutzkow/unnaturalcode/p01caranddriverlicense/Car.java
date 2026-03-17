@@ -1,23 +1,33 @@
 package com.prutzkow.unnaturalcode.p01caranddriverlicense;
 
 class Car {
-	private DriverLicense driverLicense;
+	private final DriverLicense driverLicense;
+	private boolean isReady = false;
+	
 	public Car(DriverLicense driverLicense) {
 		this.driverLicense = driverLicense;
 	}
+	
 	public void enableDriveMode() {
-		if (driverLicense.isAdult()) {
-			System.out.println("Drive mode enabled!");
-		} else if (driverLicense.isTeenDriver()) {
-			if (driverLicense.isLearner()) {
-				System.out.println(
-						"You cannot drive without a licensed adult's supervision.");
-			} else {
-				System.out.println("Drive mode enabled!");
-			}
+		this.isReady = this.driverLicense.canDrive();
+	}
+	
+	private boolean isCarReady() {
+		return this.isReady;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Human type: " + this.driverLicense.getHumanType());
+		builder.append("\nType of license: " + this.driverLicense.getDriveModeMessage());
+		builder.append("\nCar condition: ");
+		if (this.isCarReady()) {
+			builder.append("Car is ready to drive!");
 		} else {
-
-			System.out.println("You don't have a valid driver's license.");
+			builder.append("Car is not ready to drive!");
 		}
+		builder.append("\n\n");
+		return builder.toString();
 	}
 }
