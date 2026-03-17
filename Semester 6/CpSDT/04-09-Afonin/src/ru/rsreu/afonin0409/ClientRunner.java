@@ -11,7 +11,7 @@ public class ClientRunner {
 	
 	public static void main(String[] args) {
 		A a = new A(ClientRunner.SIZES);
-		a.fill(ClientRunner.LOWER_BOUND, ClientRunner.UPPER_BOUND);
+		a.fillRandomValuesFromInterval(ClientRunner.LOWER_BOUND, ClientRunner.UPPER_BOUND);
 		
 		// Add original two dimension array to stringBuilder
 		
