@@ -9,6 +9,10 @@ public class ClientRunner {
 	private static final int LOWER_BOUND = -5;
 	private static final int UPPER_BOUND = 5;
 
+	private ClientRunner() {
+
+	}
+
 	public static void main(String[] args) {
 		StringBuilder builder = new StringBuilder();
 		ZerosToEndShiftingTwoDimArray twoDimArray = new ZerosToEndShiftingTwoDimArray(ClientRunner.SIZES);
