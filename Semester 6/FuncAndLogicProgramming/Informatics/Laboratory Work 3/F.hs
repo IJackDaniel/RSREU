@@ -12,12 +12,12 @@ main = do
     str <- getLine
     let revStr = reverse str
 
-    let firstLen = lenToFirstH str
-    let secondLen = lenToFirstH revStr
+    let lenFromStart = lenToFirstH str
+    let lenFromEnd = lenToFirstH revStr
 
 
-    let first = take firstLen str
-    let second = reverse (take secondLen revStr)
-    let middle = drop (secondLen) (reverse (drop (firstLen) str))
+    let start = take lenFromStart str
+    let end = reverse (take lenFromEnd revStr)
+    let middle = drop (lenFromEnd) (reverse (drop (firlenFromStartstLen) str))
 
-    putStrLn $ first ++ middle ++ second
+    putStrLn $ start ++ middle ++ end
