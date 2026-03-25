@@ -22,16 +22,9 @@ public class QualityAppraiser {
     private final int r;
     private final double criticalValuePirson;
 
-    // Параметры для критерия числа серий
-    private final double p;
-    private final double tb;
-    private double rH;
-    private double rB;
-
     // Значения критериев
     private double pirson;
     private double kolmogorov;
-    private int R;
 
     // Параметры для вывода
     private final String SEPARATOR_1 = "=";
@@ -39,7 +32,7 @@ public class QualityAppraiser {
     private final int LENGTH_OF_INPUT = 65;
     private static final int ACCURACY = 5;
 
-    public QualityAppraiser(double[] values, int parts, double alpha, double p) {
+    public QualityAppraiser(double[] values, int parts, double alpha) {
         this.length = values.length;
         this.countOfParts = parts;
         this.stepOfParts = this.round(1.0 / this.countOfParts);
@@ -54,13 +47,8 @@ public class QualityAppraiser {
         this.r = this.countOfParts - 1;
         this.criticalValuePirson = PirsonCriticalValues.getPirsonCriticalValue(this.r, this.beta);
 
-        this.p = p;
-        this.tb = NormalQuantiles.getTB(this.alpha);
-        computeBoundsForR();
-
         computePirson();
         computeKolmogorov();
-        computeR();
     }
 
     public void printParam() {
@@ -75,10 +63,6 @@ public class QualityAppraiser {
                 "\nЧисло степеней свободы (r): " + this.r +
                 "\nКритическое значение: " + this.criticalValuePirson +
                 "\n\n" + createSeparatorLine("Для критерия числа серий", this.SEPARATOR_2, this.LENGTH_OF_INPUT) +
-                "\nРазделительный элемент (p): " + this.p +
-                "\nЗначение квантиля стандартного нормального распределения: " + this.tb +
-                "\nНижняя граница (RH): " + this.rH +
-                "\nВерхняя граница (RB): " + this.rB +
                 "\n" + createSeparatorLine("", this.SEPARATOR_1, this.LENGTH_OF_INPUT) + "\n");
     }
 
@@ -103,36 +87,8 @@ public class QualityAppraiser {
         this.kolmogorov = this.round(dMax * Math.sqrt(this.length));
     }
 
-    public void computeR() {
-        boolean y1;
-        boolean y2;
-        int r = 0;
-
-        y1 = !(this.values[0] < this.p);
-
-        for (int i = 1; i < this.length; i++) {
-            y2 = !(this.values[i] < this.p);
-
-            if(y1 != y2) r++;
-            y1 = y2;
-        }
-        this.R = r;
-    }
-
-    public double getrH() {
-        return this.rH;
-    }
-
-    public double getrB() {
-        return this.rB;
-    }
-
     public double getPirsonCriticalValue() {
         return this.criticalValuePirson;
-    }
-
-    public boolean checkBoundsForR() {
-        return (this.rH <= this.R && this.R <= this.rB);
     }
 
     public double getPirson() {
@@ -143,29 +99,9 @@ public class QualityAppraiser {
         return kolmogorov;
     }
 
-    public int getR() {
-        return R;
-    }
 
     public int[] getFrequencies() {
         return this.frequencies.clone();
-    }
-
-    private void computeBoundsForR() {
-        double expValue = computeExpValue();
-        double dispersion = computeDispersion();
-        double sigma = Math.sqrt(dispersion);
-        this.rH = this.round(expValue - this.tb * sigma);
-        this.rB = this.round(expValue + this.tb * sigma);
-    }
-
-    private double computeExpValue() {
-        return 2 * this.length * this.p * (1 - this.p) + this.p * this.p + (1 - this.p) * (1 - this.p);
-    }
-
-    private double computeDispersion() {
-        return 4 * this.length * this.p * (1 - this.p) * (1 - 3 * this.p * (1 - this.p)) -
-                2 * this.p * (1 - this.p) * (3 - 10 * this.p * (1 - this.p));
     }
 
     private int[] generateFrequencies() {
