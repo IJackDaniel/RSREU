@@ -1,5 +1,7 @@
 package ru.rsreu.afonin0209;
 
+import java.util.function.IntPredicate;
+
 public class CharactersInWordByPatternLettersDigitsOthersSorter {
 	private CharactersInWordByPatternLettersDigitsOthersSorter() {
 
@@ -14,20 +16,26 @@ public class CharactersInWordByPatternLettersDigitsOthersSorter {
 	}
 
 	private static String sortCharactersByPatternLettersDigitsOther(String string) {
-		String letters = "";
-		String digits = "";
-		String otherSymbols = "";
-
-		for (char character : string.toCharArray()) {
-			if (Character.isLetter(character)) {
-				letters += character;
-			} else if (Character.isDigit(character)) {
-				digits += character;
-			} else {
-				otherSymbols += character;
-			}
-		}
+		IntPredicate isLetterPredicate = Character::isLetter;
+		IntPredicate isDigitPredicate = Character::isDigit;
+		IntPredicate isOtherPredicate = isLetterPredicate.negate().and(isDigitPredicate.negate());
+		
+		String letters = extractOnlyCertainTypeCharactersFromString(string, isLetterPredicate);
+		String digits = extractOnlyCertainTypeCharactersFromString(string, isDigitPredicate);
+		String otherSymbols = extractOnlyCertainTypeCharactersFromString(string, isOtherPredicate);
 
 		return letters + digits + otherSymbols;
+	}
+	
+	private static String extractOnlyCertainTypeCharactersFromString(String string, IntPredicate condition) {
+		String outcome = "";
+		
+		for (char character : string.toCharArray()) {
+			if (condition.test(character)) {
+				outcome += character;
+			}
+		}
+		
+		return outcome;
 	}
 }
