@@ -8,7 +8,7 @@ public class OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor {
 	}
 
 	public void subtrackEvenIndexAverageFromOddIndex() {
-		int average = this.averageOfNonZeroValuesWithEvenIndex();
+		int average = this.getAverageOfNonZeroValuesWithEvenIndex();
 		this.substractValueFromOddIndexes(average);
 	}
 
@@ -16,7 +16,7 @@ public class OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor {
 		return this.numbers.toString();
 	}
 
-	private int averageOfNonZeroValuesWithEvenIndex() {
+	private int getAverageOfNonZeroValuesWithEvenIndex() {
 		int count = 0;
 		int sum = 0;
 		for (int i = 0; i < numbers.getLength(); i += 2) {
