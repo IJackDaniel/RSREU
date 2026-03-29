@@ -233,8 +233,5 @@ public class Main {
         } else {
             System.out.println("  5. Метод Бокса-Мюллера работает быстрее.");
         }
-
-        System.out.println();
-        System.out.println("Лабораторная работа выполнена.");
     }
 }

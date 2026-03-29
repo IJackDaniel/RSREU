@@ -1,140 +1,262 @@
 package com.IJackDaniel;
 
 import java.util.Arrays;
+import java.util.function.Function;
+
 
 public class QualityAppraiser {
-    // Параметры последовательности
-    private final int length;
-    private final int countOfParts;
-    private final double stepOfParts;
-
-    // Последовательности данных
-    private final double[] values;
-    private double[] sortedValues;
-    private final double[] probabilities;
-    private final int[] frequencies;
-
-    // Общие параметры
-    private final double alpha;
-    private final double beta;
+    // Основные параметры
+    private final int length;                    // Объём выборки
+    private final int countOfParts;              // Количество интервалов разбиения (k)
+    private final double[] boundaries;           // Границы интервалов разбиения
+    private final double[] theoreticalProbabilities;  // Теоретические вероятности попадания в интервалы
+    private final int[] frequencies;             // Эмпирические частоты попадания в интервалы
 
     // Параметры для критерия Пирсона
-    private final int r;
-    private final double criticalValuePirson;
+    private final double alpha;                  // Уровень значимости
+    private final int r;                         // Число степеней свободы (k - 1)
+    private final double criticalValuePierson;   // Критическое значение критерия Пирсона
 
     // Значения критериев
-    private double pirson;
-    private double kolmogorov;
+    private double pierson;                      // Наблюдаемое значение критерия Пирсона
+    private double kolmogorov;                   // Наблюдаемое значение критерия Колмогорова
 
-    // Параметры для вывода
-    private final String SEPARATOR_1 = "=";
-    private final String SEPARATOR_2 = "_";
-    private final int LENGTH_OF_INPUT = 65;
-    private static final int ACCURACY = 5;
+    // Функция теоретического распределения
+    private final Function<Double, Double> distributionFunction;
 
-    public QualityAppraiser(double[] values, int parts, double alpha) {
+    // Параметры вывода
+    private static final int ACCURACY = 5;       // Точность округления
+
+    public QualityAppraiser(double[] values, int parts, double alpha,
+                            double lowerBound, double upperBound,
+                            Function<Double, Double> distFunc) {
         this.length = values.length;
         this.countOfParts = parts;
-        this.stepOfParts = this.round(1.0 / this.countOfParts);
+        this.distributionFunction = distFunc;
         this.alpha = alpha;
-        this.beta = this.round(1 - this.alpha);
 
-        this.values = values;
-        this.sortedValues = values.clone();
-        Arrays.sort(this.sortedValues);
-        this.probabilities = computeTheoreticalProbabilities();
-        this.frequencies = generateFrequencies();
-        this.r = this.countOfParts - 1;
-        this.criticalValuePirson = PirsonCriticalValues.getPirsonCriticalValue(this.r, this.beta);
+        // Вычисляем границы интервалов разбиения
+        this.boundaries = computeBoundaries(lowerBound, upperBound, parts);
 
-        computePirson();
-        computeKolmogorov();
+        // Вычисляем теоретические вероятности попадания в интервалы
+        this.theoreticalProbabilities = computeTheoreticalProbabilities();
+
+        // Вычисляем эмпирические частоты попадания в интервалы
+        this.frequencies = generateFrequencies(values);
+
+        // Параметры для критерия Пирсона
+        this.r = parts - 1;                      // Число степеней свободы
+        this.criticalValuePierson = PiersonCriticalValues.getPiersonCriticalValue(this.r, alpha);
+
+        // Вычисляем значения критериев
+        computePierson();
+        computeKolmogorov(values);
     }
 
-    public void printParam() {
-        System.out.println(createSeparatorLine("Параметры", this.SEPARATOR_1, this.LENGTH_OF_INPUT) +
-                "\n" + createSeparatorLine("Общие", this.SEPARATOR_2, this.LENGTH_OF_INPUT) +
-                "\nЧисло значений (N): " + this.length +
-                "\nЧисло интервалов (k): " + this.countOfParts +
-                "\nДлина интервала: " + this.stepOfParts +
-                "\nУровень значимости (alpha): " + this.alpha +
-                "\nНадёжность (beta): " + this.beta +
-                "\n\n" + createSeparatorLine("Для критерия Пирсона", this.SEPARATOR_2, this.LENGTH_OF_INPUT) +
-                "\nЧисло степеней свободы (r): " + this.r +
-                "\nКритическое значение: " + this.criticalValuePirson +
-                "\n\n" + createSeparatorLine("Для критерия числа серий", this.SEPARATOR_2, this.LENGTH_OF_INPUT) +
-                "\n" + createSeparatorLine("", this.SEPARATOR_1, this.LENGTH_OF_INPUT) + "\n");
+    private double[] computeBoundaries(double lowerBound, double upperBound, int parts) {
+        double[] boundaries = new double[parts + 1];
+        double step = (upperBound - lowerBound) / parts;
+
+        for (int i = 0; i <= parts; i++) {
+            boundaries[i] = lowerBound + i * step;
+        }
+
+        return boundaries;
     }
 
-    public void computePirson() {
+    private double[] computeTheoreticalProbabilities() {
+        double[] probs = new double[countOfParts];
+
+        for (int i = 0; i < countOfParts; i++) {
+            double fUpper = distributionFunction.apply(boundaries[i + 1]);
+            double fLower = distributionFunction.apply(boundaries[i]);
+            probs[i] = fUpper - fLower;
+
+            // Проверка на корректность вероятности
+            if (probs[i] < 0) {
+                System.err.printf("Внимание: отрицательная вероятность в интервале %d: %.5f\n", i, probs[i]);
+                probs[i] = 0;
+            }
+        }
+
+        // Нормализация вероятностей (для устранения погрешностей округления)
+        double sum = 0;
+        for (double prob : probs) {
+            sum += prob;
+        }
+
+        if (Math.abs(sum - 1.0) > 0.001) {
+            // Корректируем последнюю вероятность для получения суммы = 1
+            probs[countOfParts - 1] += (1.0 - sum);
+        }
+
+        return probs;
+    }
+
+    private int[] generateFrequencies(double[] values) {
+        int[] freqs = new int[countOfParts];
+
+        for (double val : values) {
+            // Находим интервал, в который попадает значение
+            for (int i = 0; i < countOfParts; i++) {
+                // Для последнего интервала включаем правую границу
+                if (i == countOfParts - 1) {
+                    if (val >= boundaries[i] && val <= boundaries[i + 1]) {
+                        freqs[i]++;
+                        break;
+                    }
+                } else {
+                    if (val >= boundaries[i] && val < boundaries[i + 1]) {
+                        freqs[i]++;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return freqs;
+    }
+
+    private void computePierson() {
         double xi = 0.0;
-        for (int i = 0; i < this.countOfParts; i++) {
-            xi += Math.pow(this.frequencies[i] - this.length * this.probabilities[i], 2) /
-                    (this.length * this.probabilities[i]);
+
+        for (int i = 0; i < countOfParts; i++) {
+            double theoreticalFrequency = length * theoreticalProbabilities[i];
+
+            if (theoreticalFrequency > 0) {
+                double diff = frequencies[i] - theoreticalFrequency;
+                xi += (diff * diff) / theoreticalFrequency;
+            } else if (frequencies[i] > 0) {
+                System.err.printf("Внимание: нулевая теоретическая частота в интервале %d, "
+                        + "но есть эмпирические данные\n", i);
+                xi = Double.POSITIVE_INFINITY;
+            }
         }
-        this.pirson = this.round(xi);
+
+        this.pierson = round(xi);
     }
 
-    public void computeKolmogorov() {
+    private void computeKolmogorov(double[] values) {
+        double[] sorted = values.clone();
+        Arrays.sort(sorted);
+
         double dMax = 0.0;
-        for (int i = 0; i < this.length; i++) {
-            double ft = (double) (i + 1) / this.length;
-            double dp = Math.abs((double) (i + 1) / this.length - ft);
-            double dm = Math.abs(ft - (double) i / this.length);
-            if (dp > dMax) dMax = dp;
-            if (dm > dMax) dMax = dm;
+
+        for (int i = 0; i < length; i++) {
+            double empiricalCDF = (double) (i + 1) / length;
+
+            double theoreticalCDF = distributionFunction.apply(sorted[i]);
+
+            // Максимальное отклонение
+            double diff = Math.abs(empiricalCDF - theoreticalCDF);
+            if (diff > dMax) {
+                dMax = diff;
+            }
         }
-        this.kolmogorov = this.round(dMax * Math.sqrt(this.length));
+
+        this.kolmogorov = round(dMax);
     }
 
-    public double getPirsonCriticalValue() {
-        return this.criticalValuePirson;
+    public void printResults() {
+        System.out.println("\n" + createSeparatorLine("Проверка распределения", "=", 70));
+        System.out.println("\n" + createSeparatorLine("Общие параметры", "_", 70));
+        System.out.printf("Объём выборки (n): %d\n", length);
+        System.out.printf("Число интервалов (k): %d\n", countOfParts);
+        System.out.printf("Уровень значимости (α): %.2f\n", alpha);
+
+        System.out.println("\n" + createSeparatorLine("Критерий Пирсона", "_", 70));
+        System.out.printf("Число степеней свободы (r = k - 1): %d\n", r);
+        System.out.printf("Наблюдаемое значение: %.5f\n", pierson);
+        System.out.printf("Критическое значение (α=%.2f, r=%d): %.5f\n", alpha, r, criticalValuePierson);
+
+        if (pierson < criticalValuePierson) {
+            System.out.println("Результат: ГИПОТЕЗА ПРИНИМАЕТСЯ");
+            System.out.println("(Эмпирическое распределение соответствует теоретическому)");
+        } else {
+            System.out.println("Результат: ГИПОТЕЗА ОТВЕРГАЕТСЯ");
+            System.out.println("(Эмпирическое распределение не соответствует теоретическому)");
+        }
+
+        System.out.println("\n" + createSeparatorLine("Критерий Колмогорова", "_", 70));
+        System.out.printf("Наблюдаемое значение D: %.5f\n", kolmogorov);
+        System.out.printf("Критическое значение D(α=%.2f, n=%d): %.5f\n", alpha, length,
+                getKolmogorovCriticalValue());
+
+        if (kolmogorov < getKolmogorovCriticalValue()) {
+            System.out.println("Результат: ГИПОТЕЗА ПРИНИМАЕТСЯ");
+            System.out.println("(Эмпирическое распределение соответствует теоретическому)");
+        } else {
+            System.out.println("Результат: ГИПОТЕЗА ОТВЕРГАЕТСЯ");
+            System.out.println("(Эмпирическое распределение не соответствует теоретическому)");
+        }
+
+        System.out.println("\n" + createSeparatorLine("", "=", 70));
     }
 
-    public double getPirson() {
-        return pirson;
+    private double getKolmogorovCriticalValue() {
+        if (alpha == 0.05) {
+            return round(1.36 / Math.sqrt(length));
+        } else if (alpha == 0.01) {
+            return round(1.63 / Math.sqrt(length));
+        } else {
+            return round(1.36 / Math.sqrt(length) * (Math.log(1.0 / alpha) / Math.log(1.0 / 0.05)));
+        }
+    }
+
+    private String createSeparatorLine(String word, String separatorChar, int totalLength) {
+        if (word.isEmpty()) {
+            return separatorChar.repeat(totalLength);
+        }
+
+        if (word.length() >= totalLength) {
+            return word;
+        }
+
+        int remainingLength = totalLength - word.length();
+        int leftPadding = remainingLength / 2;
+        int rightPadding = remainingLength - leftPadding;
+
+        return separatorChar.repeat(leftPadding) + word + separatorChar.repeat(rightPadding);
+    }
+
+    private double round(double value) {
+        if (Double.isInfinite(value) || Double.isNaN(value)) {
+            return value;
+        }
+        int divider = (int) Math.pow(10, ACCURACY);
+        return (double) Math.round(value * divider) / divider;
+    }
+
+    // Геттеры
+    public double getPierson() {
+        return pierson;
     }
 
     public double getKolmogorov() {
         return kolmogorov;
     }
 
+    public double getCriticalValuePierson() {
+        return criticalValuePierson;
+    }
 
     public int[] getFrequencies() {
-        return this.frequencies.clone();
+        return frequencies.clone();
     }
 
-    private int[] generateFrequencies() {
-        int[] frequencies = new int[this.countOfParts];
-        for (int i = 0; i < this.length; i++) {
-            int j = (int) (this.values[i] / this.stepOfParts);
-            frequencies[j] += 1;
-        }
-        return frequencies;
+    public double[] getTheoreticalProbabilities() {
+        return theoreticalProbabilities.clone();
     }
 
-    private double[] computeTheoreticalProbabilities() {
-        double[] result = new double[this.countOfParts];
-        Arrays.fill(result, 1.0 / this.countOfParts);
-        return result;
+    public double[] getBoundaries() {
+        return boundaries.clone();
     }
 
-    private String createSeparatorLine(String word, String separatorChar, int totalLength) {
-        String processedWord = word;
-
-        if (processedWord.length() >= totalLength) {
-            return processedWord;
-        }
-
-        int remainingLength = totalLength - processedWord.length();
-        int leftPadding = remainingLength / 2;
-        int rightPadding = remainingLength - leftPadding;
-
-        return separatorChar.repeat(leftPadding) + processedWord + separatorChar.repeat(rightPadding);
+    public int getLength() {
+        return length;
     }
 
-    private double round(double value) {
-        int divider = (int) Math.pow(10, ACCURACY);
-        return (double) Math.round(value * divider) / divider;
+    public int getCountOfParts() {
+        return countOfParts;
     }
 }

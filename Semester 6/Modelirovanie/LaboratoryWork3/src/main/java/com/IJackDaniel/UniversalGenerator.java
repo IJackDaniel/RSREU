@@ -25,7 +25,7 @@ public class UniversalGenerator {
         return arrOfValues;
     }
 
-    private static double rnd() {
+    public static double rnd() {
         double s = 0.0;
         double[] x = new double[K];
         int[] yN = new int[K];

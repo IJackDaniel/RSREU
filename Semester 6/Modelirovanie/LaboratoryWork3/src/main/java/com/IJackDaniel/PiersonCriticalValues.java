@@ -2,259 +2,252 @@ package com.IJackDaniel;
 
 import java.util.Map;
 
-public class PirsonCriticalValues {
+public class PiersonCriticalValues {
+    // Таблица критических значений критерия Пирсона для уровня значимости α
+    // Ключ: степени свободы (r)
+    // Значение: Map (α -> критическое значение)
     private static final Map<Integer, Map<Double, Double>> TABLE = Map.ofEntries(
-            Map.entry(
-                    5, Map.ofEntries(
-                            Map.entry(0.99, 0.55),
-                            Map.entry(0.975, 0.83),
-                            Map.entry(0.950, 1.15),
-                            Map.entry(0.9, 1.61),
-                            Map.entry(0.8, 2.34),
-                            Map.entry(0.7, 3.0),
-                            Map.entry(0.6, 3.66),
-                            Map.entry(0.5, 4.35),
-                            Map.entry(0.4, 5.13),
-                            Map.entry(0.3, 6.06)
-                    )),
-            Map.entry(
-                    6, Map.ofEntries(
-                            Map.entry(0.99, 0.87),
-                            Map.entry(0.975, 1.24),
-                            Map.entry(0.950, 1.64),
-                            Map.entry(0.9, 2.2),
-                            Map.entry(0.8, 3.07),
-                            Map.entry(0.7, 3.83),
-                            Map.entry(0.6, 4.57),
-                            Map.entry(0.5, 5.35),
-                            Map.entry(0.4, 6.21),
-                            Map.entry(0.3, 7.23)
-                    )),
-            Map.entry(
-                    7, Map.ofEntries(
-                            Map.entry(0.99, 1.24),
-                            Map.entry(0.975, 1.69),
-                            Map.entry(0.950, 2.17),
-                            Map.entry(0.9, 2.83),
-                            Map.entry(0.8, 3.82),
-                            Map.entry(0.7, 4.67),
-                            Map.entry(0.6, 5.49),
-                            Map.entry(0.5, 6.35),
-                            Map.entry(0.4, 7.28),
-                            Map.entry(0.3, 8.38)
-                    )),
-            Map.entry(
-                    8, Map.ofEntries(
-                            Map.entry(0.99, 1.65),
-                            Map.entry(0.975, 2.18),
-                            Map.entry(0.950, 2.73),
-                            Map.entry(0.9, 3.49),
-                            Map.entry(0.8, 4.59),
-                            Map.entry(0.7, 5.53),
-                            Map.entry(0.6, 6.42),
-                            Map.entry(0.5, 7.34),
-                            Map.entry(0.4, 8.35),
-                            Map.entry(0.3, 9.52)
-                    )),
-            Map.entry(
-                    9, Map.ofEntries(
-                            Map.entry(0.99, 2.09),
-                            Map.entry(0.975, 2.7),
-                            Map.entry(0.950, 3.33),
-                            Map.entry(0.9, 4.17),
-                            Map.entry(0.8, 5.38),
-                            Map.entry(0.7, 6.39),
-                            Map.entry(0.6, 7.36),
-                            Map.entry(0.5, 8.34),
-                            Map.entry(0.4, 9.41),
-                            Map.entry(0.3, 10.66)
-                    )),
-            Map.entry(
-                    10, Map.ofEntries(
-                            Map.entry(0.99, 2.56),
-                            Map.entry(0.975, 3.25),
-                            Map.entry(0.950, 3.94),
-                            Map.entry(0.9, 4.87),
-                            Map.entry(0.8, 6.18),
-                            Map.entry(0.7, 7.27),
-                            Map.entry(0.6, 8.3),
-                            Map.entry(0.5, 9.34),
-                            Map.entry(0.4, 10.47),
-                            Map.entry(0.3, 11.78)
-                    )),
-            Map.entry(
-                    11, Map.ofEntries(
-                            Map.entry(0.99, 3.05),
-                            Map.entry(0.975, 3.82),
-                            Map.entry(0.950, 4.57),
-                            Map.entry(0.9, 5.58),
-                            Map.entry(0.8, 6.99),
-                            Map.entry(0.7, 8.15),
-                            Map.entry(0.6, 9.24),
-                            Map.entry(0.5, 10.34),
-                            Map.entry(0.4, 11.53),
-                            Map.entry(0.3, 12.90)
-                    )),
-            Map.entry(
-                    12, Map.ofEntries(
-                            Map.entry(0.99, 3.57),
-                            Map.entry(0.975, 4.4),
-                            Map.entry(0.950, 5.23),
-                            Map.entry(0.9, 6.30),
-                            Map.entry(0.8, 7.81),
-                            Map.entry(0.7, 9.03),
-                            Map.entry(0.6, 10.18),
-                            Map.entry(0.5, 11.34),
-                            Map.entry(0.4, 12.58),
-                            Map.entry(0.3, 14.01)
-                    )),
-            Map.entry(
-                    13, Map.ofEntries(
-                            Map.entry(0.99, 4.11),
-                            Map.entry(0.975, 5.01),
-                            Map.entry(0.950, 5.89),
-                            Map.entry(0.9, 7.04),
-                            Map.entry(0.8, 8.63),
-                            Map.entry(0.7, 9.93),
-                            Map.entry(0.6, 11.13),
-                            Map.entry(0.5, 12.34),
-                            Map.entry(0.4, 13.64),
-                            Map.entry(0.3, 15.12)
-                    )),
-            Map.entry(
-                    14, Map.ofEntries(
-                            Map.entry(0.99, 4.66),
-                            Map.entry(0.975, 5.63),
-                            Map.entry(0.950, 6.57),
-                            Map.entry(0.9, 7.79),
-                            Map.entry(0.8, 9.47),
-                            Map.entry(0.7, 10.82),
-                            Map.entry(0.6, 12.08),
-                            Map.entry(0.5, 13.34),
-                            Map.entry(0.4, 14.69),
-                            Map.entry(0.3, 16.22)
-                    )),
-            Map.entry(
-                    15, Map.ofEntries(
-                            Map.entry(0.99, 5.23),
-                            Map.entry(0.975, 6.26),
-                            Map.entry(0.950, 7.26),
-                            Map.entry(0.9, 8.55),
-                            Map.entry(0.8, 10.31),
-                            Map.entry(0.7, 11.72),
-                            Map.entry(0.6, 13.03),
-                            Map.entry(0.5, 14.34),
-                            Map.entry(0.4, 15.73),
-                            Map.entry(0.3, 17.32)
-                    )),
-            Map.entry(
-                    16, Map.ofEntries(
-                            Map.entry(0.99, 5.81),
-                            Map.entry(0.975, 6.91),
-                            Map.entry(0.950, 7.96),
-                            Map.entry(0.9, 9.31),
-                            Map.entry(0.8, 11.15),
-                            Map.entry(0.7, 12.62),
-                            Map.entry(0.6, 13.98),
-                            Map.entry(0.5, 15.34),
-                            Map.entry(0.4, 16.78),
-                            Map.entry(0.3, 18.42)
-                    )),
-            Map.entry(
-                    17, Map.ofEntries(
-                            Map.entry(0.99, 6.41),
-                            Map.entry(0.975, 7.56),
-                            Map.entry(0.950, 8.67),
-                            Map.entry(0.9, 10.09),
-                            Map.entry(0.8, 12.0),
-                            Map.entry(0.7, 13.53),
-                            Map.entry(0.6, 14.94),
-                            Map.entry(0.5, 16.34),
-                            Map.entry(0.4, 17.82),
-                            Map.entry(0.3, 19.51)
-                    )),
-            Map.entry(
-                    18, Map.ofEntries(
-                            Map.entry(0.99, 7.01),
-                            Map.entry(0.975, 8.23),
-                            Map.entry(0.950, 9.39),
-                            Map.entry(0.9, 10.86),
-                            Map.entry(0.8, 12.86),
-                            Map.entry(0.7, 14.44),
-                            Map.entry(0.6, 15.89),
-                            Map.entry(0.5, 17.34),
-                            Map.entry(0.4, 18.87),
-                            Map.entry(0.3, 20.6)
-                    )),
-            Map.entry(
-                    19, Map.ofEntries(
-                            Map.entry(0.99, 7.63),
-                            Map.entry(0.975, 8.91),
-                            Map.entry(0.950, 10.12),
-                            Map.entry(0.9, 11.65),
-                            Map.entry(0.8, 13.72),
-                            Map.entry(0.7, 15.35),
-                            Map.entry(0.6, 16.85),
-                            Map.entry(0.5, 18.34),
-                            Map.entry(0.4, 19.91),
-                            Map.entry(0.3, 21.69)
-                    )),
-            Map.entry(
-                    20, Map.ofEntries(
-                            Map.entry(0.99, 8.26),
-                            Map.entry(0.975, 9.59),
-                            Map.entry(0.950, 10.85),
-                            Map.entry(0.9, 12.44),
-                            Map.entry(0.8, 14.58),
-                            Map.entry(0.7, 16.27),
-                            Map.entry(0.6, 17.81),
-                            Map.entry(0.5, 19.34),
-                            Map.entry(0.4, 20.95),
-                            Map.entry(0.3, 22.77)
-                    )),
-            Map.entry(
-                    25, Map.ofEntries(
-                            Map.entry(0.99, 11.52),
-                            Map.entry(0.975, 13.12),
-                            Map.entry(0.950, 14.61),
-                            Map.entry(0.9, 16.47),
-                            Map.entry(0.8, 18.94),
-                            Map.entry(0.7, 20.87),
-                            Map.entry(0.6, 22.62),
-                            Map.entry(0.5, 24.34),
-                            Map.entry(0.4, 26.14),
-                            Map.entry(0.3, 28.17)
-                    )),
-            Map.entry(
-                    50, Map.ofEntries(
-                            Map.entry(0.99, 29.71),
-                            Map.entry(0.975, 32.36),
-                            Map.entry(0.950, 34.76),
-                            Map.entry(0.9, 37.69),
-                            Map.entry(0.8, 41.45),
-                            Map.entry(0.7, 44.31),
-                            Map.entry(0.6, 46.86),
-                            Map.entry(0.5, 49.33),
-                            Map.entry(0.4, 51.89),
-                            Map.entry(0.3, 54.72)
-                    )),
-            Map.entry(
-                    100, Map.ofEntries(
-                            Map.entry(0.99, 70.06),
-                            Map.entry(0.975, 74.22),
-                            Map.entry(0.950, 77.93),
-                            Map.entry(0.9, 82.36),
-                            Map.entry(0.8, 87.95),
-                            Map.entry(0.7, 92.13),
-                            Map.entry(0.6, 95.81),
-                            Map.entry(0.5, 99.33),
-                            Map.entry(0.4, 102.95),
-                            Map.entry(0.3, 106.91)
-                    ))
+            Map.entry(1, Map.ofEntries(
+                    Map.entry(0.10, 2.71),
+                    Map.entry(0.05, 3.84),
+                    Map.entry(0.025, 5.02),
+                    Map.entry(0.01, 6.63),
+                    Map.entry(0.001, 10.83)
+            )),
+            Map.entry(2, Map.ofEntries(
+                    Map.entry(0.10, 4.61),
+                    Map.entry(0.05, 5.99),
+                    Map.entry(0.025, 7.38),
+                    Map.entry(0.01, 9.21),
+                    Map.entry(0.001, 13.82)
+            )),
+            Map.entry(3, Map.ofEntries(
+                    Map.entry(0.10, 6.25),
+                    Map.entry(0.05, 7.81),
+                    Map.entry(0.025, 9.35),
+                    Map.entry(0.01, 11.34),
+                    Map.entry(0.001, 16.27)
+            )),
+            Map.entry(4, Map.ofEntries(
+                    Map.entry(0.10, 7.78),
+                    Map.entry(0.05, 9.49),
+                    Map.entry(0.025, 11.14),
+                    Map.entry(0.01, 13.28),
+                    Map.entry(0.001, 18.47)
+            )),
+            Map.entry(5, Map.ofEntries(
+                    Map.entry(0.10, 9.24),
+                    Map.entry(0.05, 11.07),
+                    Map.entry(0.025, 12.83),
+                    Map.entry(0.01, 15.09),
+                    Map.entry(0.001, 20.52)
+            )),
+            Map.entry(6, Map.ofEntries(
+                    Map.entry(0.10, 10.64),
+                    Map.entry(0.05, 12.59),
+                    Map.entry(0.025, 14.45),
+                    Map.entry(0.01, 16.81),
+                    Map.entry(0.001, 22.46)
+            )),
+            Map.entry(7, Map.ofEntries(
+                    Map.entry(0.10, 12.02),
+                    Map.entry(0.05, 14.07),
+                    Map.entry(0.025, 16.01),
+                    Map.entry(0.01, 18.48),
+                    Map.entry(0.001, 24.32)
+            )),
+            Map.entry(8, Map.ofEntries(
+                    Map.entry(0.10, 13.36),
+                    Map.entry(0.05, 15.51),
+                    Map.entry(0.025, 17.53),
+                    Map.entry(0.01, 20.09),
+                    Map.entry(0.001, 26.12)
+            )),
+            Map.entry(9, Map.ofEntries(
+                    Map.entry(0.10, 14.68),
+                    Map.entry(0.05, 16.92),
+                    Map.entry(0.025, 19.02),
+                    Map.entry(0.01, 21.67),
+                    Map.entry(0.001, 27.88)
+            )),
+            Map.entry(10, Map.ofEntries(
+                    Map.entry(0.10, 15.99),
+                    Map.entry(0.05, 18.31),
+                    Map.entry(0.025, 20.48),
+                    Map.entry(0.01, 23.21),
+                    Map.entry(0.001, 29.59)
+            )),
+            Map.entry(11, Map.ofEntries(
+                    Map.entry(0.10, 17.28),
+                    Map.entry(0.05, 19.68),
+                    Map.entry(0.025, 21.92),
+                    Map.entry(0.01, 24.72),
+                    Map.entry(0.001, 31.26)
+            )),
+            Map.entry(12, Map.ofEntries(
+                    Map.entry(0.10, 18.55),
+                    Map.entry(0.05, 21.03),
+                    Map.entry(0.025, 23.34),
+                    Map.entry(0.01, 26.22),
+                    Map.entry(0.001, 32.91)
+            )),
+            Map.entry(13, Map.ofEntries(
+                    Map.entry(0.10, 19.81),
+                    Map.entry(0.05, 22.36),
+                    Map.entry(0.025, 24.74),
+                    Map.entry(0.01, 27.69),
+                    Map.entry(0.001, 34.53)
+            )),
+            Map.entry(14, Map.ofEntries(
+                    Map.entry(0.10, 21.06),
+                    Map.entry(0.05, 23.68),
+                    Map.entry(0.025, 26.12),
+                    Map.entry(0.01, 29.14),
+                    Map.entry(0.001, 36.12)
+            )),
+            Map.entry(15, Map.ofEntries(
+                    Map.entry(0.10, 22.31),
+                    Map.entry(0.05, 25.00),
+                    Map.entry(0.025, 27.49),
+                    Map.entry(0.01, 30.58),
+                    Map.entry(0.001, 37.70)
+            )),
+            Map.entry(16, Map.ofEntries(
+                    Map.entry(0.10, 23.54),
+                    Map.entry(0.05, 26.30),
+                    Map.entry(0.025, 28.85),
+                    Map.entry(0.01, 32.00),
+                    Map.entry(0.001, 39.25)
+            )),
+            Map.entry(17, Map.ofEntries(
+                    Map.entry(0.10, 24.77),
+                    Map.entry(0.05, 27.59),
+                    Map.entry(0.025, 30.19),
+                    Map.entry(0.01, 33.41),
+                    Map.entry(0.001, 40.79)
+            )),
+            Map.entry(18, Map.ofEntries(
+                    Map.entry(0.10, 25.99),
+                    Map.entry(0.05, 28.87),
+                    Map.entry(0.025, 31.53),
+                    Map.entry(0.01, 34.81),
+                    Map.entry(0.001, 42.31)
+            )),
+            Map.entry(19, Map.ofEntries(
+                    Map.entry(0.10, 27.20),
+                    Map.entry(0.05, 30.14),
+                    Map.entry(0.025, 32.85),
+                    Map.entry(0.01, 36.19),
+                    Map.entry(0.001, 43.82)
+            )),
+            Map.entry(20, Map.ofEntries(
+                    Map.entry(0.10, 28.41),
+                    Map.entry(0.05, 31.41),
+                    Map.entry(0.025, 34.17),
+                    Map.entry(0.01, 37.57),
+                    Map.entry(0.001, 45.32)
+            )),
+            Map.entry(25, Map.ofEntries(
+                    Map.entry(0.10, 34.38),
+                    Map.entry(0.05, 37.65),
+                    Map.entry(0.025, 40.65),
+                    Map.entry(0.01, 44.31),
+                    Map.entry(0.001, 52.62)
+            )),
+            Map.entry(30, Map.ofEntries(
+                    Map.entry(0.10, 40.26),
+                    Map.entry(0.05, 43.77),
+                    Map.entry(0.025, 46.98),
+                    Map.entry(0.01, 50.89),
+                    Map.entry(0.001, 59.70)
+            )),
+            Map.entry(50, Map.ofEntries(
+                    Map.entry(0.10, 63.17),
+                    Map.entry(0.05, 67.50),
+                    Map.entry(0.025, 71.42),
+                    Map.entry(0.01, 76.15),
+                    Map.entry(0.001, 86.66)
+            )),
+            Map.entry(100, Map.ofEntries(
+                    Map.entry(0.10, 118.50),
+                    Map.entry(0.05, 124.34),
+                    Map.entry(0.025, 129.56),
+                    Map.entry(0.01, 135.81),
+                    Map.entry(0.001, 149.45)
+            ))
     );
 
-    public static double getPirsonCriticalValue(int r, double beta) {
-        Map<Double, Double> string = TABLE.get(r);
-        return string.get(beta);
+    public static double getPiersonCriticalValue(int r, double alpha) {
+        // Проверяем, есть ли в таблице нужное количество степеней свободы
+        if (TABLE.containsKey(r)) {
+            Map<Double, Double> alphaMap = TABLE.get(r);
+
+            // Ищем ближайшее значение alpha
+            double closestAlpha = alpha;
+            double closestValue = 0;
+            double minDiff = Double.MAX_VALUE;
+
+            for (Map.Entry<Double, Double> entry : alphaMap.entrySet()) {
+                double diff = Math.abs(entry.getKey() - alpha);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closestAlpha = entry.getKey();
+                    closestValue = entry.getValue();
+                }
+            }
+
+            return closestValue;
+        }
+
+        // Если r > 100, используем аппроксимацию
+        if (r > 100) {
+            double z = 0;
+            if (Math.abs(alpha - 0.05) < 0.01) {
+                z = 1.645;
+            } else if (Math.abs(alpha - 0.01) < 0.01) {
+                z = 2.326;
+            } else {
+                z = 1.96;
+            }
+
+            return (z * Math.sqrt(2 * r - 1) + 2 * r - 1) / 2;
+        }
+
+        // Для r, которых нет в таблице, используем интерполяцию
+        return interpolateCriticalValue(r, alpha);
+    }
+
+    private static double interpolateCriticalValue(int r, double alpha) {
+        // Находим ближайшие известные значения r1 и r2
+        int r1 = -1, r2 = -1;
+        double value1 = 0, value2 = 0;
+
+        for (Integer knownR : TABLE.keySet()) {
+            if (knownR <= r) {
+                if (knownR > r1) {
+                    r1 = knownR;
+                    value1 = TABLE.get(knownR).get(alpha);
+                }
+            }
+            if (knownR >= r) {
+                if (r2 == -1 || knownR < r2) {
+                    r2 = knownR;
+                    value2 = TABLE.get(knownR).get(alpha);
+                }
+            }
+        }
+
+        if (r1 == -1) {
+            return value2;
+        }
+        if (r2 == -1) {
+            return value1;
+        }
+        if (r1 == r2) {
+            return value1;
+        }
+
+        // Линейная интерполяция
+        return value1 + (value2 - value1) * (r - r1) / (r2 - r1);
     }
 }
