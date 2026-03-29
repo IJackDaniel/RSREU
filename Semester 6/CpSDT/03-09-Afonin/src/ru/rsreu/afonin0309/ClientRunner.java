@@ -17,7 +17,7 @@ public class ClientRunner {
 	public static void main(String[] args) {
 		StringBuilder stringBuilder = new StringBuilder();
 		OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor substractor = new OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor(
-				new NumbersList(ClientRunner.NUMBERS));
+				new Numbers(ClientRunner.NUMBERS));
 
 		substractor.subtrackEvenIndexAverageFromOddIndex();
 

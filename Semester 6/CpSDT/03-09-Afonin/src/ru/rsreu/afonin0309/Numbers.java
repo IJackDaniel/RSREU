@@ -1,9 +1,9 @@
 package ru.rsreu.afonin0309;
 
-public class NumbersList {
+public class Numbers {
 	private int[] numbers;
 
-	public NumbersList(int... numbers) {
+	public Numbers(int... numbers) {
 		this.numbers = numbers.clone();
 	}
 

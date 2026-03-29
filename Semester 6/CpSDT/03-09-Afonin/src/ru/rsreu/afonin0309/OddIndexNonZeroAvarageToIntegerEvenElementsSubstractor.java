@@ -1,9 +1,9 @@
 package ru.rsreu.afonin0309;
 
 public class OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor {
-	private NumbersList numbers;
+	private Numbers numbers;
 
-	public OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor(NumbersList numbers) {
+	public OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor(Numbers numbers) {
 		this.numbers = numbers;
 	}
 
