@@ -6,12 +6,12 @@ public abstract class Aircraft implements Comparable<Aircraft> {
 	
 	private final String model;
 	private final int flightRange;
-	private final Manufacturer engine;
+	private final Manufacturer manufacturer;
 	
-	protected Aircraft(String model, int flightRange, Manufacturer engine) {
+	protected Aircraft(String model, int flightRange, Manufacturer manufacturer) {
 		this.model = model;
 		this.flightRange = flightRange;
-		this.engine = engine;
+		this.manufacturer = manufacturer;
 	}
 	
 	public abstract boolean canTransportPassengers(int passengers);
@@ -31,8 +31,8 @@ public abstract class Aircraft implements Comparable<Aircraft> {
 		return this.flightRange;
 	}
 	
-	public Manufacturer getEngine() {
-		return this.engine;
+	public Manufacturer getManufacturer() {
+		return this.manufacturer;
 	}
 	
 	@Override
