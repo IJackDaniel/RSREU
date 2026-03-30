@@ -2,7 +2,7 @@ package ru.rsreu.afonin0509.model.aircraft;
 
 import ru.rsreu.afonin0509.model.Engine;
 
-public class Aircraft implements Comparable<Aircraft> {
+public abstract class Aircraft implements Comparable<Aircraft> {
 	
 	private final String model;
 	private final int flightRange;
@@ -14,6 +14,15 @@ public class Aircraft implements Comparable<Aircraft> {
 		this.engine = engine;
 	}
 	
+	public abstract boolean canTransportPassengers(int passengers);
+	
+	public abstract boolean canTransportCargo(double cargo);
+	
+	public abstract int getPassengerCapacity();
+	
+	public abstract double getCargoCapacity();
+	
+	// Getters
 	public String getModel() {
 		return this.model;
 	}
@@ -28,6 +37,6 @@ public class Aircraft implements Comparable<Aircraft> {
 	
 	@Override
 	public int compareTo(Aircraft other) {
-		return 0;
+		return Integer.compare(this.flightRange, other.flightRange);
 	}
 }
