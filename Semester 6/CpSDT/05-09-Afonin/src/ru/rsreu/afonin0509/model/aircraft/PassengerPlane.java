@@ -1,12 +1,12 @@
 package ru.rsreu.afonin0509.model.aircraft;
 
-import ru.rsreu.afonin0509.model.Engine;
+import ru.rsreu.afonin0509.model.Manufacturer;
 
 public class PassengerPlane extends Plane{
 	
 	private final int passengerCapacity;
 
-	public PassengerPlane(String model, int flightRange, Engine engine, int wingspan, int passengerCapacity) {
+	public PassengerPlane(String model, int flightRange, Manufacturer engine, int wingspan, int passengerCapacity) {
 		super(model, flightRange, engine, wingspan);
 		this.passengerCapacity = passengerCapacity;
 	}

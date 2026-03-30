@@ -1,12 +1,12 @@
 package ru.rsreu.afonin0509.model.aircraft;
 
-import ru.rsreu.afonin0509.model.Engine;
+import ru.rsreu.afonin0509.model.Manufacturer;
 
 public class Drone extends Aircraft {
 	
 	private final double cargoCapacity;
 	
-	public Drone(String model, int flightRange, Engine engine, double cargoCapacity) {
+	public Drone(String model, int flightRange, Manufacturer engine, double cargoCapacity) {
 		super(model, flightRange, engine);
 		this.cargoCapacity = cargoCapacity;
 	}

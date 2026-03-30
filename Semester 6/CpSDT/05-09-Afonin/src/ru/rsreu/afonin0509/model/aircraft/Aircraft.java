@@ -1,14 +1,14 @@
 package ru.rsreu.afonin0509.model.aircraft;
 
-import ru.rsreu.afonin0509.model.Engine;
+import ru.rsreu.afonin0509.model.Manufacturer;
 
 public abstract class Aircraft implements Comparable<Aircraft> {
 	
 	private final String model;
 	private final int flightRange;
-	private final Engine engine;
+	private final Manufacturer engine;
 	
-	protected Aircraft(String model, int flightRange, Engine engine) {
+	protected Aircraft(String model, int flightRange, Manufacturer engine) {
 		this.model = model;
 		this.flightRange = flightRange;
 		this.engine = engine;
@@ -31,7 +31,7 @@ public abstract class Aircraft implements Comparable<Aircraft> {
 		return this.flightRange;
 	}
 	
-	public Engine getEngine() {
+	public Manufacturer getEngine() {
 		return this.engine;
 	}
 	
