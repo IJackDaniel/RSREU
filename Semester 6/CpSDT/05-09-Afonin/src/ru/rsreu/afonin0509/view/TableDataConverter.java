@@ -2,9 +2,9 @@ package ru.rsreu.afonin0509.view;
 
 import ru.rsreu.afonin0509.model.aircraft.Aircraft;
 
-class TableDataConverter {
+public class TableDataConverter {
 	
-	static String[][] convertAircraftsToStrings(Aircraft[] fleet) {
+	public static String[][] convertAircraftsToStrings(Aircraft[] fleet) {
 		String[][] data = new String[fleet.length][4];
 		
 		for (int i = 0; i < fleet.length; i++) {

@@ -1,8 +1,8 @@
 package ru.rsreu.afonin0509.view;
 
-class TablePrinter {
+public class TablePrinter {
 	
-	static String formTable(String[] headers, String[][] data) {
+	public static String formTable(String[] headers, String[][] data) {
 		StringBuilder builder = new StringBuilder();
 		
 		int[] widths = TablePrinter.calculateWidths(headers, data);
