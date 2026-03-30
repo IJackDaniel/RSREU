@@ -1,0 +1,34 @@
+package ru.rsreu.afonin0509.model.aircraft;
+
+import ru.rsreu.afonin0509.model.Engine;
+
+public class CargoHelicopter extends Helicopter {
+	
+	private final double cargoCapacity;
+
+	protected CargoHelicopter(String model, int flightRange, Engine engine, int rotorDiameter, double cargoCapacity) {
+		super(model, flightRange, engine, rotorDiameter);
+		this.cargoCapacity = cargoCapacity; 
+	}
+
+	@Override
+	public boolean canTransportPassengers(int passengers) {
+		return false;
+	}
+
+	@Override
+	public boolean canTransportCargo(double cargo) {
+		return cargo <= this.cargoCapacity;
+	}
+
+	@Override
+	public int getPassengerCapacity() {
+		return 0;
+	}
+
+	@Override
+	public double getCargoCapacity() {
+		return this.cargoCapacity;
+	}
+
+}
