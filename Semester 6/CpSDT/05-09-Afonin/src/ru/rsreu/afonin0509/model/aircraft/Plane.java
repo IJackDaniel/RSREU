@@ -2,7 +2,7 @@ package ru.rsreu.afonin0509.model.aircraft;
 
 import ru.rsreu.afonin0509.model.Manufacturer;
 
-public abstract class Plane extends Aircraft {
+abstract class Plane extends Aircraft {
 	
 	private final int wingspan;
 	

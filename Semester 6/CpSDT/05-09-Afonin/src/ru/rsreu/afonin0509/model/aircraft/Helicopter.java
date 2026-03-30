@@ -2,7 +2,7 @@ package ru.rsreu.afonin0509.model.aircraft;
 
 import ru.rsreu.afonin0509.model.Manufacturer;
 
-public abstract class Helicopter extends Aircraft {
+abstract class Helicopter extends Aircraft {
 	
 	private final int rotorDiameter;
 	

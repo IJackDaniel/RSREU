@@ -6,7 +6,7 @@ public class CargoHelicopter extends Helicopter {
 	
 	private final double cargoCapacity;
 
-	protected CargoHelicopter(String model, int flightRange, Manufacturer engine, int rotorDiameter, double cargoCapacity) {
+	public CargoHelicopter(String model, int flightRange, Manufacturer engine, int rotorDiameter, double cargoCapacity) {
 		super(model, flightRange, engine, rotorDiameter);
 		this.cargoCapacity = cargoCapacity; 
 	}
