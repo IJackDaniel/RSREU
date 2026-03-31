@@ -67,7 +67,6 @@ public class Main {
 
         // 3. Построение гистограммы частот
         System.out.println("Гистограмма частот:");
-        System.out.println("(теоретические частоты указаны в скобках)");
 
         int[] frequencies = appraiser.getFrequencies();
         double[] boundaries = appraiser.getBoundaries();
