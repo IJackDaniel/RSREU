@@ -13,7 +13,7 @@ public class PassengerPlane extends Plane {
 
 	@Override
 	public boolean canTransportPassengers(int passengers) {
-		return this.passengerCapacity <= passengerCapacity;
+		return passengers <= this.passengerCapacity;
 	}
 
 	@Override
