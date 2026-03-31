@@ -16,6 +16,10 @@ public class ClientRunner {
 
 	private static final Resourcer RESOURCER = ProjectResourcer.getInstance();
 
+	private ClientRunner() {
+
+	}
+
 	public static void main(String[] args) {
 
 		StringBuilder output = new StringBuilder();
