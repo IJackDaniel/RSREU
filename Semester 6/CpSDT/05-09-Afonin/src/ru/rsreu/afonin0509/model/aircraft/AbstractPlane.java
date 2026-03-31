@@ -6,8 +6,8 @@ abstract class AbstractPlane extends AbstractAircraft {
 
 	private final int wingspan;
 
-	protected AbstractPlane(String model, int flightRange, Manufacturer engine, int wingspan) {
-		super(model, flightRange, engine);
+	protected AbstractPlane(String model, int flightRange, Manufacturer manufacturer, int wingspan) {
+		super(model, flightRange, manufacturer);
 		this.wingspan = wingspan;
 	}
 

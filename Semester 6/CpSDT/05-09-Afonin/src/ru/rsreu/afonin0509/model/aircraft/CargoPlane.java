@@ -6,8 +6,8 @@ public class CargoPlane extends AbstractPlane {
 
 	private final double cargoCapacity;
 
-	public CargoPlane(String model, int flightRange, Manufacturer engine, int wingspan, double cargoCapacity) {
-		super(model, flightRange, engine, wingspan);
+	public CargoPlane(String model, int flightRange, Manufacturer manufacturer, int wingspan, double cargoCapacity) {
+		super(model, flightRange, manufacturer, wingspan);
 		this.cargoCapacity = cargoCapacity;
 	}
 

@@ -6,8 +6,8 @@ public class Drone extends AbstractAircraft {
 
 	private final double cargoCapacity;
 
-	public Drone(String model, int flightRange, Manufacturer engine, double cargoCapacity) {
-		super(model, flightRange, engine);
+	public Drone(String model, int flightRange, Manufacturer manufacturer, double cargoCapacity) {
+		super(model, flightRange, manufacturer);
 		this.cargoCapacity = cargoCapacity;
 	}
 

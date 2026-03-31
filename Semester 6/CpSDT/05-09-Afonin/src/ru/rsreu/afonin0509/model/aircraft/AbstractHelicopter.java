@@ -6,8 +6,8 @@ abstract class AbstractHelicopter extends AbstractAircraft {
 
 	private final int rotorDiameter;
 
-	protected AbstractHelicopter(String model, int flightRange, Manufacturer engine, int rotorDiameter) {
-		super(model, flightRange, engine);
+	protected AbstractHelicopter(String model, int flightRange, Manufacturer manufacturer, int rotorDiameter) {
+		super(model, flightRange, manufacturer);
 		this.rotorDiameter = rotorDiameter;
 	}
 

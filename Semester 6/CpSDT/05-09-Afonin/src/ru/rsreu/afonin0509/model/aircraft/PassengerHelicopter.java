@@ -6,9 +6,9 @@ public class PassengerHelicopter extends AbstractHelicopter {
 
 	private final int passengerCapacity;
 
-	public PassengerHelicopter(String model, int flightRange, Manufacturer engine, int rotorDiameter,
+	public PassengerHelicopter(String model, int flightRange, Manufacturer manufacturer, int rotorDiameter,
 			int passengerCapacity) {
-		super(model, flightRange, engine, rotorDiameter);
+		super(model, flightRange, manufacturer, rotorDiameter);
 		this.passengerCapacity = passengerCapacity;
 	}
 

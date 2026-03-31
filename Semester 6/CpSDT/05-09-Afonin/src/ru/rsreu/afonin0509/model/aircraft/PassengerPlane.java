@@ -6,8 +6,8 @@ public class PassengerPlane extends AbstractPlane {
 
 	private final int passengerCapacity;
 
-	public PassengerPlane(String model, int flightRange, Manufacturer engine, int wingspan, int passengerCapacity) {
-		super(model, flightRange, engine, wingspan);
+	public PassengerPlane(String model, int flightRange, Manufacturer manufacturer, int wingspan, int passengerCapacity) {
+		super(model, flightRange, manufacturer, wingspan);
 		this.passengerCapacity = passengerCapacity;
 	}
 
