@@ -19,8 +19,8 @@ public class OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor {
 	private int getAverageOfNonZeroValuesWithEvenIndex() {
 		int count = 0;
 		int sum = 0;
-		for (int i = 0; i < numbers.getLength(); i += 2) {
-			int value = numbers.get(i);
+		for (int i = 0; i < this.numbers.getLength(); i += 2) {
+			int value = this.numbers.get(i);
 			if (value != 0) {
 				count++;
 				sum += value;
@@ -31,8 +31,8 @@ public class OddIndexNonZeroAvarageToIntegerEvenElementsSubstractor {
 	}
 
 	private void substractValueFromOddIndexes(int number) {
-		for (int i = 1; i < numbers.getLength(); i += 2) {
-			numbers.set(i, numbers.get(i) - number);
+		for (int i = 1; i < this.numbers.getLength(); i += 2) {
+			this.numbers.set(i, this.numbers.get(i) - number);
 		}
 	}
 }
