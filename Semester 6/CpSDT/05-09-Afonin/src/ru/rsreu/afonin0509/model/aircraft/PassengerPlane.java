@@ -2,8 +2,8 @@ package ru.rsreu.afonin0509.model.aircraft;
 
 import ru.rsreu.afonin0509.model.Manufacturer;
 
-public class PassengerPlane extends Plane{
-	
+public class PassengerPlane extends Plane {
+
 	private final int passengerCapacity;
 
 	public PassengerPlane(String model, int flightRange, Manufacturer engine, int wingspan, int passengerCapacity) {
@@ -30,7 +30,5 @@ public class PassengerPlane extends Plane{
 	public double getCargoCapacity() {
 		return 0;
 	}
-	
-	
-	
+
 }

@@ -3,7 +3,7 @@ package ru.rsreu.afonin0509.model.aircraft;
 import ru.rsreu.afonin0509.model.Manufacturer;
 
 public class CargoPlane extends Plane {
-	
+
 	private final double cargoCapacity;
 
 	public CargoPlane(String model, int flightRange, Manufacturer engine, int wingspan, double cargoCapacity) {
