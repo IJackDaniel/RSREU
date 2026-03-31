@@ -3,14 +3,14 @@ package ru.rsreu.afonin0509.initializer;
 import ru.rsreu.afonin0509.model.aircraft.*;
 import ru.rsreu.afonin0509.model.Manufacturer;
 
-public final class DataInitializer {
+public final class FleetInitializer {
 
-	private DataInitializer() {
+	private FleetInitializer() {
 
 	}
 
-	public static Aircraft[] initializeFleet() {
-		return new Aircraft[] {
+	public static AbstractAircraft[] initializeFleet() {
+		return new AbstractAircraft[] {
 				new PassengerPlane("Ilyushin II-96-300", 12100, new Manufacturer("Ilyushin", "Russia"), 60, 235),
 
 				new PassengerPlane("Boeing 777-300ER", 13650, new Manufacturer("Boeing", "USA"), 64, 396),

@@ -2,7 +2,7 @@ package ru.rsreu.afonin0509.model.aircraft;
 
 import ru.rsreu.afonin0509.model.Manufacturer;
 
-public class NullAircraft extends Aircraft {
+public class NullAircraft extends AbstractAircraft {
 
 	public NullAircraft() {
 		super("NONE", 0, new Manufacturer("NONE", "NONE"));

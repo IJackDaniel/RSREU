@@ -2,13 +2,13 @@ package ru.rsreu.afonin0509.model.aircraft;
 
 import ru.rsreu.afonin0509.model.Manufacturer;
 
-public abstract class Aircraft implements Comparable<Aircraft> {
+public abstract class AbstractAircraft implements Comparable<AbstractAircraft> {
 
 	private final String model;
 	private final int flightRange;
 	private final Manufacturer manufacturer;
 
-	protected Aircraft(String model, int flightRange, Manufacturer manufacturer) {
+	protected AbstractAircraft(String model, int flightRange, Manufacturer manufacturer) {
 		this.model = model;
 		this.flightRange = flightRange;
 		this.manufacturer = manufacturer;
@@ -36,7 +36,7 @@ public abstract class Aircraft implements Comparable<Aircraft> {
 	}
 
 	@Override
-	public int compareTo(Aircraft other) {
+	public int compareTo(AbstractAircraft other) {
 		return Integer.compare(this.flightRange, other.flightRange);
 	}
 }

@@ -3,9 +3,9 @@ package ru.rsreu.afonin0509;
 import com.prutzkow.resourcer.ProjectResourcer;
 import com.prutzkow.resourcer.Resourcer;
 
-import ru.rsreu.afonin0509.initializer.DataInitializer;
+import ru.rsreu.afonin0509.initializer.FleetInitializer;
 import ru.rsreu.afonin0509.model.Airline;
-import ru.rsreu.afonin0509.model.aircraft.Aircraft;
+import ru.rsreu.afonin0509.model.aircraft.AbstractAircraft;
 import ru.rsreu.afonin0509.view.*;
 
 public class ClientRunner {
@@ -24,7 +24,7 @@ public class ClientRunner {
 
 		StringBuilder output = new StringBuilder();
 
-		Aircraft[] fleet = DataInitializer.initializeFleet();
+		AbstractAircraft[] fleet = FleetInitializer.initializeFleet();
 		Airline airline = new Airline(fleet);
 
 		airline.sortByFlightRange();
@@ -42,7 +42,7 @@ public class ClientRunner {
 				ClientRunner.REQUIRED_CARGO);
 		output.append(RESOURCER.getString("message.output.canTransport")).append(catTransport);
 
-		Aircraft found = airline.findByModel(ClientRunner.REQUIRED_AIRCRAFT_MODEL);
+		AbstractAircraft found = airline.findByModel(ClientRunner.REQUIRED_AIRCRAFT_MODEL);
 		output.append(RESOURCER.getString("message.output.searchResult")).append(found.getModel());
 
 		System.out.println(output);

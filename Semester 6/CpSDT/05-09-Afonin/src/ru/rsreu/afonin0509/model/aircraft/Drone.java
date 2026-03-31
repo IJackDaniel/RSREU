@@ -2,7 +2,7 @@ package ru.rsreu.afonin0509.model.aircraft;
 
 import ru.rsreu.afonin0509.model.Manufacturer;
 
-public class Drone extends Aircraft {
+public class Drone extends AbstractAircraft {
 
 	private final double cargoCapacity;
 

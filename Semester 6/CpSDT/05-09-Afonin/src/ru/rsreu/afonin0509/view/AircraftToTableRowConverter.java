@@ -1,6 +1,6 @@
 package ru.rsreu.afonin0509.view;
 
-import ru.rsreu.afonin0509.model.aircraft.Aircraft;
+import ru.rsreu.afonin0509.model.aircraft.AbstractAircraft;
 
 public class AircraftToTableRowConverter {
 
@@ -26,7 +26,7 @@ public class AircraftToTableRowConverter {
 
 	}
 
-	public static String[][] convertAircraftsToStrings(Aircraft[] fleet) {
+	public static String[][] convertAircraftsToStrings(AbstractAircraft[] fleet) {
 		String[][] data = new String[fleet.length][ColumnIndex.getColumnCount()];
 
 		for (int i = 0; i < fleet.length; i++) {

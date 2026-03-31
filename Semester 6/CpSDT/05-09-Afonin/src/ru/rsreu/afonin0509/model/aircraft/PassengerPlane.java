@@ -2,7 +2,7 @@ package ru.rsreu.afonin0509.model.aircraft;
 
 import ru.rsreu.afonin0509.model.Manufacturer;
 
-public class PassengerPlane extends Plane {
+public class PassengerPlane extends AbstractPlane {
 
 	private final int passengerCapacity;
 
