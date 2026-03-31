@@ -13,6 +13,10 @@ public class Airline {
 		this.fleet = fleet;
 	}
 	
+	public Aircraft[] getFleet() {
+		return this.fleet;
+	}
+	
 	public int getTotalPassengersCapacity() {
 		return Arrays.stream(this.fleet)
 				.mapToInt(Aircraft::getPassengerCapacity)
