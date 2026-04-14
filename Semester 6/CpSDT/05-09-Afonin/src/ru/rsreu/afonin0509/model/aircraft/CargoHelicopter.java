@@ -5,11 +5,19 @@ import ru.rsreu.afonin0509.model.Manufacturer;
 public class CargoHelicopter extends AbstractHelicopter {
 
 	private final double cargoCapacity;
+	private final boolean hasExternalSling;
+	private final double externalSlingCapacity;
 
 	public CargoHelicopter(String model, int flightRange, Manufacturer manufacturer, int rotorDiameter,
-			double cargoCapacity) {
+			double cargoCapacity, boolean hasExternalSling, double externalSlingCapacity) {
 		super(model, flightRange, manufacturer, rotorDiameter);
 		this.cargoCapacity = cargoCapacity;
+		this.hasExternalSling = hasExternalSling;
+		this.externalSlingCapacity = externalSlingCapacity;
+	}
+
+	public boolean canUseExternalSling() {
+		return this.hasExternalSling;
 	}
 
 	@Override
@@ -19,7 +27,7 @@ public class CargoHelicopter extends AbstractHelicopter {
 
 	@Override
 	public boolean canTransportCargo(double cargo) {
-		return cargo <= this.cargoCapacity;
+		return cargo <= this.getCargoCapacity();
 	}
 
 	@Override
@@ -29,7 +37,11 @@ public class CargoHelicopter extends AbstractHelicopter {
 
 	@Override
 	public double getCargoCapacity() {
-		return this.cargoCapacity;
+		double totalCargoWeightCanTransport = this.cargoCapacity;
+		if (this.canUseExternalSling()) {
+			totalCargoWeightCanTransport += this.externalSlingCapacity;
+		}
+		return totalCargoWeightCanTransport;
 	}
 
 }

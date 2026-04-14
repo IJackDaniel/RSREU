@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Main {
 
     // Параметры лабораторной работы
-    private static final int SAMPLE_SIZE = 1000;      // Объем выборки (не менее 1000)
+    private static final int SAMPLE_SIZE = 100000;      // Объем выборки (не менее 1000)
     private static final int INTERVALS = 15;          // Количество интервалов (15 или 25)
     private static final double ALPHA = 0.05;         // Уровень значимости
 

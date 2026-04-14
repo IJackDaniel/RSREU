@@ -5,10 +5,17 @@ import ru.rsreu.afonin0509.model.Manufacturer;
 public class PassengerPlane extends AbstractPlane {
 
 	private final int passengerCapacity;
+	private final boolean hasBusinessClass;
 
-	public PassengerPlane(String model, int flightRange, Manufacturer manufacturer, int wingspan, int passengerCapacity) {
+	public PassengerPlane(String model, int flightRange, Manufacturer manufacturer, int wingspan, int passengerCapacity,
+			boolean hasBusinessClass) {
 		super(model, flightRange, manufacturer, wingspan);
 		this.passengerCapacity = passengerCapacity;
+		this.hasBusinessClass = hasBusinessClass;
+	}
+
+	public boolean hasBusinessClass() {
+		return this.hasBusinessClass;
 	}
 
 	@Override

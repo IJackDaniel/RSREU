@@ -5,10 +5,21 @@ import ru.rsreu.afonin0509.model.Manufacturer;
 public class CargoPlane extends AbstractPlane {
 
 	private final double cargoCapacity;
+	private final boolean hasRefrigeration;
 
-	public CargoPlane(String model, int flightRange, Manufacturer manufacturer, int wingspan, double cargoCapacity) {
+	public CargoPlane(String model, int flightRange, Manufacturer manufacturer, int wingspan, double cargoCapacity,
+			boolean hasRefrigeration) {
 		super(model, flightRange, manufacturer, wingspan);
 		this.cargoCapacity = cargoCapacity;
+		this.hasRefrigeration = hasRefrigeration;
+	}
+
+	public boolean canTransportPerishableCargo(double cargo) {
+		return this.hasRefrigeration() && cargo <= this.cargoCapacity;
+	}
+
+	public boolean hasRefrigeration() {
+		return this.hasRefrigeration;
 	}
 
 	@Override
