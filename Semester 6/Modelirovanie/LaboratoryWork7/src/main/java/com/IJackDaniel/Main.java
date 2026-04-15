@@ -13,7 +13,6 @@ public class Main {
     private static final double ALPHA = 0.05;
 
     public static void main(String[] args) {
-        System.out.println("=== Лабораторная работа: Моделирование случайных блужданий ===");
         System.out.println("Тип: Двумерное случайное блуждание");
         System.out.println("Параметры: M = " + M + " шагов, N = " + N_EXPERIMENTS + " экспериментов");
 

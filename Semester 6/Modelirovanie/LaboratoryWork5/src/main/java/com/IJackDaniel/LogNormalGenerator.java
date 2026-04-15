@@ -5,8 +5,6 @@ import com.IJackDaniel.basicClasses.UniversalGenerator;
 public class LogNormalGenerator {
     private final double mu;
     private final double sigma;
-    private boolean hasSpare = false;
-    private double spare;
 
     public LogNormalGenerator(double mu, double sigma) {
         this.mu = mu;
@@ -14,30 +12,21 @@ public class LogNormalGenerator {
     }
 
     public double next() {
-        // Используем полярный метод для N(mu, sigma^2)
-        double z;
-        if (hasSpare) {
-            hasSpare = false;
-            z = spare;
-        } else {
-            double u1, u2, s;
-            do {
-                u1 = 2.0 * UniversalGenerator.rnd() - 1.0;
-                u2 = 2.0 * UniversalGenerator.rnd() - 1.0;
-                s = u1 * u1 + u2 * u2;
-            } while (s >= 1.0 || s == 0.0);
-            double mult = Math.sqrt(-2.0 * Math.log(s) / s);
-            z = u1 * mult;
-            spare = u2 * mult;
-            hasSpare = true;
+        double s = 0.0;
+        for (int j = 0; j < 12; j++) {
+            s += UniversalGenerator.rnd();
         }
-        // Логнормальное преобразование
-        return Math.exp(mu + sigma * z);
+
+        double y = s - 6.0;
+
+        return Math.exp(sigma * y + mu);
     }
 
     public double[] generateArray(int n) {
         double[] arr = new double[n];
-        for (int i = 0; i < n; i++) arr[i] = next();
+        for (int i = 0; i < n; i++) {
+            arr[i] = next();
+        }
         return arr;
     }
 

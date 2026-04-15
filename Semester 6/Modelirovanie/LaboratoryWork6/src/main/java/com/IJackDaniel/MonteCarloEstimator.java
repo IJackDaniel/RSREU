@@ -1,35 +1,22 @@
 // файл: MonteCarloEstimator.java
 package com.IJackDaniel;
 
-/**
- * Оценка вероятности методом Монте-Карло с построением доверительного интервала.
- */
 public class MonteCarloEstimator {
     private final int nTrials;           // количество экспериментов
     private final ShootingSimulation simulation;
     private final double beta;            // надёжность (0.95)
 
-    // Результаты после run()
     private double probability;           // оценка вероятности
     private double confidenceLower;       // нижняя граница доверительного интервала
     private double confidenceUpper;       // верхняя граница доверительного интервала
     private int ignitionCount;            // количество воспламенений
 
-    /**
-     * Конструктор
-     * @param nTrials количество экспериментов
-     * @param simulation модель стрельбы
-     * @param beta надёжность (например, 0.95)
-     */
     public MonteCarloEstimator(int nTrials, ShootingSimulation simulation, double beta) {
         this.nTrials = nTrials;
         this.simulation = simulation;
         this.beta = beta;
     }
 
-    /**
-     * Запуск моделирования
-     */
     public void run() {
         ignitionCount = 0;
         for (int i = 0; i < nTrials; i++) {
@@ -53,9 +40,7 @@ public class MonteCarloEstimator {
         confidenceUpper = Math.min(1.0, confidenceUpper);
     }
 
-    /**
-     * Возвращает квантиль стандартного нормального распределения для заданной надёжности
-     */
+    // Квантиль СтНРаспределения для заданной надёжности
     private double getZForBeta(double beta) {
         // Для наиболее распространённых значений β
         if (Math.abs(beta - 0.90) < 0.001) {
