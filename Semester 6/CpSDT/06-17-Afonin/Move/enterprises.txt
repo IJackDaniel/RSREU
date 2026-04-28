@@ -1,0 +1,7 @@
+TechnoSoft;Moscow;AO
+TechnoSoft;Moscow;AO
+BuildPro;Kazan;PAO
+AlphaTrade;Kazan;OOO
+NeoMarket;Ryazan;PAO
+NeoMarket;Ryazan;PAO
+GreenFarm;Kazan;OOO

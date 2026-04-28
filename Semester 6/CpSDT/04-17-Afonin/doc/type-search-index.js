@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"ru.rsreu.afonin0417","l":"ClientRunner"},{"p":"com.prutzkow.resourcer","l":"ProjectResourcer"},{"p":"com.prutzkow.resourcer","l":"Resourcer"},{"p":"com.prutzkow.resourcer","l":"ProjectResourcer.ResourcerHolder"},{"p":"ru.rsreu.afonin0417","l":"TwoDimArraySignChanger"}];updateSearchResults();

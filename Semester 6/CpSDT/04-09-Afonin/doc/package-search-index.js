@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.prutzkow.resourcer"},{"l":"ru.rsreu.afonin0409"}];updateSearchResults();

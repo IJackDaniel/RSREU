@@ -25,7 +25,7 @@ public class Main {
     private static final double LOGNORMAL_SIGMA = 0.5;
 
     public static void main(String[] args) {
-        // Инициализируем базовый ГСЧ (можно задать seed)
+        // Инициализируем базовый ГСЧ
         UniversalGenerator.setSeed(new int[]{12345, 67890, 13579});
 
         System.out.printf("Объём выборки: %d\n", SAMPLE_SIZE);
