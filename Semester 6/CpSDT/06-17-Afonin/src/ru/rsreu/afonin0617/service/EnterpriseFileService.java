@@ -163,15 +163,19 @@ public class EnterpriseFileService {
 
 	private String buildBackupFileName(Path sourceFilePath) {
 
-		String originalFileName = sourceFilePath.getFileName().toString();
+	    String originalFileName = sourceFilePath.getFileName().toString();
 
-		int dotIndex = originalFileName.lastIndexOf('.');
+	    int extensionSeparatorIndex = originalFileName.lastIndexOf('.');
 
-		String baseName = originalFileName;
-		if (dotIndex > 0) {
-			originalFileName.substring(0, dotIndex);
-		}
+	    String fileNameWithoutExtension;
 
-		return baseName + "." + EnterpriseFileService.BACKUP_FILE_EXTENSION;
+	    if (extensionSeparatorIndex > 0) {
+	        fileNameWithoutExtension =
+	                originalFileName.substring(0, extensionSeparatorIndex);
+	    } else {
+	        fileNameWithoutExtension = originalFileName;
+	    }
+
+	    return fileNameWithoutExtension + "." + EnterpriseFileService.BACKUP_FILE_EXTENSION;
 	}
 }
