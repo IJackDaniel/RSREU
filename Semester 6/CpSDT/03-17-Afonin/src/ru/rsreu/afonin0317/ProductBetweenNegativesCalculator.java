@@ -17,14 +17,22 @@ public class ProductBetweenNegativesCalculator {
 		this.findNegativePositions();
 	}
 
-	public int calculateProduct() {
-		int product = ProductBetweenNegativesCalculator.INITIAL_PRODUCT_VALUE;
+	public String calculateProductOrGetMessage(String insufficientMessage, String adjacentMessage) {
 
+		if (!this.hasEnoughNegatives()) {
+			return insufficientMessage;
+		}
+
+		if (this.isDistanceBetweenFirstAndSecondNegativesMinimal()) {
+			return adjacentMessage;
+		}
+
+		int product = ProductBetweenNegativesCalculator.INITIAL_PRODUCT_VALUE;
 		for (int i = this.firstNegativePosition + 1; i < this.secondNegativePosition; i++) {
 			product *= this.numbers.get(i);
 		}
 
-		return product;
+		return String.valueOf(product);
 	}
 
 	public boolean hasEnoughNegatives() {

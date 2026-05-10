@@ -9,7 +9,7 @@ import ru.rsreu.afonin0617.initializer.EnterprisesInitializer;
 import ru.rsreu.afonin0617.model.Enterprise;
 import ru.rsreu.afonin0617.service.EnterpriseFileService;
 import ru.rsreu.afonin0617.view.converter.EnterpriseToTableConverter;
-import ru.rsreu.afonin0617.view.table.SmartTableRenderer;
+import ru.rsreu.afonin0617.view.table.SmartTableDrawer;
 
 public class ClientRunner {
 
@@ -40,15 +40,15 @@ public class ClientRunner {
 				RESOURCER.getString("table.column.ownership") };
 
 		outputBuilder.append(RESOURCER.getString("message.output.original"));
-		outputBuilder.append(SmartTableRenderer.drawTable(headers,
+		outputBuilder.append(SmartTableDrawer.drawTable(headers,
 				EnterpriseToTableConverter.convertEnterprisesToTableRows(initialEnterprises)));
 
 		outputBuilder.append(RESOURCER.getString("message.output.backup"));
-		outputBuilder.append(SmartTableRenderer.drawTable(headers,
+		outputBuilder.append(SmartTableDrawer.drawTable(headers,
 				EnterpriseToTableConverter.convertEnterprisesToTableRows(backupEnterprises)));
 
 		outputBuilder.append(RESOURCER.getString("message.output.moved"));
-		outputBuilder.append(SmartTableRenderer.drawTable(headers,
+		outputBuilder.append(SmartTableDrawer.drawTable(headers,
 				EnterpriseToTableConverter.convertEnterprisesToTableRows(movedEnterprises)));
 
 		boolean isBackupEqual = EnterprisesComparator.areEnterprisesEqual(initialEnterprises, backupEnterprises);

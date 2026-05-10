@@ -1,18 +1,19 @@
 package ru.rsreu.afonin0517.model.voucher;
 
 import ru.rsreu.afonin0517.model.component.Transport;
+import ru.rsreu.afonin0517.model.voucher.features.CruiseVoucherFeatures;
 import ru.rsreu.afonin0517.model.component.MealPlan;
 
 public class CruiseVoucher extends AbstractVoucher {
 
-	private static final double PORT_WEIGHT = 3.0;
-	private static final double TRANSPORT_WEIGHT = 0.3;
-
+	private final CruiseVoucherFeatures features;
 	private final int portsCount;
 
-	public CruiseVoucher(String title, int days, double price, Transport transport, MealPlan mealPlan, int portsCount) {
+	public CruiseVoucher(String title, int days, double price, Transport transport, MealPlan mealPlan, int portsCount,
+			CruiseVoucherFeatures features) {
 		super(title, days, price, transport, mealPlan);
 		this.portsCount = portsCount;
+		this.features = features;
 	}
 
 	public int getPortsCount() {
@@ -23,7 +24,7 @@ public class CruiseVoucher extends AbstractVoucher {
 	public double calculateValue() {
 		double transportEfficiency = this.getTransport().calculateEfficiency();
 
-		return this.portsCount * CruiseVoucher.PORT_WEIGHT + transportEfficiency * CruiseVoucher.TRANSPORT_WEIGHT;
+		return this.portsCount * this.features.portWeight() + transportEfficiency * this.features.transportWeight();
 	}
 
 }

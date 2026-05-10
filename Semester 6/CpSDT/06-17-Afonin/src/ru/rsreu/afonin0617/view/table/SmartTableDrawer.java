@@ -1,13 +1,13 @@
 package ru.rsreu.afonin0617.view.table;
 
-import ru.rsreu.afonin0617.view.table.SmartTableRenderer;
+import ru.rsreu.afonin0617.view.table.SmartTableDrawer;
 import ru.rsreu.afonin0617.view.converter.EnterpriseTableColumn;
 
-public final class SmartTableRenderer {
+public final class SmartTableDrawer {
 
 	private static final int PADDING = 1;
 
-	private SmartTableRenderer() {
+	private SmartTableDrawer() {
 	}
 
 	public static String drawTable(String[] headers, String[][] data) {
@@ -15,25 +15,25 @@ public final class SmartTableRenderer {
 		int[] widths = EnterpriseTableColumn.getAllWidths();
 		TableAlignment[] alignments = EnterpriseTableColumn.getAllAlignments();
 
-		int totalWidth = SmartTableRenderer.calculateTotalWidth(widths);
-		int totalHeight = SmartTableRenderer.calculateTotalHeight(headers, data, widths);
+		int totalWidth = SmartTableDrawer.calculateTotalWidth(widths);
+		int totalHeight = SmartTableDrawer.calculateTotalHeight(headers, data, widths);
 
 		char[][] canvas = new char[totalHeight][totalWidth];
 
-		SmartTableRenderer.fillCanvas(canvas);
+		SmartTableDrawer.fillCanvas(canvas);
 
 		int currentRow = 0;
 
-		currentRow = SmartTableRenderer.drawBorder(canvas, currentRow, widths);
-		currentRow = SmartTableRenderer.drawWrappedRow(canvas, currentRow, headers, widths, alignments);
-		currentRow = SmartTableRenderer.drawBorder(canvas, currentRow, widths);
+		currentRow = SmartTableDrawer.drawBorder(canvas, currentRow, widths);
+		currentRow = SmartTableDrawer.drawWrappedRow(canvas, currentRow, headers, widths, alignments);
+		currentRow = SmartTableDrawer.drawBorder(canvas, currentRow, widths);
 
 		for (int i = 0; i < data.length; i++) {
-			currentRow = SmartTableRenderer.drawWrappedRow(canvas, currentRow, data[i], widths, alignments);
-			currentRow = SmartTableRenderer.drawBorder(canvas, currentRow, widths);
+			currentRow = SmartTableDrawer.drawWrappedRow(canvas, currentRow, data[i], widths, alignments);
+			currentRow = SmartTableDrawer.drawBorder(canvas, currentRow, widths);
 		}
 
-		return SmartTableRenderer.convertCanvasToString(canvas);
+		return SmartTableDrawer.convertCanvasToString(canvas);
 	}
 
 	private static int calculateTotalWidth(int[] widths) {
@@ -41,7 +41,7 @@ public final class SmartTableRenderer {
 		int width = 1;
 
 		for (int i = 0; i < widths.length; i++) {
-			width += widths[i] + SmartTableRenderer.PADDING * 2 + 1;
+			width += widths[i] + SmartTableDrawer.PADDING * 2 + 1;
 		}
 
 		return width;
@@ -52,11 +52,11 @@ public final class SmartTableRenderer {
 		int height = 0;
 
 		height += 1;
-		height += SmartTableRenderer.calculateRowHeight(headers, widths);
+		height += SmartTableDrawer.calculateRowHeight(headers, widths);
 		height += 1;
 
 		for (int i = 0; i < data.length; i++) {
-			height += SmartTableRenderer.calculateRowHeight(data[i], widths);
+			height += SmartTableDrawer.calculateRowHeight(data[i], widths);
 			height += 1;
 		}
 
@@ -93,7 +93,7 @@ public final class SmartTableRenderer {
 
 		for (int i = 0; i < widths.length; i++) {
 
-			int length = widths[i] + SmartTableRenderer.PADDING * 2;
+			int length = widths[i] + SmartTableDrawer.PADDING * 2;
 
 			for (int j = 0; j < length; j++) {
 				canvas[row][col++] = TableSymbol.HORIZONTAL.getSymbol();
@@ -108,8 +108,8 @@ public final class SmartTableRenderer {
 	private static int drawWrappedRow(char[][] canvas, int row, String[] values, int[] widths,
 			TableAlignment[] alignments) {
 
-		String[][] wrappedCellTexts = SmartTableRenderer.wrapTextsToFitColumns(values, widths);
-		int maxPartsPerCell = SmartTableRenderer.findMaxPartsPerCell(wrappedCellTexts);
+		String[][] wrappedCellTexts = SmartTableDrawer.wrapTextsToFitColumns(values, widths);
+		int maxPartsPerCell = SmartTableDrawer.findMaxPartsPerCell(wrappedCellTexts);
 
 		for (int line = 0; line < maxPartsPerCell; line++) {
 
@@ -123,7 +123,7 @@ public final class SmartTableRenderer {
 					text = wrappedCellTexts[i][line];
 				}
 
-				col = SmartTableRenderer.drawCell(canvas, row, col, text, widths[i], alignments[i]);
+				col = SmartTableDrawer.drawCell(canvas, row, col, text, widths[i], alignments[i]);
 			}
 
 			row++;
@@ -154,7 +154,7 @@ public final class SmartTableRenderer {
 
 		canvas[row][col++] = TableSymbol.SPACE.getSymbol();
 
-		int start = SmartTableRenderer.calculateStartPosition(col, value, width, alignment);
+		int start = SmartTableDrawer.calculateStartPosition(col, value, width, alignment);
 
 		for (int i = 0; i < value.length(); i++) {
 			canvas[row][start + i] = value.charAt(i);
