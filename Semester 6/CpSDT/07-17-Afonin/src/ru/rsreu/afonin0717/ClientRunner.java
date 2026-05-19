@@ -1,5 +1,7 @@
 package ru.rsreu.afonin0717;
 
+import ru.rsreu.afonin0717.initializer.EnterprisesInitializer;
+import ru.rsreu.afonin0717.model.Enterprise;
 import ru.rsreu.afonin0717.model.Model;
 import ru.rsreu.afonin0717.model.ModelResult;
 import ru.rsreu.afonin0717.view.View;
@@ -11,7 +13,9 @@ public class ClientRunner {
 
 	public static void main(String[] args) {
 
-		Model model = new Model();
+		Enterprise[] enterprises = EnterprisesInitializer.createInitialEnterprises();
+
+		Model model = new Model(enterprises);
 
 		ModelResult modelResult = model.execute();
 

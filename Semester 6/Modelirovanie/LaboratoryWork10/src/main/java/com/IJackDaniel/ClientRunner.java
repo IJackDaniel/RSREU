@@ -1,7 +1,5 @@
 package com.IJackDaniel;
 
-import java.util.Random;
-
 public class ClientRunner {
 
     // Интенсивность входного потока
@@ -70,7 +68,7 @@ public class ClientRunner {
         double utilization =
                 busyTime / currentTime;
 
-        System.out.println("===== РЕЗУЛЬТАТЫ МОДЕЛИРОВАНИЯ =====");
+        System.out.println("Результат моделирования");
 
         System.out.println("Всего заявок: " + TOTAL_REQUESTS);
 

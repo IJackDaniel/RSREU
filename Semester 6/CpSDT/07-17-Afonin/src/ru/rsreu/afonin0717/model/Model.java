@@ -1,39 +1,68 @@
 package ru.rsreu.afonin0717.model;
 
-import java.util.*;
-
-import ru.rsreu.afonin0717.initializer.EnterprisesInitializer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Model {
 
 	private final List<Enterprise> enterprises;
+	private final Map<String, Enterprise> enterprisesByCompanyName;
 
-	public Model() {
-		Enterprise[] initialEnterprises = EnterprisesInitializer.createInitialEnterprises();
-		this.enterprises = new ArrayList<>(Arrays.asList(initialEnterprises));
+	public Model(Enterprise[] enterprises) {
+
+		this.enterprises = new ArrayList<>(Arrays.asList(enterprises));
+
+		this.enterprisesByCompanyName = this.createEnterprisesByCompanyName();
 	}
 
 	public ModelResult execute() {
 
 		List<Enterprise> enterprisesSortedByName = this.sortByDefaultOrder();
-		List<Enterprise> enterprisesSortedByCityAndForm = this.sortByCityAndOwnership();
-		Set<String> uniqueRegistrationCities = this.extractUniqueCities();
-		List<Enterprise> enterprisesWithoutSpecificForm = this.removeEnterprisesByOwnership(OwnershipForm.OOO);
 
-		Enterprise existingEnterprise = this.findEnterpriseByName("TechnoSoft");
-		Enterprise missingEnterprise = this.findEnterpriseByName("Unknown");
+		List<Enterprise> enterprisesSortedByCityAndOwnership = this.sortByCityAndOwnership();
 
-		return new ModelResult(enterprisesSortedByName, enterprisesSortedByCityAndForm, uniqueRegistrationCities,
-				enterprisesWithoutSpecificForm, existingEnterprise, missingEnterprise);
+		Set<String> uniqueRegistrationCities = this.extractUniqueRegistrationCities();
+
+		List<Enterprise> enterprisesWithoutLimitedLiability = this.removeByOwnershipForm(OwnershipForm.OOO);
+
+		Enterprise existingEnterprise = this.findEnterpriseByCompanyName("TechnoSoft");
+
+		Enterprise missingEnterprise = this.findEnterpriseByCompanyName("UnknownCompany");
+
+		return new ModelResult(enterprisesSortedByName, enterprisesSortedByCityAndOwnership, uniqueRegistrationCities,
+				enterprisesWithoutLimitedLiability, existingEnterprise, missingEnterprise);
+	}
+
+	private Map<String, Enterprise> createEnterprisesByCompanyName() {
+
+		Map<String, Enterprise> enterprisesByName = new HashMap<>();
+
+		for (Enterprise enterprise : this.enterprises) {
+			enterprisesByName.put(enterprise.companyName(), enterprise);
+		}
+
+		return enterprisesByName;
 	}
 
 	private List<Enterprise> sortByDefaultOrder() {
+
 		List<Enterprise> sortedEnterprises = new ArrayList<>(this.enterprises);
+
 		Collections.sort(sortedEnterprises);
+
 		return sortedEnterprises;
 	}
 
 	private List<Enterprise> sortByCityAndOwnership() {
+
 		List<Enterprise> sortedEnterprises = new ArrayList<>(this.enterprises);
 
 		sortedEnterprises
@@ -42,7 +71,8 @@ public class Model {
 		return sortedEnterprises;
 	}
 
-	private Set<String> extractUniqueCities() {
+	private Set<String> extractUniqueRegistrationCities() {
+
 		Set<String> uniqueCities = new HashSet<>();
 
 		for (Enterprise enterprise : this.enterprises) {
@@ -52,12 +82,14 @@ public class Model {
 		return uniqueCities;
 	}
 
-	private List<Enterprise> removeEnterprisesByOwnership(OwnershipForm ownershipForm) {
+	private List<Enterprise> removeByOwnershipForm(OwnershipForm ownershipForm) {
 
 		List<Enterprise> filteredEnterprises = new ArrayList<>(this.enterprises);
+
 		Iterator<Enterprise> enterpriseIterator = filteredEnterprises.iterator();
 
 		while (enterpriseIterator.hasNext()) {
+
 			Enterprise currentEnterprise = enterpriseIterator.next();
 
 			if (currentEnterprise.ownershipForm() == ownershipForm) {
@@ -68,12 +100,13 @@ public class Model {
 		return filteredEnterprises;
 	}
 
-	private Enterprise findEnterpriseByName(String companyName) {
-		for (Enterprise enterprise : this.enterprises) {
-			if (enterprise.companyName().equals(companyName)) {
-				return enterprise;
-			}
+	private Enterprise findEnterpriseByCompanyName(String companyName) {
+
+		if (this.enterprisesByCompanyName.containsKey(companyName)) {
+
+			return this.enterprisesByCompanyName.get(companyName);
 		}
+
 		return null;
 	}
 }

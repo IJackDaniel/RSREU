@@ -11,11 +11,11 @@ public final class EnterprisesInitializer {
 	public static Enterprise[] createInitialEnterprises() {
 
 		return new Enterprise[] { new Enterprise("TechnoSoft", "Moscow", OwnershipForm.AO),
-				new Enterprise("TechnoSoft", "Moscow", OwnershipForm.AO),
 				new Enterprise("BuildPro", "Kazan", OwnershipForm.PAO),
-				new Enterprise("AlphaTrade", "Kazan", OwnershipForm.OOO),
+				new Enterprise("AlphaTrade", "Saint Petersburg", OwnershipForm.OOO),
 				new Enterprise("NeoMarket", "Ryazan", OwnershipForm.PAO),
-				new Enterprise("NeoMarket", "Ryazan", OwnershipForm.PAO),
-				new Enterprise("GreenFarm", "Kazan", OwnershipForm.OOO) };
+				new Enterprise("GreenFarm", "Kazan", OwnershipForm.OOO),
+				new Enterprise("SkyLine", "Moscow", OwnershipForm.AO),
+				new Enterprise("VolgaEnergy", "Samara", OwnershipForm.PAO) };
 	}
 }
