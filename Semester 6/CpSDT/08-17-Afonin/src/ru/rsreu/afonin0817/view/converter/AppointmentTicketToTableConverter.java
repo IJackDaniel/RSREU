@@ -1,33 +1,32 @@
 package ru.rsreu.afonin0817.view.converter;
 
-import ru.rsreu.afonin0817.entity.AppointmentTicket;
+import ru.rsreu.afonin0817.datalayer.data.AppointmentTicket;
 
 public final class AppointmentTicketToTableConverter {
 
 	private AppointmentTicketToTableConverter() {
 	}
 
-	public static String[][] convertAppointmentTicketsToTableRows(AppointmentTicket[] appointmentTickets) {
+	public static String[][] convertAppointmentTicketsToTableRows(AppointmentTicket[] tickets) {
+		String[][] table = new String[tickets.length][AppointmentTicketTableColumn.getColumnsCount()];
 
-		String[][] table = new String[appointmentTickets.length][AppointmentTicketTableColumn.getColumnsCount()];
+		for (int index = 0; index < tickets.length; index++) {
+			AppointmentTicket ticket = tickets[index];
 
-		for (int index = 0; index < appointmentTickets.length; index++) {
+			table[index][AppointmentTicketTableColumn.TICKET_NUMBER.getIndex()] = String
+					.valueOf(ticket.getAppointmentTicketNumber());
 
-			AppointmentTicket appointmentTicket = appointmentTickets[index];
+			table[index][AppointmentTicketTableColumn.APPOINTMENT_DATETIME.getIndex()] = ticket.getAppointmentDatetime()
+					.toString();
 
-			table[index][AppointmentTicketTableColumn.APPOINTMENT_TICKET_NUMBER.getIndex()] = String
-					.valueOf(appointmentTicket.getAppointmentTicketNumber());
+			table[index][AppointmentTicketTableColumn.DOCTOR_PERSONNEL_NUMBER.getIndex()] = String
+					.valueOf(ticket.getDoctorPersonnelNumber());
 
-			table[index][AppointmentTicketTableColumn.APPOINTMENT_DATETIME.getIndex()] = appointmentTicket
-					.getAppointmentDatetime().toString();
-
-			table[index][AppointmentTicketTableColumn.DOCTOR_SURNAME.getIndex()] = appointmentTicket.getDoctorSurname();
-
-			table[index][AppointmentTicketTableColumn.PATIENT_SURNAME.getIndex()] = appointmentTicket
-					.getPatientSurname();
+			table[index][AppointmentTicketTableColumn.PATIENT_INSURANCE_POLICY_NUMBER.getIndex()] = String
+					.valueOf(ticket.getPatientInsurancePolicyNumber());
 
 			table[index][AppointmentTicketTableColumn.INSURANCE_PAYMENT_AMOUNT.getIndex()] = String
-					.valueOf(appointmentTicket.getInsurancePaymentAmount());
+					.valueOf(ticket.getInsurancePaymentAmount());
 		}
 
 		return table;

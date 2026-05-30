@@ -4,18 +4,11 @@ import ru.rsreu.afonin0817.view.table.TableAlignment;
 
 public enum DoctorTableColumn implements TableColumnInterface {
 
-	DOCTOR_PERSONNEL_NUMBER(0, 12, TableAlignment.RIGHT),
-
-	DOCTOR_SURNAME(1, 20, TableAlignment.LEFT),
-
-	DOCTOR_SPECIALIZATION(2, 20, TableAlignment.LEFT),
-
-	DOCTOR_OFFICE_NUMBER(3, 10, TableAlignment.RIGHT);
+	DOCTOR_PERSONNEL_NUMBER(0, 12, TableAlignment.RIGHT), DOCTOR_SURNAME(1, 20, TableAlignment.LEFT),
+	DOCTOR_SPECIALIZATION(2, 20, TableAlignment.LEFT), DOCTOR_OFFICE_NUMBER(3, 10, TableAlignment.RIGHT);
 
 	private final int index;
-
 	private final int width;
-
 	private final TableAlignment alignment;
 
 	DoctorTableColumn(int index, int width, TableAlignment alignment) {

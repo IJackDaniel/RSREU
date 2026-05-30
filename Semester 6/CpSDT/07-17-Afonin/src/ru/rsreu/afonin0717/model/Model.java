@@ -102,11 +102,7 @@ public class Model {
 
 	private Enterprise findEnterpriseByCompanyName(String companyName) {
 
-		if (this.enterprisesByCompanyName.containsKey(companyName)) {
+		return this.enterprisesByCompanyName.getOrDefault(companyName, null);
 
-			return this.enterprisesByCompanyName.get(companyName);
-		}
-
-		return null;
 	}
 }

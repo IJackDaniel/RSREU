@@ -2,23 +2,16 @@ package ru.rsreu.afonin0817.view.converter;
 
 import ru.rsreu.afonin0817.view.table.TableAlignment;
 
-public enum PatientTableColumn implements TableColumnInterface {
+public enum AveragePatientsTableColumn implements TableColumnInterface {
 
-	PATIENT_INSURANCE_POLICY_NUMBER(0, 15, TableAlignment.RIGHT),
-
-	PATIENT_SURNAME(1, 20, TableAlignment.LEFT),
-
-	PATIENT_ADDRESS(2, 20, TableAlignment.LEFT),
-
-	PATIENT_BIRTH_YEAR(3, 10, TableAlignment.RIGHT);
+	DOCTOR_PERSONNEL_NUMBER(0, 12, TableAlignment.RIGHT), DOCTOR_SURNAME(1, 20, TableAlignment.LEFT),
+	PATIENT_COUNT(2, 15, TableAlignment.RIGHT);
 
 	private final int index;
-
 	private final int width;
-
 	private final TableAlignment alignment;
 
-	PatientTableColumn(int index, int width, TableAlignment alignment) {
+	AveragePatientsTableColumn(int index, int width, TableAlignment alignment) {
 		this.index = index;
 		this.width = width;
 		this.alignment = alignment;
@@ -40,14 +33,14 @@ public enum PatientTableColumn implements TableColumnInterface {
 	}
 
 	public static int getColumnsCount() {
-		return TableColumnInterface.getColumnsCount(PatientTableColumn.class);
+		return TableColumnInterface.getColumnsCount(AveragePatientsTableColumn.class);
 	}
 
 	public static int[] getAllWidths() {
-		return TableColumnInterface.getAllWidths(PatientTableColumn.values());
+		return TableColumnInterface.getAllWidths(AveragePatientsTableColumn.values());
 	}
 
 	public static TableAlignment[] getAllAlignments() {
-		return TableColumnInterface.getAllAlignments(PatientTableColumn.values());
+		return TableColumnInterface.getAllAlignments(AveragePatientsTableColumn.values());
 	}
 }

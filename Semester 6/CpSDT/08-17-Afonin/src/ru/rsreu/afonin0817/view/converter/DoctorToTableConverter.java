@@ -1,6 +1,6 @@
 package ru.rsreu.afonin0817.view.converter;
 
-import ru.rsreu.afonin0817.entity.Doctor;
+import ru.rsreu.afonin0817.datalayer.data.Doctor;
 
 public final class DoctorToTableConverter {
 
@@ -8,11 +8,9 @@ public final class DoctorToTableConverter {
 	}
 
 	public static String[][] convertDoctorsToTableRows(Doctor[] doctors) {
-
 		String[][] table = new String[doctors.length][DoctorTableColumn.getColumnsCount()];
 
 		for (int index = 0; index < doctors.length; index++) {
-
 			Doctor doctor = doctors[index];
 
 			table[index][DoctorTableColumn.DOCTOR_PERSONNEL_NUMBER.getIndex()] = String
