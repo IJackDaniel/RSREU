@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/24"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.IJackDaniel.InfS.controller.LoginController"
+            prefWidth="700"
+            prefHeight="500">
+
+    <center>
+        <VBox alignment="CENTER"
+              spacing="15"
+              maxWidth="320">
+
+            <padding>
+                <Insets top="30"
+                        right="30"
+                        bottom="30"
+                        left="30"/>
+            </padding>
+
+            <Label text="ЗаМеТоЧкИ"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+            <Label text="Вход в систему"
+                   style="-fx-font-size: 18px;"/>
+
+            <TextField fx:id="loginField"
+                       promptText="Логин"
+                       prefWidth="300"/>
+
+            <PasswordField fx:id="passwordField"
+                           promptText="Одноразовый пароль"
+                           prefWidth="300"/>
+
+            <Label fx:id="messageLabel"
+                   wrapText="true"/>
+
+            <Button fx:id="loginButton"
+                    text="Войти"
+                    prefWidth="300"
+                    onAction="#onLoginButtonClick"/>
+
+            <Button text="Регистрация"
+                    prefWidth="300"
+                    onAction="#onRegisterButtonClick"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>

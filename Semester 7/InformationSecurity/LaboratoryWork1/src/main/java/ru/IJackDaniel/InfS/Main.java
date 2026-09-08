@@ -1,24 +1,63 @@
 package ru.IJackDaniel.InfS;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ru.IJackDaniel.InfS.converter.UserConverter;
+import ru.IJackDaniel.InfS.file.UserFileReader;
+import ru.IJackDaniel.InfS.generator.OneTimePasswordGenerator;
+import ru.IJackDaniel.InfS.generator.PasswordGenerator;
+import ru.IJackDaniel.InfS.model.User;
+import ru.IJackDaniel.InfS.security.PasswordGenerationSettings;
+import ru.IJackDaniel.InfS.security.PasswordSecurityCalculator;
+import ru.IJackDaniel.InfS.service.AuthService;
+import ru.IJackDaniel.InfS.service.UserService;
+import ru.IJackDaniel.InfS.util.SceneManager;
 
-import java.io.IOException;
+import java.util.List;
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader =
-                new FXMLLoader(Main.class.getResource("login-view.fxml"));
+    public void start(Stage stage) {
+        List<String> data =
+                UserFileReader.readData();
 
-        Scene scene = new Scene(fxmlLoader.load());
+        List<User> users =
+                UserConverter.toUsers(data);
 
-        stage.setTitle("Password Security");
-        stage.setScene(scene);
-        stage.show();
+        PasswordGenerationSettings passwordSettings =
+                PasswordGenerationSettings.createDefault();
+
+        PasswordSecurityCalculator passwordSecurityCalculator =
+                new PasswordSecurityCalculator();
+
+        PasswordGenerator generator =
+                new OneTimePasswordGenerator(
+                        passwordSettings,
+                        passwordSecurityCalculator
+                );
+
+        UserService userService =
+                new UserService(
+                        users,
+                        generator
+                );
+
+        AuthService authService =
+                new AuthService(
+                        users,
+                        userService
+                );
+
+        SceneManager.initialize(
+                stage,
+                userService,
+                authService,
+                passwordSettings,
+                passwordSecurityCalculator
+        );
+
+        SceneManager.showLogin();
     }
 
     public static void main(String[] args) {
