@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
 
-    private String login;
+    private final String login;
     private List<String> passwords = new ArrayList<>();
     private String userData = "";
 

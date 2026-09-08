@@ -34,24 +34,16 @@ public class WorkspaceController {
     public void setUser(User user) {
         this.user = user;
 
-        welcomeLabel.setText(
-                "Добро пожаловать, " + user.getLogin() + "!"
-        );
+        welcomeLabel.setText("Добро пожаловать, " + user.getLogin() + "!");
 
         userTextArea.setText(user.getText());
 
         if (!user.hasPasswords()) {
-            List<String> passwords =
-                    userService.regeneratePasswords(user);
+            List<String> passwords = userService.regeneratePasswords(user);
 
-            messageLabel.setText(
-                    "Одноразовые пароли закончились. " +
-                            "Сохраните новый набор."
-            );
+            messageLabel.setText("Одноразовые пароли закончились. " + "Сохраните новый набор.");
 
-            newPasswordsTextArea.setText(
-                    String.join(System.lineSeparator(), passwords)
-            );
+            newPasswordsTextArea.setText(String.join(System.lineSeparator(), passwords));
 
             newPasswordsTextArea.setVisible(true);
             newPasswordsTextArea.setManaged(true);
@@ -60,9 +52,7 @@ public class WorkspaceController {
 
     @FXML
     private void onSaveButtonClick() {
-        String text = userTextArea.getText()
-                .replace("\r", " ")
-                .replace("\n", " ");
+        String text = userTextArea.getText().replace("\r", " ").replace("\n", " ");
 
         userTextArea.setText(text);
 

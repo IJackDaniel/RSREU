@@ -31,30 +31,15 @@ public class AuthService {
         User user = findUser(login);
 
         if (user == null) {
-            return new LoginResult(
-                    LoginResult.Status.USER_NOT_FOUND,
-                    null,
-                    0,
-                    0
-            );
+            return new LoginResult(LoginResult.Status.USER_NOT_FOUND, null, 0, 0);
         }
 
         if (isBlocked(login)) {
-            return new LoginResult(
-                    LoginResult.Status.BLOCKED,
-                    null,
-                    0,
-                    getRemainingBlockSeconds(login)
-            );
+            return new LoginResult(LoginResult.Status.BLOCKED, null, 0, getRemainingBlockSeconds(login));
         }
 
         if (!user.hasPasswords()) {
-            return new LoginResult(
-                    LoginResult.Status.NO_PASSWORDS,
-                    null,
-                    0,
-                    0
-            );
+            return new LoginResult(LoginResult.Status.NO_PASSWORDS, null, 0, 0);
         }
 
         if (!Objects.equals(user.getCurrentPassword(), password)) {
@@ -66,12 +51,7 @@ public class AuthService {
         user.removeCurrentPassword();
         userService.saveUsers();
 
-        return new LoginResult(
-                LoginResult.Status.SUCCESS,
-                user,
-                MAX_ATTEMPTS,
-                0
-        );
+        return new LoginResult(LoginResult.Status.SUCCESS, user, MAX_ATTEMPTS, 0);
     }
 
     private User findUser(String login) {
@@ -90,34 +70,20 @@ public class AuthService {
         failedAttempts.put(login, attempts);
 
         if (attempts < MAX_ATTEMPTS) {
-            return new LoginResult(
-                    LoginResult.Status.INVALID_PASSWORD,
-                    null,
-                    MAX_ATTEMPTS - attempts,
-                    0
-            );
+            return new LoginResult(LoginResult.Status.INVALID_PASSWORD, null, MAX_ATTEMPTS - attempts, 0);
         }
 
         long blockSeconds = calculateBlockSeconds(attempts);
 
-        blockedUntil.put(
-                login,
-                LocalDateTime.now().plusSeconds(blockSeconds)
-        );
+        blockedUntil.put(login, LocalDateTime.now().plusSeconds(blockSeconds));
 
-        return new LoginResult(
-                LoginResult.Status.BLOCKED,
-                null,
-                0,
-                blockSeconds
-        );
+        return new LoginResult(LoginResult.Status.BLOCKED, null, 0, blockSeconds);
     }
 
     private long calculateBlockSeconds(int attempts) {
         int additionalAttempts = attempts - MAX_ATTEMPTS;
 
-        long blockSeconds =
-                INITIAL_BLOCK_SECONDS * (1L << additionalAttempts);
+        long blockSeconds = INITIAL_BLOCK_SECONDS * (1L << additionalAttempts);
 
         return Math.min(blockSeconds, MAX_BLOCK_SECONDS);
     }
@@ -144,10 +110,7 @@ public class AuthService {
             return 0;
         }
 
-        long seconds = Duration.between(
-                LocalDateTime.now(),
-                blockEnd
-        ).getSeconds();
+        long seconds = Duration.between(LocalDateTime.now(), blockEnd).getSeconds();
 
         return Math.max(seconds, 1);
     }

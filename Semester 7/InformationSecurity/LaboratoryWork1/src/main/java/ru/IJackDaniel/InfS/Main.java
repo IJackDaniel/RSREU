@@ -19,43 +19,21 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        List<String> data =
-                UserFileReader.readData();
+        List<String> data = UserFileReader.readData();
 
-        List<User> users =
-                UserConverter.toUsers(data);
+        List<User> users = UserConverter.toUsers(data);
 
-        PasswordGenerationSettings passwordSettings =
-                PasswordGenerationSettings.createDefault();
+        PasswordGenerationSettings passwordSettings = PasswordGenerationSettings.createDefault();
 
-        PasswordSecurityCalculator passwordSecurityCalculator =
-                new PasswordSecurityCalculator();
+        PasswordSecurityCalculator passwordSecurityCalculator = new PasswordSecurityCalculator();
 
-        PasswordGenerator generator =
-                new OneTimePasswordGenerator(
-                        passwordSettings,
-                        passwordSecurityCalculator
-                );
+        PasswordGenerator generator = new OneTimePasswordGenerator(passwordSettings, passwordSecurityCalculator);
 
-        UserService userService =
-                new UserService(
-                        users,
-                        generator
-                );
+        UserService userService = new UserService(users, generator);
 
-        AuthService authService =
-                new AuthService(
-                        users,
-                        userService
-                );
+        AuthService authService = new AuthService(users, userService);
 
-        SceneManager.initialize(
-                stage,
-                userService,
-                authService,
-                passwordSettings,
-                passwordSecurityCalculator
-        );
+        SceneManager.initialize(stage, userService, authService, passwordSettings, passwordSecurityCalculator);
 
         SceneManager.showLogin();
     }

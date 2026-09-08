@@ -36,26 +36,15 @@ public class RegisterController {
         }
 
         if (userService.isLoginExists(login)) {
-            messageLabel.setText(
-                    "Пользователь с таким логином уже существует"
-            );
+            messageLabel.setText("Пользователь с таким логином уже существует");
             return;
         }
 
-        List<String> passwords =
-                userService.register(login);
+        List<String> passwords = userService.register(login);
 
-        messageLabel.setText(
-                "Пользователь зарегистрирован. " +
-                        "Сохраните одноразовые пароли."
-        );
+        messageLabel.setText("Пользователь зарегистрирован. " + "Сохраните одноразовые пароли.");
 
-        passwordsTextArea.setText(
-                String.join(
-                        System.lineSeparator(),
-                        passwords
-                )
-        );
+        passwordsTextArea.setText(String.join(System.lineSeparator(), passwords));
 
         loginField.setDisable(true);
     }

@@ -41,8 +41,7 @@ public class LoginController {
             return;
         }
 
-        LoginResult result =
-                authService.login(login, password);
+        LoginResult result = authService.login(login, password);
 
         switch (result.getStatus()) {
 
@@ -51,18 +50,13 @@ public class LoginController {
             }
 
             case USER_NOT_FOUND -> {
-                messageLabel.setText(
-                        "Пользователь с таким логином не найден"
-                );
+                messageLabel.setText("Пользователь с таким логином не найден");
 
                 passwordField.clear();
             }
 
             case INVALID_PASSWORD -> {
-                messageLabel.setText(
-                        "Неверный пароль. Осталось попыток: "
-                                + result.getAttemptsRemaining()
-                );
+                messageLabel.setText("Неверный пароль. Осталось попыток: " + result.getAttemptsRemaining());
 
                 passwordField.clear();
             }
@@ -74,9 +68,7 @@ public class LoginController {
             }
 
             case NO_PASSWORDS -> {
-                messageLabel.setText(
-                        "У пользователя отсутствуют одноразовые пароли"
-                );
+                messageLabel.setText("У пользователя отсутствуют одноразовые пароли");
             }
         }
     }
@@ -86,22 +78,16 @@ public class LoginController {
         loginField.setDisable(true);
         passwordField.setDisable(true);
 
-        messageLabel.setText(
-                "Вход временно заблокирован. Повторите через "
-                        + seconds + " сек."
-        );
+        messageLabel.setText("Вход временно заблокирован. Повторите через " + seconds + " сек.");
 
-        PauseTransition pause =
-                new PauseTransition(Duration.seconds(seconds));
+        PauseTransition pause = new PauseTransition(Duration.seconds(seconds));
 
         pause.setOnFinished(event -> {
             loginButton.setDisable(false);
             loginField.setDisable(false);
             passwordField.setDisable(false);
 
-            messageLabel.setText(
-                    "Блокировка снята. Можно повторить попытку."
-            );
+            messageLabel.setText("Блокировка снята. Можно повторить попытку.");
         });
 
         pause.play();

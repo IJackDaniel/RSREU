@@ -55,10 +55,7 @@ public class GeneratorSettingsController {
     private PasswordGenerationSettings settings;
     private PasswordSecurityCalculator calculator;
 
-    public void setDependencies(
-            PasswordGenerationSettings settings,
-            PasswordSecurityCalculator calculator
-    ) {
+    public void setDependencies(PasswordGenerationSettings settings, PasswordSecurityCalculator calculator) {
         this.settings = settings;
         this.calculator = calculator;
 
@@ -67,33 +64,19 @@ public class GeneratorSettingsController {
     }
 
     private void loadSettings() {
-        probabilityField.setText(
-                settings.getProbability().toPlainString()
-        );
+        probabilityField.setText(settings.getProbability().toPlainString());
 
-        attemptsPerMinuteField.setText(
-                settings.getAttemptsPerMinute().toPlainString()
-        );
+        attemptsPerMinuteField.setText(settings.getAttemptsPerMinute().toPlainString());
 
-        validityDaysField.setText(
-                settings.getValidityDays().toPlainString()
-        );
+        validityDaysField.setText(settings.getValidityDays().toPlainString());
 
-        lowercaseCheckBox.setSelected(
-                settings.isUseLowercase()
-        );
+        lowercaseCheckBox.setSelected(settings.isUseLowercase());
 
-        uppercaseCheckBox.setSelected(
-                settings.isUseUppercase()
-        );
+        uppercaseCheckBox.setSelected(settings.isUseUppercase());
 
-        digitsCheckBox.setSelected(
-                settings.isUseDigits()
-        );
+        digitsCheckBox.setSelected(settings.isUseDigits());
 
-        specialSymbolsCheckBox.setSelected(
-                settings.isUseSpecialSymbols()
-        );
+        specialSymbolsCheckBox.setSelected(settings.isUseSpecialSymbols());
     }
 
     @FXML
@@ -104,13 +87,11 @@ public class GeneratorSettingsController {
     @FXML
     private void onApplyButtonClick() {
         try {
-            PasswordGenerationSettings newSettings =
-                    createSettingsFromFields();
+            PasswordGenerationSettings newSettings = createSettingsFromFields();
 
             validateSettings(newSettings);
 
-            PasswordSecurityResult result =
-                    calculator.calculate(newSettings);
+            PasswordSecurityResult result = calculator.calculate(newSettings);
 
             settings.copyFrom(newSettings);
 
@@ -130,13 +111,11 @@ public class GeneratorSettingsController {
 
     private void calculateAndShow() {
         try {
-            PasswordGenerationSettings temporarySettings =
-                    createSettingsFromFields();
+            PasswordGenerationSettings temporarySettings = createSettingsFromFields();
 
             validateSettings(temporarySettings);
 
-            PasswordSecurityResult result =
-                    calculator.calculate(temporarySettings);
+            PasswordSecurityResult result = calculator.calculate(temporarySettings);
 
             showResult(result);
 
@@ -154,105 +133,52 @@ public class GeneratorSettingsController {
         BigDecimal validityDays;
 
         try {
-            probability =
-                    new BigDecimal(
-                            probabilityField.getText().trim()
-                    );
+            probability = new BigDecimal(probabilityField.getText().trim());
 
-            attemptsPerMinute =
-                    new BigDecimal(
-                            attemptsPerMinuteField.getText().trim()
-                    );
+            attemptsPerMinute = new BigDecimal(attemptsPerMinuteField.getText().trim());
 
-            validityDays =
-                    new BigDecimal(
-                            validityDaysField.getText().trim()
-                    );
+            validityDays = new BigDecimal(validityDaysField.getText().trim());
 
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(
-                    "P, V и T должны быть числами"
-            );
+            throw new IllegalArgumentException("P, V и T должны быть числами");
         }
 
-        return new PasswordGenerationSettings(
-                probability,
-                attemptsPerMinute,
-                validityDays,
-                lowercaseCheckBox.isSelected(),
-                uppercaseCheckBox.isSelected(),
-                digitsCheckBox.isSelected(),
-                specialSymbolsCheckBox.isSelected()
-        );
+        return new PasswordGenerationSettings(probability, attemptsPerMinute, validityDays, lowercaseCheckBox.isSelected(), uppercaseCheckBox.isSelected(), digitsCheckBox.isSelected(), specialSymbolsCheckBox.isSelected());
     }
 
-    private void validateSettings(
-            PasswordGenerationSettings settings
-    ) {
-        BigDecimal probability =
-                settings.getProbability();
+    private void validateSettings(PasswordGenerationSettings settings) {
+        BigDecimal probability = settings.getProbability();
 
-        if (probability.compareTo(BigDecimal.ZERO) <= 0
-                || probability.compareTo(BigDecimal.ONE) >= 0) {
+        if (probability.compareTo(BigDecimal.ZERO) <= 0 || probability.compareTo(BigDecimal.ONE) >= 0) {
 
-            throw new IllegalArgumentException(
-                    "Вероятность P должна быть больше 0 и меньше 1"
-            );
+            throw new IllegalArgumentException("Вероятность P должна быть больше 0 и меньше 1");
         }
 
-        if (settings.getAttemptsPerMinute()
-                .compareTo(BigDecimal.ZERO) <= 0) {
+        if (settings.getAttemptsPerMinute().compareTo(BigDecimal.ZERO) <= 0) {
 
-            throw new IllegalArgumentException(
-                    "Скорость перебора V должна быть больше 0"
-            );
+            throw new IllegalArgumentException("Скорость перебора V должна быть больше 0");
         }
 
-        if (settings.getValidityDays()
-                .compareTo(BigDecimal.ZERO) <= 0) {
+        if (settings.getValidityDays().compareTo(BigDecimal.ZERO) <= 0) {
 
-            throw new IllegalArgumentException(
-                    "Срок действия T должен быть больше 0"
-            );
+            throw new IllegalArgumentException("Срок действия T должен быть больше 0");
         }
 
         if (settings.getAlphabetPower() == 0) {
-            throw new IllegalArgumentException(
-                    "Выберите хотя бы одну группу символов"
-            );
+            throw new IllegalArgumentException("Выберите хотя бы одну группу символов");
         }
     }
 
-    private void showResult(
-            PasswordSecurityResult result
-    ) {
-        alphabetPowerLabel.setText(
-                String.valueOf(
-                        result.getAlphabetPower()
-                )
-        );
+    private void showResult(PasswordSecurityResult result) {
+        alphabetPowerLabel.setText(String.valueOf(result.getAlphabetPower()));
 
-        requiredPasswordsLabel.setText(
-                result.getRequiredPasswordsCount()
-                        .toString()
-        );
+        requiredPasswordsLabel.setText(result.getRequiredPasswordsCount().toString());
 
-        calculatedLengthLabel.setText(
-                String.valueOf(
-                        result.getCalculatedPasswordLength()
-                )
-        );
+        calculatedLengthLabel.setText(String.valueOf(result.getCalculatedPasswordLength()));
 
-        passwordLengthLabel.setText(
-                String.valueOf(
-                        result.getPasswordLength()
-                )
-        );
+        passwordLengthLabel.setText(String.valueOf(result.getPasswordLength()));
 
-        passwordsCountLabel.setText(
-                result.getPasswordsCount()
-                        .toString()
-        );
+        passwordsCountLabel.setText(result.getPasswordsCount().toString());
     }
 
     private void clearResult() {
@@ -264,10 +190,7 @@ public class GeneratorSettingsController {
     }
 
     private void closeWindow() {
-        Stage stage =
-                (Stage) probabilityField
-                        .getScene()
-                        .getWindow();
+        Stage stage = (Stage) probabilityField.getScene().getWindow();
 
         stage.close();
     }

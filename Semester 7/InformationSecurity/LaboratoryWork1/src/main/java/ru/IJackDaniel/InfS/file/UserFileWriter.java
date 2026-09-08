@@ -10,8 +10,7 @@ public class UserFileWriter {
     private static final String DATA_FILE_PATH = "data/data.txt";
 
     public static void writeData(List<String> data) {
-        try (BufferedWriter writer =
-                     new BufferedWriter(new FileWriter(DATA_FILE_PATH))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DATA_FILE_PATH))) {
 
             for (String line : data) {
                 writer.write(line);

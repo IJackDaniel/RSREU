@@ -42,8 +42,6 @@ public class UserConverter {
             return new ArrayList<>();
         }
 
-        return new ArrayList<>(
-                List.of(passwordsString.split(";"))
-        );
+        return new ArrayList<>(List.of(passwordsString.split(";")));
     }
 }
