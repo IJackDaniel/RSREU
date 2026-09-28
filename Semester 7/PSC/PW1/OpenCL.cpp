@@ -6,6 +6,8 @@
 
 void printDeviceInfo(cl_device_id device) 
 {
+    std::cout << std::endl;
+    
     cl_int status;
 
     char openclVersion[1024];
@@ -101,6 +103,27 @@ int convertToString(const char *filename, std::string& s)
     return -1;
 }
 
+void printPlatformInfo(cl_platform_id* platforms, cl_uint numPlanforms) 
+{
+    std::cout << std::endl;
+    for (int i = 0; i < numPlanforms; ++i) 
+    {
+        char platformName[1024];
+        cl_int status = clGetPlatformInfo(
+            platforms[i],
+            CL_PLATFORM_NAME,
+            sizeof(platformName),
+            platformName,
+            nullptr
+        );
+        if (status != CL_SUCCESS) {
+        std::cout << "OpenCL error: " << status << std::endl;
+    }
+    std::cout << "Platform name: " << platformName << std::endl;
+    }
+    
+}
+
 OpenCLContext Init(cl_device_type deviceType)
 {
     OpenCLContext opencl;
@@ -132,8 +155,10 @@ OpenCLContext Init(cl_device_type deviceType)
             platforms,
             NULL
         );
+        // 0 для GPU, 1 для CPU
+        opencl.platform = platforms[(deviceType == CL_DEVICE_TYPE_CPU)? 1:0];
 
-        opencl.platform = platforms[0];
+        printPlatformInfo(platforms, numPlatforms);
 
         free(platforms);
     }
