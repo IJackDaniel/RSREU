@@ -26,7 +26,7 @@ std::string loadKernelSource(const std::string& filename)
 
 int main()
 {
-    const cl_ulong numSteps = 10000000ULL;
+    const cl_ulong numSteps = 500000000ULL;
     const double referencePi = 3.14159265358979323846;
     const double step = 1.0 / static_cast<double>(numSteps);
 
@@ -52,13 +52,13 @@ int main()
     std::cout << "CPU error:  " << std::fabs(cpuPi - referencePi) << '\n';
     std::cout << "CPU time:   " << cpuElapsed.count() << " s\n\n";
 
-    cl_int error;
+    cl_int status;
 
     // Получаем первую доступную OpenCL-платформу
     cl_uint platformCount = 0;
-    error = clGetPlatformIDs(0, nullptr, &platformCount);
+    status = clGetPlatformIDs(0, nullptr, &platformCount);
 
-    if (error != CL_SUCCESS || platformCount == 0)
+    if (status != CL_SUCCESS || platformCount == 0)
     {
         std::cerr << "No OpenCL platforms found.\n";
         return 1;
@@ -66,13 +66,13 @@ int main()
 
     std::vector<cl_platform_id> platforms(platformCount);
 
-    error = clGetPlatformIDs(
+    status = clGetPlatformIDs(
         platformCount,
         platforms.data(),
         nullptr
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to get OpenCL platforms.\n";
         return 1;
@@ -83,7 +83,7 @@ int main()
     // Получаем первое доступное устройство
     cl_uint deviceCount = 0;
 
-    error = clGetDeviceIDs(
+    status = clGetDeviceIDs(
         platform,
         CL_DEVICE_TYPE_ALL,
         0,
@@ -91,7 +91,7 @@ int main()
         &deviceCount
     );
 
-    if (error != CL_SUCCESS || deviceCount == 0)
+    if (status != CL_SUCCESS || deviceCount == 0)
     {
         std::cerr << "No OpenCL devices found.\n";
         return 1;
@@ -99,7 +99,7 @@ int main()
 
     std::vector<cl_device_id> devices(deviceCount);
 
-    error = clGetDeviceIDs(
+    status = clGetDeviceIDs(
         platform,
         CL_DEVICE_TYPE_ALL,
         deviceCount,
@@ -107,7 +107,7 @@ int main()
         nullptr
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to get OpenCL devices.\n";
         return 1;
@@ -121,10 +121,10 @@ int main()
         &device,
         nullptr,
         nullptr,
-        &error
+        &status
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to create OpenCL context.\n";
         return 1;
@@ -135,10 +135,10 @@ int main()
         context,
         device,
         CL_QUEUE_PROFILING_ENABLE,
-        &error
+        &status
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to create command queue.\n";
         return 1;
@@ -164,16 +164,16 @@ int main()
         1,
         &sourcePtr,
         &sourceLength,
-        &error
+        &status
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to create OpenCL program.\n";
         return 1;
     }
 
-    error = clBuildProgram(
+    status = clBuildProgram(
         program,
         1,
         &device,
@@ -182,7 +182,7 @@ int main()
         nullptr
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         size_t logSize = 0;
 
@@ -215,10 +215,10 @@ int main()
     cl_kernel kernel = clCreateKernel(
         program,
         "calculatePi",
-        &error
+        &status
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to create kernel.\n";
         return 1;
@@ -234,30 +234,30 @@ int main()
         CL_MEM_WRITE_ONLY,
         sizeof(double) * groupCount,
         nullptr,
-        &error
+        &status
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to create output buffer.\n";
         return 1;
     }
 
-    error  = clSetKernelArg(
+    status  = clSetKernelArg(
         kernel,
         0,
         sizeof(cl_ulong),
         &numSteps
     );
 
-    error |= clSetKernelArg(
+    status |= clSetKernelArg(
         kernel,
         1,
         sizeof(double),
         &step
     );
 
-    error |= clSetKernelArg(
+    status |= clSetKernelArg(
         kernel,
         2,
         sizeof(cl_mem),
@@ -265,14 +265,14 @@ int main()
     );
 
     // localSums выделяется отдельно для каждой work-group
-    error |= clSetKernelArg(
+    status |= clSetKernelArg(
         kernel,
         3,
         sizeof(double) * localSize,
         nullptr
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to set kernel arguments.\n";
         return 1;
@@ -280,7 +280,7 @@ int main()
 
     cl_event kernelEvent;
 
-    error = clEnqueueNDRangeKernel(
+    status = clEnqueueNDRangeKernel(
         queue,
         kernel,
         1,
@@ -292,10 +292,10 @@ int main()
         &kernelEvent
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to execute kernel. Error code: "
-                  << error << '\n';
+                  << status << '\n';
         return 1;
     }
 
@@ -325,7 +325,7 @@ int main()
 
     std::vector<double> groupSums(groupCount);
 
-    error = clEnqueueReadBuffer(
+    status = clEnqueueReadBuffer(
         queue,
         groupSumsBuffer,
         CL_TRUE,
@@ -337,7 +337,7 @@ int main()
         nullptr
     );
 
-    if (error != CL_SUCCESS)
+    if (status != CL_SUCCESS)
     {
         std::cerr << "Failed to read results.\n";
         return 1;

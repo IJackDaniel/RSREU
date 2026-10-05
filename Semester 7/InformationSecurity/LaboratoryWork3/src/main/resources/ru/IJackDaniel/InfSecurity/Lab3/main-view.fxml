@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ru.IJackDaniel.InfSecurity.Lab3.controller.MainController">
+    <center>
+        <VBox spacing="12.0">
+            <padding>
+                <Insets top="18.0" right="18.0" bottom="18.0" left="18.0"/>
+            </padding>
+
+            <HBox alignment="CENTER">
+                <Label text="Шифр перестановки" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <Separator/>
+
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <Label text="Исходный текст" style="-fx-font-weight: bold;"/>
+                <HBox HBox.hgrow="ALWAYS"/>
+                <Button text="Справка по алфавиту ASCII" onAction="#onHelp"/>
+            </HBox>
+            <TextArea fx:id="inputTextArea"
+                      promptText="Enter your text..."
+                      wrapText="true"
+                      prefRowCount="5"
+                      VBox.vgrow="ALWAYS"/>
+
+            <Label text="Ключ перестановки" style="-fx-font-weight: bold;"/>
+            <TextField fx:id="keyField" promptText="3 5 2 6 1 4"/>
+
+            <HBox spacing="10.0">
+                <Button text="Зашифровать" onAction="#onEncrypt" defaultButton="true"/>
+                <Button text="Расшифровать" onAction="#onDecrypt"/>
+                <Button text="Очистить" onAction="#onClear"/>
+            </HBox>
+
+            <Label text="Результат" style="-fx-font-weight: bold;"/>
+            <TextArea fx:id="resultTextArea"
+                      editable="false"
+                      wrapText="true"
+                      prefRowCount="5"
+                      VBox.vgrow="ALWAYS"/>
+        </VBox>
+    </center>
+</BorderPane>
