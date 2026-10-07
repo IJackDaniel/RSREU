@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import ru.IJackDaniel.InfSecurity.Lab3.model.PermutationKey;
 import ru.IJackDaniel.InfSecurity.Lab3.service.KeyParserService;
 import ru.IJackDaniel.InfSecurity.Lab3.service.PermutationCipherService;
+import ru.IJackDaniel.InfSecurity.Lab3.service.SimplePermutationCipherService;
 import ru.IJackDaniel.InfSecurity.Lab3.util.HelpText;
 import ru.IJackDaniel.InfSecurity.Lab3.validator.AsciiValidator;
 
@@ -20,13 +22,22 @@ public class MainController {
     @FXML
     private TextArea resultTextArea;
 
+    @FXML
+    private ToggleButton simpleModeButton;
+
+    @FXML
+    private ToggleButton blockModeButton;
+
     private final KeyParserService keyParserService = new KeyParserService();
-    private final PermutationCipherService cipherService = new PermutationCipherService();
+    private final PermutationCipherService blockCipherService = new PermutationCipherService();
+    private final SimplePermutationCipherService simpleCipherService =
+            new SimplePermutationCipherService();
     private final AsciiValidator asciiValidator = new AsciiValidator();
 
     @FXML
     private void initialize() {
         keyField.setText("3 5 2 6 1 4");
+        blockModeButton.setSelected(true);
     }
 
     @FXML
@@ -60,9 +71,18 @@ public class MainController {
             asciiValidator.validate(text);
 
             PermutationKey key = keyParserService.parse(keyField.getText());
-            String result = encrypt
-                    ? cipherService.encrypt(text, key)
-                    : cipherService.decrypt(text, key);
+
+            String result;
+
+            if (simpleModeButton.isSelected()) {
+                result = encrypt
+                        ? simpleCipherService.encrypt(text, key)
+                        : simpleCipherService.decrypt(text, key);
+            } else {
+                result = encrypt
+                        ? blockCipherService.encrypt(text, key)
+                        : blockCipherService.decrypt(text, key);
+            }
 
             resultTextArea.setText(result);
         } catch (IllegalArgumentException ex) {
