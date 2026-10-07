@@ -1,0 +1,37 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>D:\Programms\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\Debug\LaboratoryWork3.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>LaboratoryWork3.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>LaboratoryWork3.map</FILE>
+  <FILE>LaboratoryWork3.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <m><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>16</LINE></m>
+  <pp2><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>51</LINE></pp2>
+  <pp4><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>93</LINE></pp4>
+  <pp1><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>23</LINE></pp1>
+  <m1><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>35</LINE></m1>
+  <m2><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>58</LINE></m2>
+  <m3><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>71</LINE></m3>
+  <pp3><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>74</LINE></pp3>
+  <m4><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>81</LINE></m4>
+  <m5><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>99</LINE></m5>
+  <no_update><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork3\LaboratoryWork3\LR_3.asm</FILE><LINE>107</LINE></no_update>
+ </LABELS>
+</ASSEMBLER_INFO>

@@ -1,0 +1,35 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>D:\Programms\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\Debug\LaboratoryWork2.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>LaboratoryWork2.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>LaboratoryWork2.map</FILE>
+  <FILE>LaboratoryWork2.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <m><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</FILE><LINE>17</LINE></m>
+  <pp8><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</FILE><LINE>168</LINE></pp8>
+  <pp1><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</FILE><LINE>30</LINE></pp1>
+  <pp2><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</FILE><LINE>57</LINE></pp2>
+  <pp3><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</FILE><LINE>63</LINE></pp3>
+  <pp4><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</FILE><LINE>98</LINE></pp4>
+  <pp5><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</FILE><LINE>110</LINE></pp5>
+  <pp6><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</FILE><LINE>120</LINE></pp6>
+  <pp7><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm</FILE><LINE>147</LINE></pp7>
+ </LABELS>
+</ASSEMBLER_INFO>
