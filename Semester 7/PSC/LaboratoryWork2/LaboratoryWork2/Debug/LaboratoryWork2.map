@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm Wed Oct 07 00:23:35 2026
+AVRASM ver. 2.2.7  C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm Fri Oct 09 00:10:17 2026
 
 
 EQU  SIGNATURE_000 0000001e
@@ -696,11 +696,11 @@ EQU  TWIaddr      00000030
 EQU  SPMRaddr     00000032
 EQU  INT_VECTORS_SIZE 00000034
 CSEG m            00000004
-CSEG pp8          0000005e
+CSEG pp3          00000021
 CSEG pp1          00000008
 CSEG pp2          0000001d
-CSEG pp3          00000021
 CSEG pp4          00000034
 CSEG pp5          0000003c
 CSEG pp6          00000042
 CSEG pp7          00000054
+CSEG pp8          0000005e

@@ -1,0 +1,39 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>D:\Programms\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\Debug\LabWork3AdditionalTask_MunSum.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>LabWork3AdditionalTask_MunSum.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>LabWork3AdditionalTask_MunSum.map</FILE>
+  <FILE>LabWork3AdditionalTask_MunSum.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <main><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>30</LINE></main>
+  <fill_array><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>38</LINE></fill_array>
+  <find_pair><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>57</LINE></find_pair>
+  <stop><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>34</LINE></stop>
+  <fill_loop><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>45</LINE></fill_loop>
+  <outer_loop><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>73</LINE></outer_loop>
+  <inner_loop><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>88</LINE></inner_loop>
+  <first_positive><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>102</LINE></first_positive>
+  <second_positive><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>112</LINE></second_positive>
+  <abs_ready><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>132</LINE></abs_ready>
+  <save_pair><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>146</LINE></save_pair>
+  <next_pair><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>164</LINE></next_pair>
+  <finish><FILE>C:\Programming\RSREU\Semester 7\PSC\LabWork3AdditionalTask_MunSum\LabWork3AdditionalTask_MunSum\main.asm</FILE><LINE>175</LINE></finish>
+ </LABELS>
+</ASSEMBLER_INFO>

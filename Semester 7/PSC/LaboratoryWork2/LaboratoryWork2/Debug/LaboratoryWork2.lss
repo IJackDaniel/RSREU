@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm Wed Oct 07 00:23:35 2026
+AVRASM ver. 2.2.7  C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm Fri Oct 09 00:10:17 2026
 
 [builtin](2): Including file 'D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
 C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm(9): Including file 'D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
@@ -1047,13 +1047,17 @@ C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm(9):
                                  
                                  m:
                                      ;call pp1
-                                     ;call pp2
-                                     ;call pp3
+                                 
+                                     ;ldi r16, 0b00100101
+                                 	;mov r5, r16
+                                 	;call pp2
+                                 
+000004 940e 0021                     call pp3
                                  	;call pp4
                                  	;call pp5
                                  	;call pp6
                                  	;call pp7
-000004 940e 005e                 	call pp8
+                                 	;call pp8
                                  
                                  
 000006 940c 0004                     jmp m
@@ -1086,14 +1090,14 @@ C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork2\LaboratoryWork2\LR_2.asm(9):
 00001c 9508                          ret
                                  
                                  pp2:
-00001d e205                      	ldi r16, 0b00100101
+00001d 2d05                          mov r16, r5
 00001e 7f00                          andi r16, 0b11110000
 00001f 3300                          cpi r16, 0b00110000
 000020 9508                          ret
                                  
                                  pp3:
                                      ; Тестовое значение
-000021 ef0f                          ldi r16, 0xFF
+000021 ea0b                          ldi r16, 0xAB
                                  
                                      ; Копии исходного числа
 000022 2f10                          mov r17, r16
@@ -1233,11 +1237,11 @@ counted separately from r26..r31 here.
 
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   9 r1 :   7 r2 :   5 r3 :   0 r4 :   0 
-r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
+r5 :   1 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
 r13:   0 r14:   0 r15:   0 r16:  40 r17:  28 r18:  12 r19:  11 r20:   6 
 r21:   3 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
-Registers used: 9 out of 35 (25.7%)
+Registers used: 10 out of 35 (28.6%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   3 add   :   7 adiw  :   0 and   :   3 
@@ -1250,8 +1254,8 @@ clc   :   2 clh   :   0 cli   :   1 cln   :   0 clr   :   0 cls   :   0
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
 cpi   :   1 cpse  :   0 dec   :   0 eor   :   4 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   0 jmp   :   1 
-ld    :   0 ldd   :   0 ldi   :  31 lds   :   0 lpm   :   0 lsl   :   2 
-lsr   :   2 mov   :   8 movw  :   0 mul   :   3 muls  :   3 mulsu :   0 
+ld    :   0 ldd   :   0 ldi   :  30 lds   :   0 lpm   :   0 lsl   :   2 
+lsr   :   2 mov   :   9 movw  :   0 mul   :   3 muls  :   3 mulsu :   0 
 neg   :   0 nop   :   0 or    :   2 ori   :   0 out   :   2 pop   :   0 
 push  :   0 rcall :   0 ret   :   8 reti  :   0 rjmp  :   0 rol   :   2 
 ror   :   7 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 

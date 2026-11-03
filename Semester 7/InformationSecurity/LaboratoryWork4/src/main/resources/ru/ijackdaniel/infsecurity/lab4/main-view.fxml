@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="ru.ijackdaniel.infsecurity.lab4.controller.MainController" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 13px;">
+    <top>
+        <VBox spacing="3" style="-fx-padding: 14 18; -fx-background-color: #eeeeee;">
+            <Label text="Лабораторная работа 4. Шифр гаммирования" style="-fx-font-size: 17px; -fx-font-weight: bold;" />
+            <Label text="Вариант 2: обратная связь, b = 7. Можно переключить метод и изменить параметры." />
+        </VBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+            <VBox spacing="14" style="-fx-padding: 16 18;">
+                <VBox spacing="8">
+                    <Label text="1. Параметры шифрования" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                    <Label text="Метод" />
+                    <ComboBox fx:id="modeBox" maxWidth="Infinity" />
+                    <GridPane hgap="12" vgap="5">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="25" />
+                            <ColumnConstraints percentWidth="25" />
+                            <ColumnConstraints percentWidth="25" />
+                            <ColumnConstraints percentWidth="25" />
+                        </columnConstraints>
+                        <Label text="A — множитель" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                        <Label text="C — приращение" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+                        <Label text="T0 — начало" GridPane.rowIndex="0" GridPane.columnIndex="2" />
+                        <Label text="b — разрядность" GridPane.rowIndex="0" GridPane.columnIndex="3" />
+                        <TextField fx:id="aField" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                        <TextField fx:id="cField" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+                        <TextField fx:id="seedField" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+                        <TextField fx:id="bitsField" GridPane.rowIndex="1" GridPane.columnIndex="3" promptText="1..16" />
+                    </GridPane>
+                    <Label fx:id="modulusLabel" />
+                    <Label fx:id="periodLabel" wrapText="true" />
+                </VBox>
+                <Separator />
+                <VBox spacing="8">
+                    <Label text="2. Шифрование" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                    <Label text="Введите текст (UTF-8)" />
+                    <TextArea fx:id="inputText" wrapText="true" prefRowCount="3" promptText="Исходное сообщение" />
+                    <HBox spacing="9">
+                        <Button text="Зашифровать" onAction="#encrypt" defaultButton="true" />
+                        <Button text="Зашифровать и проверить" onAction="#roundTrip" />
+                    </HBox>
+                </VBox>
+                <Separator />
+                <VBox spacing="8">
+                    <Label text="3. Дешифрование" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                    <Label text="Шифротекст в HEX (сюда можно вставить свой HEX)" />
+                    <TextArea fx:id="cipherHex" wrapText="true" prefRowCount="3" promptText="HEX после шифрования или для ввода вручную" />
+                    <Button text="Расшифровать HEX" onAction="#decrypt" />
+                    <Label text="Восстановленный текст" />
+                    <TextArea fx:id="restoredText" wrapText="true" prefRowCount="3" editable="false" />
+                </VBox>
+                <Separator />
+                <VBox spacing="8">
+                    <Label text="4. Дополнительные сведения" style="-fx-font-size: 15px; -fx-font-weight: bold;" />
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <CheckBox fx:id="detailCheck" selected="false" accessibleText="Показывать расчёты по шагам" />
+                        <Label text="Показывать расчёты по шагам" />
+                    </HBox>
+                    <Label text="После включения выполните операцию ещё раз: появятся биты, гамма и XOR." wrapText="true" />
+                    <TitledPane fx:id="detailPane" text="Ход вычислений" expanded="false">
+                        <content><TextArea fx:id="detailedText" editable="false" wrapText="false" prefRowCount="16" style="-fx-font-family: 'Consolas';" /></content>
+                    </TitledPane>
+                    <TitledPane text="Сравнение двух последних шифрований" expanded="false">
+                        <content><TextArea fx:id="comparisonText" editable="false" wrapText="true" prefRowCount="6" /></content>
+                    </TitledPane>
+                </VBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <HBox style="-fx-padding: 10 18; -fx-background-color: #eeeeee;" alignment="CENTER_LEFT">
+            <Label fx:id="statusLabel" text="Готово" wrapText="true" />
+        </HBox>
+    </bottom>
+</BorderPane>
