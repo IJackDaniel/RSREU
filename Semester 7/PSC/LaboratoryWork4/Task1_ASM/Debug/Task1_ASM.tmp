@@ -1,0 +1,29 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork4\Task1_ASM\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>D:\Programms\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork4\Task1_ASM\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>D:/Programms\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork4\Task1_ASM\Debug\Task1_ASM.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Task1_ASM.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Task1_ASM.map</FILE>
+  <FILE>Task1_ASM.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <start><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork4\Task1_ASM\main.asm</FILE><LINE>4</LINE></start>
+  <count_up><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork4\Task1_ASM\main.asm</FILE><LINE>10</LINE></count_up>
+  <count_down><FILE>C:\Programming\RSREU\Semester 7\PSC\LaboratoryWork4\Task1_ASM\main.asm</FILE><LINE>17</LINE></count_down>
+ </LABELS>
+</ASSEMBLER_INFO>

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public final class DoublePermutationAnalyzer {
-    public static final long MAX_COMBINATIONS = 1_000_000_000;
+    public static final long MAX_COMBINATIONS = 1_000_000;
 
     public record Result(int[] rows, int[] columns, double score, String text) {
         public Result { rows = rows.clone(); columns = columns.clone(); }

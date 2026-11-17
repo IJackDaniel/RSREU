@@ -69,5 +69,20 @@ public final class BigramStatistics {
         return 0.001;
     }
 
+    // Источник значения для подробного просмотра расчёта.
+    public String source(char left, char right) {
+        left = Character.toUpperCase(left);
+        right = Character.toUpperCase(right);
+        if (left == ' ') left = '_';
+        if (right == ' ') right = '_';
+        if (left == '_' || right == '_') return "пробел: приближённая оценка";
+        if (left == 'Ё') left = 'Е';
+        if (right == 'Ё') right = 'Е';
+        if (left == 'Ъ') left = 'Ь';
+        if (right == 'Ъ') right = 'Ь';
+        Integer count = frequency.get("" + left + right);
+        return count == null ? "нет в CSV: сглаживание" : "CSV, частота " + count + ", сглаживание";
+    }
+
     public int entries() { return frequency.size(); }
 }

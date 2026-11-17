@@ -25,6 +25,7 @@ public final class PermutationAnalyzer {
         return result;
     }
 
+    // Для построчной записи границу строк образуют последний и первый символы.
     public double[][] rowMatrix(CipherTable table, BigramStatistics stats) {
         int n = table.rows();
         double[][] result = new double[n][n];

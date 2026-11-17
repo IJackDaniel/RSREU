@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="ru.rsreu.pr5.controller.ReferenceController">
+    <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Буквы"><content><VBox><padding><Insets top="10" right="10" bottom="10" left="10"/></padding><children><TableView fx:id="letterTable" VBox.vgrow="ALWAYS"><columns><TableColumn fx:id="letterNameColumn" text="Символ"/><TableColumn fx:id="letterRateColumn" text="Частота, %"/></columns></TableView></children></VBox></content></Tab>
+                <Tab text="Биграммы"><content><FlowPane fx:id="bigramsPane" hgap="9" vgap="9"><padding><Insets top="15" right="15" bottom="15" left="15"/></padding></FlowPane></content></Tab>
+                <Tab text="Триграммы"><content><FlowPane fx:id="trigramsPane" hgap="9" vgap="9"><padding><Insets top="15" right="15" bottom="15" left="15"/></padding></FlowPane></content></Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>

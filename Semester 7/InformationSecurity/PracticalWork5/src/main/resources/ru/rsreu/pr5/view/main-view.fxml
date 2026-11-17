@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.TextFlow?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="ru.rsreu.pr5.controller.MainController" spacing="0">
+    <padding><Insets top="0" right="8" bottom="0" left="8"/></padding>
+    <children>
+        <HBox alignment="CENTER_LEFT" spacing="6" style="-fx-background-color: #eef3f8;">
+            <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+            <children>
+                <Button text="Вариант №2" onAction="#loadDefault"/>
+                <Button text="Анализировать" onAction="#analyze"/>
+                <Label text="Режим:"/>
+                <ComboBox fx:id="analysisMode" prefWidth="130" onAction="#refresh"/>
+                <Button text="Автоподбор по частотам" onAction="#applySuggestions"/>
+                <Button text="Сбросить замены" onAction="#clearMappings"/>
+                <Button text="Поменять местами (2 строки)" onAction="#swapSelected"/>
+                <Button text="Отменить (Ctrl+Z)" onAction="#undoChange"/>
+                <Button text="Частоты русского языка..." onAction="#showReference"/>
+            </children>
+        </HBox>
+        <SplitPane fx:id="bodySplit" VBox.vgrow="ALWAYS">
+            <items>
+                <SplitPane fx:id="leftSplit" orientation="VERTICAL">
+                    <items>
+                        <VBox spacing="6">
+                            <children>
+                                <Label text="Криптограмма"/>
+                                <TabPane fx:id="cipherTabs" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+                                    <tabs>
+                                        <Tab text="Исходный текст (редактирование)">
+                                            <content><TextArea fx:id="ciphertext" wrapText="true" promptText="Загрузите криптограмму или вставьте двухзначные коды..." style="-fx-font-family: 'Consolas'; -fx-font-size: 13px;"/></content>
+                                        </Tab>
+                                        <Tab text="Подсветка кодов">
+                                            <content><ScrollPane fx:id="cipherScroll" fitToWidth="true" style="-fx-background: white; -fx-background-color: white;"><content><TextFlow fx:id="cipherHighlighted" lineSpacing="3"><padding><Insets top="10" right="10" bottom="10" left="10"/></padding></TextFlow></content></ScrollPane></content>
+                                        </Tab>
+                                    </tabs>
+                                </TabPane>
+                            </children>
+                        </VBox>
+                        <VBox spacing="6">
+                            <children>
+                                <Label text="Результат расшифровки (· — неизвестная буква)"/>
+                                <TabPane fx:id="plainTabs" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+                                    <tabs>
+                                        <Tab text="Текст"><content><TextArea fx:id="plaintext" editable="false" wrapText="true" style="-fx-font-family: 'Consolas'; -fx-font-size: 14px;"/></content></Tab>
+                                        <Tab text="Подсветка"><content><ScrollPane fx:id="plainScroll" fitToWidth="true" style="-fx-background: white; -fx-background-color: white;"><content><TextFlow fx:id="plainHighlighted" lineSpacing="3"><padding><Insets top="10" right="10" bottom="10" left="10"/></padding></TextFlow></content></ScrollPane></content></Tab>
+                                    </tabs>
+                                </TabPane>
+                                <Label text="Выделите код в правой таблице: все его вхождения подсветятся в обеих вкладках «Подсветка»." style="-fx-text-fill: #52677b; -fx-font-size: 11px;"/>
+                            </children>
+                        </VBox>
+                    </items>
+                </SplitPane>
+                <SplitPane fx:id="rightSplit" orientation="VERTICAL">
+                    <items>
+                        <VBox spacing="7">
+                            <children>
+                                <Label text="Частоты и замены (выберите букву в последнем столбце)"/>
+                                <TableView fx:id="table" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="codeColumn" text="Код" prefWidth="65"/>
+                                        <TableColumn fx:id="countColumn" text="Количество" prefWidth="105"/>
+                                        <TableColumn fx:id="frequencyColumn" text="Частота" prefWidth="90"/>
+                                        <TableColumn fx:id="letterColumn" text="Замена ↴" prefWidth="105"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </VBox>
+                        <VBox spacing="6">
+                            <children>
+                                <Label text="Частые сочетания кодов"/>
+                                <HBox spacing="7" alignment="CENTER_LEFT"><children><Label text="Длина:"/><ComboBox fx:id="nSelect" prefWidth="75"/></children></HBox>
+                                <TableView fx:id="grams" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="gramColumn" text="Сочетание кодов"/>
+                                        <TableColumn fx:id="decodedColumn" text="Расшифровка" prefWidth="120"/>
+                                        <TableColumn fx:id="timesColumn" text="Раз" prefWidth="55"/>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </VBox>
+                    </items>
+                </SplitPane>
+            </items>
+        </SplitPane>
+        <Label fx:id="status" style="-fx-text-fill: #3d5064;"><padding><Insets top="7" right="14" bottom="10" left="14"/></padding></Label>
+    </children>
+</VBox>

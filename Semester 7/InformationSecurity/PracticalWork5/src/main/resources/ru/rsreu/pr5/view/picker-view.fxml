@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="ru.rsreu.pr5.controller.PickerController" spacing="9"
+      style="-fx-background-color: white; -fx-border-color: #98aabd; -fx-border-radius: 7; -fx-background-radius: 7; -fx-effect: dropshadow(gaussian, #00000033, 12, 0, 2, 3);">
+    <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+    <children>
+        <Label fx:id="heading" style="-fx-font-weight: bold;"/>
+        <Label text="␣ — пробел, — — убрать замену" style="-fx-text-fill: #667788; -fx-font-size: 11;"/>
+        <GridPane fx:id="lettersGrid" hgap="4" vgap="4"/>
+    </children>
+</VBox>

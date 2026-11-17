@@ -55,43 +55,15 @@ public final class Main {
             System.out.println("Исходная таблица:");
             table.print();
             if (task == 1) {
-                showCandidates(table, true, analyzer.columnMatrix(table, stats), analyzer, in);
+                showCandidates(table, true, analyzer.columnMatrix(table, stats), analyzer, stats, in);
             } else {
-                DoublePermutationAnalyzer doubleAnalyzer = new DoublePermutationAnalyzer();
-                long count = doubleAnalyzer.combinations(rows, cols);
-                System.out.println("Возможных сочетаний перестановок: " + count);
-                if (count <= DoublePermutationAnalyzer.MAX_COMBINATIONS) {
-                    var results = doubleAnalyzer.analyze(table, stats, originalRowMajor, 20);
-                    for (int i = 0; i < results.size(); i++) {
-                        var result = results.get(i);
-                        System.out.printf(java.util.Locale.forLanguageTag("ru-RU"),
-                                "%d) Строки %s, столбцы %s, оценка %.3f: %s%n",
-                                i + 1, PermutationAnalyzer.order(result.rows()),
-                                PermutationAnalyzer.order(result.columns()), result.score(),
-                                result.text().replace('_', ' '));
-                    }
-                } else {
-                    System.out.println("Полный перебор ограничен " + DoublePermutationAnalyzer.MAX_COMBINATIONS
-                            + " комбинаций. Укажите меньшие размеры таблицы.");
-                }
-                System.out.print("Проверить свой порядок строк и столбцов? (д/н): ");
-                if (in.nextLine().trim().equalsIgnoreCase("д")) {
-                    try {
-                        int[] rowOrder = readOrder(in, "Порядок строк: ", rows);
-                        int[] colOrder = readOrder(in, "Порядок столбцов: ", cols);
-                        String restored = table.rows(rowOrder).columns(colOrder).read(originalRowMajor);
-                        System.out.printf(java.util.Locale.forLanguageTag("ru-RU"),
-                                "Оценка %.3f: %s%n", doubleAnalyzer.score(restored, stats),
-                                restored.replace('_', ' '));
-                    } catch (IllegalArgumentException ex) {
-                        System.out.println("Неверная перестановка: " + ex.getMessage());
-                    }
-                }
+                showDoubleCandidates(table, originalRowMajor, stats, in);
             }
         }
     }
 
-    private static void showCandidates(CipherTable table, boolean rowMajor, double[][] matrix, PermutationAnalyzer analyzer, Scanner in) {
+    private static void showCandidates(CipherTable table, boolean rowMajor, double[][] matrix,
+                                       PermutationAnalyzer analyzer, BigramStatistics stats, Scanner in) {
         analyzer.printMatrix(matrix);
         List<PermutationAnalyzer.Candidate> list = analyzer.best(matrix, 20);
         for (int i = 0; i < list.size(); i++) {
@@ -100,29 +72,92 @@ public final class Main {
                     PermutationAnalyzer.order(item.order()), item.score(),
                     table.columns(item.order()).read(rowMajor).replace('_', ' '));
         }
-        System.out.print("Свой порядок столбцов (например, 2 3 5 1 4; Enter для пропуска): ");
-        String typed = in.nextLine().trim();
-        if (!typed.isEmpty()) {
-            try {
-                String[] parts = typed.replace(',', ' ').trim().split("\\s+");
-                int[] order = new int[parts.length];
-                if (order.length != table.cols()) throw new IllegalArgumentException("Нужно указать все столбцы");
-                boolean[] used = new boolean[order.length];
-                for (int i = 0; i < order.length; i++) {
-                    order[i] = Integer.parseInt(parts[i]) - 1;
-                    if (order[i] < 0 || order[i] >= order.length || used[order[i]]) {
-                        throw new IllegalArgumentException("Номера должны быть от 1 до " + order.length + " без повторений");
-                    }
-                    used[order[i]] = true;
+        while (true) {
+            System.out.println("\n1. Расчёт оценки кандидата");
+            System.out.println("2. Расчёт соседства двух столбцов");
+            System.out.println("3. Проверить свой порядок столбцов");
+            System.out.println("0. Вернуться в меню");
+            int action = ask(in, "Выбор: ", 0, 3);
+            if (action == 0) return;
+            if (action == 1) {
+                int n = ask(in, "Номер кандидата: ", 1, list.size());
+                var candidate = list.get(n - 1);
+                ScoreExplanation.columnOrder(table, stats, candidate.order());
+            } else if (action == 2) {
+                int left = ask(in, "Первый столбец: ", 1, table.cols());
+                int right = ask(in, "Следующий столбец: ", 1, table.cols());
+                if (left == right) System.out.println("Нужно выбрать два разных столбца.");
+                else ScoreExplanation.columnPair(table, stats, left - 1, right - 1);
+            } else {
+                try {
+                    int[] order = readOrder(in, "Порядок столбцов: ", table.cols());
+                    double score = 0;
+                    for (int i = 1; i < order.length; i++) score += matrix[order[i - 1]][order[i]];
+                    System.out.printf("Порядок %s, оценка %.3f: %s%n", PermutationAnalyzer.order(order),
+                            score, table.columns(order).read(rowMajor).replace('_', ' '));
+                    System.out.print("Показать подробный расчёт? (д/н): ");
+                    if (yes(in.nextLine())) ScoreExplanation.columnOrder(table, stats, order);
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Неправильный порядок: " + ex.getMessage());
                 }
-                double score = 0;
-                for (int i = 1; i < order.length; i++) score += matrix[order[i - 1]][order[i]];
-                System.out.printf("Порядок %s, оценка %.3f: %s%n", PermutationAnalyzer.order(order),
-                        score, table.columns(order).read(rowMajor).replace('_', ' '));
-            } catch (IllegalArgumentException ex) {
-                System.out.println("Неправильный порядок: " + ex.getMessage());
             }
         }
+    }
+
+    private static void showDoubleCandidates(CipherTable table, boolean originalRowMajor,
+                                             BigramStatistics stats, Scanner in) {
+        DoublePermutationAnalyzer analyzer = new DoublePermutationAnalyzer();
+        long count = analyzer.combinations(table.rows(), table.cols());
+        System.out.println("Возможных сочетаний перестановок: " + count);
+        List<DoublePermutationAnalyzer.Result> results = List.of();
+        if (count <= DoublePermutationAnalyzer.MAX_COMBINATIONS) {
+            results = analyzer.analyze(table, stats, originalRowMajor, 20);
+            for (int i = 0; i < results.size(); i++) {
+                var result = results.get(i);
+                System.out.printf(java.util.Locale.forLanguageTag("ru-RU"),
+                        "%d) Строки %s, столбцы %s, оценка %.3f: %s%n",
+                        i + 1, PermutationAnalyzer.order(result.rows()),
+                        PermutationAnalyzer.order(result.columns()), result.score(),
+                        result.text().replace('_', ' '));
+            }
+        } else {
+            System.out.println("Полный перебор ограничен " + DoublePermutationAnalyzer.MAX_COMBINATIONS
+                    + " комбинаций. Укажите меньшие размеры таблицы.");
+        }
+        while (true) {
+            System.out.println("\n1. Расчёт оценки кандидата");
+            System.out.println("2. Проверить свой порядок строк и столбцов");
+            System.out.println("0. Вернуться в меню");
+            int action = ask(in, "Выбор: ", 0, 2);
+            if (action == 0) return;
+            if (action == 1) {
+                if (results.isEmpty()) {
+                    System.out.println("Список кандидатов пуст.");
+                    continue;
+                }
+                int n = ask(in, "Номер кандидата: ", 1, results.size());
+                var result = results.get(n - 1);
+                System.out.println("Строки: " + PermutationAnalyzer.order(result.rows()));
+                System.out.println("Столбцы: " + PermutationAnalyzer.order(result.columns()));
+                ScoreExplanation.text(result.text(), stats);
+            } else {
+                try {
+                    int[] rowOrder = readOrder(in, "Порядок строк: ", table.rows());
+                    int[] colOrder = readOrder(in, "Порядок столбцов: ", table.cols());
+                    String restored = table.rows(rowOrder).columns(colOrder).read(originalRowMajor);
+                    System.out.printf(java.util.Locale.forLanguageTag("ru-RU"), "Оценка %.3f: %s%n",
+                            analyzer.score(restored, stats), restored.replace('_', ' '));
+                    System.out.print("Показать подробный расчёт? (д/н): ");
+                    if (yes(in.nextLine())) ScoreExplanation.text(restored, stats);
+                } catch (IllegalArgumentException ex) {
+                    System.out.println("Неверная перестановка: " + ex.getMessage());
+                }
+            }
+        }
+    }
+
+    private static boolean yes(String answer) {
+        return answer.trim().equalsIgnoreCase("д");
     }
 
     private static int[] readOrder(Scanner in, String prompt, int n) {
