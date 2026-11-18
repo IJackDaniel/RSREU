@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="ru.rsreu.rsa.controller.DecryptionController" spacing="10" styleClass="content-pane">
+ <padding><Insets top="16" right="18" bottom="16" left="18"/></padding>
+ <Label text="Дешифрование текста" styleClass="section-title"/>
+ <Label fx:id="keyLabel" text="" wrapText="true"/>
+ <HBox alignment="CENTER_LEFT" spacing="10">
+   <Label text="Размер блока (байт):"/>
+   <ComboBox fx:id="blockSizeBox" prefWidth="90"/>
+ </HBox>
+ <Label text="Шифротекст (числовые блоки):"/>
+ <TextArea fx:id="ciphertextArea" prefRowCount="7" VBox.vgrow="ALWAYS" wrapText="true"/>
+ <HBox spacing="10"><Button text="Расшифровать" onAction="#decrypt"/><Button text="Очистить" onAction="#clear"/></HBox>
+ <Label text="Восстановленный текст:"/>
+ <TextArea fx:id="plaintextArea" prefRowCount="6" VBox.vgrow="ALWAYS" wrapText="true"/>
+ <Label fx:id="statusLabel" text="" wrapText="true"/>
+</VBox>

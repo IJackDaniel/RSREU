@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="ru.rsreu.rsa.controller.CalculationController" spacing="9" styleClass="content-pane">
+ <padding><Insets top="12" right="14" bottom="12" left="14"/></padding>
+ <Label text="Вычисления по блокам" styleClass="section-title"/>
+ <TableView fx:id="blocksTable" prefHeight="190" VBox.vgrow="SOMETIMES">
+   <columns>
+    <TableColumn fx:id="blockIndexColumn" text="Блок" prefWidth="90"/>
+    <TableColumn fx:id="sourceColumn" text="Входное число" prefWidth="240"/>
+    <TableColumn fx:id="resultColumn" text="Выходное число" prefWidth="240"/>
+   </columns>
+ </TableView>
+ <Label fx:id="formulaLabel" text="Выберите блок после выполнения операции." wrapText="true"/>
+ <Label fx:id="calculationLabel" text="" wrapText="true"/>
+ <Label text="Шаги быстрого возведения в степень" styleClass="section-title"/>
+ <TableView fx:id="stepsTable" prefHeight="265" VBox.vgrow="ALWAYS">
+   <columns>
+    <TableColumn fx:id="iterationColumn" text="№" prefWidth="45"/>
+    <TableColumn fx:id="exponentColumn" text="Степень" prefWidth="95"/>
+    <TableColumn fx:id="baseColumn" text="Основание" prefWidth="115"/>
+    <TableColumn fx:id="previousColumn" text="Результат до" prefWidth="115"/>
+    <TableColumn fx:id="multiplyColumn" text="Умнож." prefWidth="75"/>
+    <TableColumn fx:id="resultColumnStep" text="Результат после" prefWidth="130"/>
+    <TableColumn fx:id="squaredColumn" text="Квадрат mod n" prefWidth="130"/>
+   </columns>
+ </TableView>
+ <Label fx:id="stepDescriptionLabel" text="" wrapText="true" minHeight="35"/>
+</VBox>

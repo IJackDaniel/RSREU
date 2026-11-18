@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<TabPane xmlns:fx="http://javafx.com/fxml" fx:controller="ru.rsreu.rsa.controller.MainController" fx:id="mainTabs" tabClosingPolicy="UNAVAILABLE">
+  <tabs>
+    <Tab text="Ключи"><content><fx:include fx:id="keysView" source="keys-view.fxml"/></content></Tab>
+    <Tab text="Шифрование"><content><fx:include fx:id="encryptionView" source="encryption-view.fxml"/></content></Tab>
+    <Tab text="Дешифрование"><content><fx:include fx:id="decryptionView" source="decryption-view.fxml"/></content></Tab>
+    <Tab text="Вычисления"><content><fx:include fx:id="calculationsView" source="calculations-view.fxml"/></content></Tab>
+  </tabs>
+</TabPane>

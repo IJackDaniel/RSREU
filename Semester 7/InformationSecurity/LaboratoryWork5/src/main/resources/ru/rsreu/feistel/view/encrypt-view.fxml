@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.feistel.controller.EncryptController" spacing="12" styleClass="page">
+  <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+  <Label text="Исходный текст" styleClass="section-title"/>
+  <TextArea fx:id="plaintextArea" promptText="Введите текст" wrapText="true" prefRowCount="5" VBox.vgrow="ALWAYS"/>
+  <HBox spacing="10" alignment="CENTER_LEFT">
+    <Button text="Зашифровать" onAction="#encryptText" styleClass="primary-button"/>
+    <Button text="Очистить" onAction="#clearFields" styleClass="secondary-button"/>
+    <Region HBox.hgrow="ALWAYS"/>
+    <Label fx:id="encryptionSummaryLabel" styleClass="hint"/>
+  </HBox>
+  <Label text="Шифротекст (Base64)" styleClass="section-title"/>
+  <TextArea fx:id="ciphertextArea" editable="false" wrapText="true" promptText="Результат" prefRowCount="5" VBox.vgrow="ALWAYS"/>
+  <HBox spacing="10">
+    <Button text="Копировать" onAction="#copyCiphertext" styleClass="secondary-button"/>
+    <Button text="В дешифрование" onAction="#sendToDecryption" styleClass="secondary-button"/>
+    <Button text="Раунды" onAction="#showRounds" styleClass="secondary-button"/>
+  </HBox>
+</VBox>

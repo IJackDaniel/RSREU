@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.feistel.controller.MainController" styleClass="root">
+  <top>
+    <VBox spacing="0">
+      <VBox styleClass="header" spacing="4">
+        <padding><Insets top="12" right="16" bottom="12" left="16"/></padding>
+        <Label text="Сеть Фейштеля" styleClass="header-title"/>
+        
+      </VBox>
+      <HBox spacing="12" alignment="CENTER_LEFT" styleClass="settings">
+        <padding><Insets top="10" right="16" bottom="10" left="16"/></padding>
+        <Label text="Ключ (HEX):" styleClass="field-label"/>
+        <TextField fx:id="keyHexField" promptText="0123456789ABCDEF" prefWidth="215"/>
+        <Button text="Новый ключ" onAction="#generateRandomKey" styleClass="secondary-button"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Раундов:" styleClass="field-label"/>
+        <Spinner fx:id="roundsSpinner" prefWidth="100"/>
+        <Button text="Сбросить" onAction="#resetVariantRounds" styleClass="secondary-button"/>
+      </HBox>
+    </VBox>
+  </top>
+  <center>
+    <TabPane fx:id="mainTabs" tabClosingPolicy="UNAVAILABLE" styleClass="main-tabs">
+      <tabs>
+        <Tab text="Шифрование">
+          <content><fx:include fx:id="encryptView" source="encrypt-view.fxml"/></content>
+        </Tab>
+        <Tab fx:id="decryptTab" text="Дешифрование">
+          <content><fx:include fx:id="decryptView" source="decrypt-view.fxml"/></content>
+        </Tab>
+        <Tab fx:id="roundsTab" text="Раунды">
+          <content><fx:include fx:id="roundsView" source="rounds-view.fxml"/></content>
+        </Tab>
+      </tabs>
+    </TabPane>
+  </center>
+  <bottom>
+    <HBox alignment="CENTER_LEFT" styleClass="footer">
+      <padding><Insets top="7" right="16" bottom="7" left="16"/></padding>
+      <Label fx:id="statusLabel" text="Готово" wrapText="true" styleClass="status-label"/>
+    </HBox>
+  </bottom>
+</BorderPane>

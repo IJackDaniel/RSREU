@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.feistel.controller.RoundsController" spacing="10" styleClass="page">
+  <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+  <HBox spacing="14" alignment="CENTER_LEFT">
+    <Label text="Результаты раундов" styleClass="section-title"/>
+    <Region HBox.hgrow="ALWAYS"/>
+    <Label text="Блок:" styleClass="field-label"/>
+    <ComboBox fx:id="blockSelector" prefWidth="90" promptText="№"/>
+    <Label fx:id="traceSummaryLabel" text="Нет данных" styleClass="hint"/>
+  </HBox>
+  <TableView fx:id="roundTable" prefHeight="245" minHeight="160" VBox.vgrow="SOMETIMES">
+    <columns>
+      <TableColumn fx:id="roundColumn" text="Раунд" prefWidth="65" maxWidth="90"/>
+      <TableColumn fx:id="parameterColumn" text="Vi (HEX)" prefWidth="125"/>
+      <TableColumn fx:id="functionColumn" text="Fi (HEX)" prefWidth="125"/>
+      <TableColumn fx:id="beforeColumn" text="4 ветви до раунда (HEX)" prefWidth="340"/>
+      <TableColumn fx:id="afterColumn" text="4 ветви после раунда (HEX)" prefWidth="340"/>
+    </columns>
+    <placeholder><Label text="Нет данных"/></placeholder>
+  </TableView>
+  <Label text="Подробности раунда" styleClass="section-title"/>
+  <TextArea fx:id="roundDetailsArea" editable="false" wrapText="false" styleClass="details-area" text="Выберите раунд в таблице." VBox.vgrow="ALWAYS" minHeight="230"/>
+</VBox>

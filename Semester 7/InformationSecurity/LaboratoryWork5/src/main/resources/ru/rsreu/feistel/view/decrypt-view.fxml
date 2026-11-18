@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.feistel.controller.DecryptController" spacing="12" styleClass="page">
+  <padding><Insets top="14" right="16" bottom="14" left="16"/></padding>
+  <Label text="Шифротекст (Base64)" styleClass="section-title"/>
+  <TextArea fx:id="ciphertextArea" promptText="Введите Base64" wrapText="true" prefRowCount="5" VBox.vgrow="ALWAYS"/>
+  <HBox spacing="10" alignment="CENTER_LEFT">
+    <Button text="Расшифровать" onAction="#decryptText" styleClass="primary-button"/>
+    <Button text="Очистить" onAction="#clearFields" styleClass="secondary-button"/>
+    <Region HBox.hgrow="ALWAYS"/>
+    <Label fx:id="decryptionSummaryLabel" styleClass="hint"/>
+  </HBox>
+  <Label text="Расшифрованный текст" styleClass="section-title"/>
+  <TextArea fx:id="plaintextArea" editable="false" promptText="Результат" wrapText="true" prefRowCount="5" VBox.vgrow="ALWAYS"/>
+  <HBox spacing="10">
+    <Button text="Раунды" onAction="#showRounds" styleClass="secondary-button"/>
+  </HBox>
+</VBox>

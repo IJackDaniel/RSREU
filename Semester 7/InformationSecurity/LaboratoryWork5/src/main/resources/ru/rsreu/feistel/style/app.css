@@ -1,0 +1,11 @@
+/* Минимальное оформление на основе стандартного JavaFX Modena. */
+.root { -fx-font-family: "Segoe UI", "Arial", sans-serif; -fx-font-size: 13px; }
+.header { -fx-background-color: #eaf2fc; }
+.header-title { -fx-font-size: 17px; -fx-font-weight: bold; }
+.settings { -fx-background-color: #f5f7fa; }
+.section-title { -fx-font-weight: bold; }
+.primary-button { -fx-background-color: #d9e9ff; }
+.primary-button:hover { -fx-background-color: #c4dcfb; }
+.hint { -fx-text-fill: #666666; }
+.footer { -fx-background-color: #f5f7fa; }
+.details-area { -fx-font-family: "Consolas", "Monospaced"; -fx-font-size: 12px; }

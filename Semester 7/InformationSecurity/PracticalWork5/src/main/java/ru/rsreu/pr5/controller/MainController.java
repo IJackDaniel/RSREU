@@ -176,7 +176,7 @@ public class MainController {
         }
     }
 
-    // Блок «Сопоставление с табличными частотами»: строим первый вариант замен.
+    // Строим первый вариант замен.
     @FXML
     private void applySuggestions() {
         boolean includeSpace = "С пробелом".equals(analysisMode.getValue());

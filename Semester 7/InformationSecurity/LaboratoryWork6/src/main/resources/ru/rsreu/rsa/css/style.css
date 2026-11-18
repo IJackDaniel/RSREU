@@ -1,0 +1,4 @@
+.root { -fx-font-size: 13px; -fx-font-family: "Segoe UI", "Arial", sans-serif; }
+.section-title { -fx-font-size: 15px; -fx-font-weight: bold; }
+.tab:selected { -fx-focus-color: #5b91c8; }
+.button:focused, .text-field:focused, .text-area:focused { -fx-focus-color: #6a9aca; }

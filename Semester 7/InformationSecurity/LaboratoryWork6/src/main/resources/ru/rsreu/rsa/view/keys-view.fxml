@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:controller="ru.rsreu.rsa.controller.KeyGenerationController" fitToWidth="true">
+ <content><VBox spacing="12" styleClass="content-pane">
+  <padding><Insets top="16" right="18" bottom="16" left="18"/></padding>
+  <Label text="Генерация ключей RSA" styleClass="section-title"/>
+  <HBox spacing="10" alignment="CENTER_LEFT">
+   <Label text="p:"/><TextField fx:id="pField" prefWidth="145"/>
+   <Label text="q:"/><TextField fx:id="qField" prefWidth="145"/>
+   <Button text="Сгенерировать ключи" onAction="#generateKeys"/>
+  </HBox>
+  <Label fx:id="statusLabel" text="" wrapText="true"/>
+  <GridPane hgap="12" vgap="10">
+   <columnConstraints><ColumnConstraints minWidth="150"/><ColumnConstraints hgrow="ALWAYS"/></columnConstraints>
+   <Label text="Модуль n:" GridPane.rowIndex="0"/><TextField fx:id="nField" editable="false" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+   <Label text="Функция Эйлера φ(n):" GridPane.rowIndex="1"/><TextField fx:id="phiField" editable="false" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+   <Label text="Открытая экспонента e:" GridPane.rowIndex="2"/><TextField fx:id="eField" editable="false" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+   <Label text="Закрытая экспонента d:" GridPane.rowIndex="3"/><TextField fx:id="dField" editable="false" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+  </GridPane>
+  <Label text="Проверка кандидатов для e" styleClass="section-title"/>
+  <TextArea fx:id="candidatesArea" editable="false" prefRowCount="9" wrapText="false"/>
+  <Label text="Проверка взаимной простоты" styleClass="section-title"/>
+  <HBox spacing="10" alignment="CENTER_LEFT">
+   <Label text="a:"/><TextField fx:id="firstGcdField" prefWidth="140"/>
+   <Label text="b:"/><TextField fx:id="secondGcdField" prefWidth="140"/>
+   <Button text="Проверить НОД" onAction="#checkCoprimality"/>
+  </HBox>
+  <Label fx:id="gcdResultLabel" text="" wrapText="true"/>
+ </VBox></content>
+</ScrollPane>
